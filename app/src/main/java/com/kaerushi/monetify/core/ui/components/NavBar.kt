@@ -59,11 +59,13 @@ fun NavBar(
     TopAppBar(
         scrollBehavior = scrollBehavior,
         navigationIcon = {
-            IconButton(onClick = {/* DO NOTHING*/ }) {
-                Icon(
-                    imageVector = Icons.Default.Star,
-                    contentDescription = null
-                )
+            if (currentRoute == Screen.Home.route) {
+                IconButton(onClick = {/* DO NOTHING*/ }) {
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = null
+                    )
+                }
             }
         },
         actions = {
@@ -111,7 +113,12 @@ fun NavBar(
                 }
             }
         },
-        title = { Text(title) },
+        title = {
+            Text(
+                text = title,
+                modifier = Modifier.padding(start = if (currentRoute != Screen.Home.route) 6.dp else 0.dp)
+            )
+        },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surface,
             scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer
