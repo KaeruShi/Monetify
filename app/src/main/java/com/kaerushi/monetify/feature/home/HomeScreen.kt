@@ -13,7 +13,7 @@ import com.kaerushi.monetify.feature.home.components.ActionsAndSupportCard
 import com.kaerushi.monetify.feature.home.components.ModuleStatusCard
 import com.kaerushi.monetify.feature.home.components.SystemInfoCard
 import com.kaerushi.monetify.feature.home.model.SystemInfo
-import com.kaerushi.monetify.utils.isModuleActive
+import com.kaerushi.monetify.core.utils.isModuleActive
 
 @Composable
 fun HomeScreen() {
