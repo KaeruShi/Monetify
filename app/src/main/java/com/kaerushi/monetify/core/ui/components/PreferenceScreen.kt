@@ -152,7 +152,7 @@ fun PreferenceApp(
 
         PreferenceType.ROUND -> RoundedCornerShape(24.dp)
     }
-    val contentAlpha = if (enabled) 1f else 0.6f
+    val contentAlpha = if (enabled) 1f else 0.3f
     Card(
         shape = shape,
         onClick = { onClick() },
