@@ -3,37 +3,30 @@ package com.kaerushi.monetify.core.ui.components
 import android.graphics.drawable.Drawable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
-import com.kaerushi.monetify.R
-import com.kaerushi.monetify.feature.apps.AppDetailScreen
+import com.kaerushi.monetify.data.model.AppInfo
+import com.kaerushi.monetify.data.viewmodel.MainViewModel
+import com.kaerushi.monetify.feature.apps.AppDetails
 
 @Composable
 fun PreferenceCategory(title: String) {
@@ -143,7 +136,9 @@ fun PreferenceApp(
     enabled: Boolean = true,
     type: PreferenceType = PreferenceType.MID,
     expanded: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    appInfo: AppInfo,
+    mainViewModel: MainViewModel
 ) {
     val shape = when (type) {
         PreferenceType.MID -> RoundedCornerShape(4.dp)
@@ -188,7 +183,7 @@ fun PreferenceApp(
                 }
             }
             AnimatedVisibility(visible = expanded) {
-                AppDetailScreen()
+                AppDetails(appInfo.packageName, mainViewModel.repository)
             }
         }
     }
