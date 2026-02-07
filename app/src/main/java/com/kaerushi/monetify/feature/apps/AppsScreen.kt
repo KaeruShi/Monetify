@@ -38,8 +38,13 @@ fun AppsScreen(mainViewModel: MainViewModel) {
             key = { _, app -> app.packageName }
         ) { index, appInfo ->
             val isExpanded = expandedKey == appInfo.packageName
+            val extraPadding = when {
+                index == apps.size - 1 -> 16.dp
+                isExpanded -> 4.dp // Add extra space when expanded
+                else -> 0.dp
+            }
             PreferenceApp(
-                modifier = Modifier.animateItem().padding(bottom = if (index == apps.size - 1) 16.dp else 0.dp),
+                modifier = Modifier.animateItem().padding(bottom = extraPadding),
                 icon = appInfo.icon,
                 altIcon = appInfo.altIcon,
                 title = appInfo.name,
