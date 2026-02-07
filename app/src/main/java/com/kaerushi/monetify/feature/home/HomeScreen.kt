@@ -1,5 +1,6 @@
 package com.kaerushi.monetify.feature.home
 
+import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,9 +21,9 @@ fun HomeScreen() {
     val moduleTitle = if (isModuleActive()) "Module Active" else "Module Inactive"
     val moduleSubtitle = if (isModuleActive()) BuildConfig.VERSION_NAME else "Please active module in LSPosed."
     val deviceInfo = listOf(
-        SystemInfo("Android Version", "12"),
-        SystemInfo("Device Model", "redwood"),
-        SystemInfo("Manufacturer", "samsung")
+        SystemInfo("Android Version", Build.VERSION.SDK_INT_FULL.toString()),
+        SystemInfo("Device Model", Build.BOARD),
+        SystemInfo("Manufacturer", Build.MANUFACTURER)
     )
 
     LazyColumn(
