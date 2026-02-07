@@ -1,6 +1,7 @@
 package com.kaerushi.monetify.core.ui.components
 
 import android.graphics.drawable.Drawable
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -14,8 +15,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -30,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import com.kaerushi.monetify.R
+import com.kaerushi.monetify.feature.apps.AppDetailScreen
 
 @Composable
 fun PreferenceCategory(title: String) {
@@ -45,7 +49,10 @@ fun PreferenceCategory(title: String) {
 }
 
 @Composable
-fun PreferenceItem(onClick: () -> Unit, title: String, summary: String, type: PreferenceType = PreferenceType.MID) {
+fun PreferenceItem(
+    onClick: () -> Unit, title: String, summary: String, type: PreferenceType = PreferenceType.MID,
+    isChild: Boolean = false
+) {
     val shape = when (type) {
         PreferenceType.MID -> RoundedCornerShape(4.dp)
         PreferenceType.TOP -> RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp, bottomStart = 4.dp, bottomEnd = 4.dp)
@@ -55,11 +62,16 @@ fun PreferenceItem(onClick: () -> Unit, title: String, summary: String, type: Pr
             bottomStart = 24.dp,
             bottomEnd = 24.dp
         )
+
         PreferenceType.ROUND -> RoundedCornerShape(24.dp)
     }
     Card(
         onClick = onClick,
-        shape = shape
+        shape = if (!isChild) shape else RoundedCornerShape(0.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isChild) MaterialTheme.colorScheme.surfaceContainerHigh
+            else MaterialTheme.colorScheme.surfaceContainerHighest
+        )
     ) {
         Column(
             modifier = Modifier
@@ -73,6 +85,55 @@ fun PreferenceItem(onClick: () -> Unit, title: String, summary: String, type: Pr
 }
 
 @Composable
+fun PreferenceSwitch(
+    checked: Boolean = false,
+    onCheckedChange: (Boolean) -> Unit,
+    title: String,
+    summary: String,
+    type: PreferenceType = PreferenceType.MID,
+    isChild: Boolean = false
+) {
+    val shape = when (type) {
+        PreferenceType.MID -> RoundedCornerShape(4.dp)
+        PreferenceType.TOP -> RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp, bottomStart = 4.dp, bottomEnd = 4.dp)
+        PreferenceType.BOTTOM -> RoundedCornerShape(
+            topStart = 4.dp,
+            topEnd = 4.dp,
+            bottomStart = 24.dp,
+            bottomEnd = 24.dp
+        )
+
+        PreferenceType.ROUND -> RoundedCornerShape(24.dp)
+    }
+    Card(
+        onClick = { onCheckedChange(!checked) },
+        shape = if (!isChild) shape else RoundedCornerShape(0.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isChild) MaterialTheme.colorScheme.surfaceContainerHigh
+            else MaterialTheme.colorScheme.surfaceContainerHighest
+        )
+    ) {
+        Row() {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .weight(1f)
+            ) {
+                Text(text = title, fontWeight = FontWeight.Bold)
+                Text(text = summary, fontSize = 14.sp)
+            }
+            Switch(
+                checked = checked,
+                onCheckedChange = onCheckedChange,
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .align(Alignment.CenterVertically)
+            )
+        }
+    }
+}
+
+@Composable
 fun PreferenceApp(
     modifier: Modifier = Modifier,
     icon: Drawable?,
@@ -81,6 +142,7 @@ fun PreferenceApp(
     summary: String,
     enabled: Boolean = true,
     type: PreferenceType = PreferenceType.MID,
+    expanded: Boolean,
     onClick: () -> Unit
 ) {
     val shape = when (type) {
@@ -92,6 +154,7 @@ fun PreferenceApp(
             bottomStart = 24.dp,
             bottomEnd = 24.dp
         )
+
         PreferenceType.ROUND -> RoundedCornerShape(24.dp)
     }
     val contentAlpha = if (enabled) 1f else 0.6f
@@ -100,27 +163,32 @@ fun PreferenceApp(
         onClick = { onClick() },
         modifier = modifier.alpha(contentAlpha)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(16.dp)) {
-            if (icon != null) {
-                Image(
-                    bitmap = icon.toBitmap().asImageBitmap(),
-                    contentDescription = null,
-                    modifier = Modifier.size(42.dp)
-                )
-            } else {
-                Image(
-                    painter = painterResource(altIcon),
-                    contentDescription = null,
-                    modifier = Modifier.size(42.dp)
-                )
+        Column {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(16.dp)) {
+                if (icon != null) {
+                    Image(
+                        bitmap = icon.toBitmap().asImageBitmap(),
+                        contentDescription = null,
+                        modifier = Modifier.size(42.dp)
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(altIcon),
+                        contentDescription = null,
+                        modifier = Modifier.size(42.dp)
+                    )
+                }
+                Column(
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text(text = title, fontWeight = FontWeight.Bold)
+                    Text(text = summary, fontSize = 14.sp)
+                }
             }
-            Column(
-                modifier = Modifier
-                    .padding(start = 16.dp)
-                    .fillMaxWidth()
-            ) {
-                Text(text = title, fontWeight = FontWeight.Bold)
-                Text(text = summary, fontSize = 14.sp)
+            AnimatedVisibility(visible = expanded) {
+                AppDetailScreen()
             }
         }
     }
