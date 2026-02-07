@@ -1,7 +1,6 @@
 package com.kaerushi.monetify.feature.apps
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -46,6 +45,8 @@ fun AppsScreen(mainViewModel: MainViewModel) {
                 title = appInfo.name,
                 summary = appInfo.summary,
                 enabled = appInfo.enabled,
+                appInfo = appInfo,
+                mainViewModel = mainViewModel,
                 type = when {
                     apps.size == 1 -> PreferenceType.ROUND
                     index == 0 -> PreferenceType.TOP

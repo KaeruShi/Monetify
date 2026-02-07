@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 class MainViewModel(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
+    val repository = userPreferencesRepository
     val uiState: StateFlow<Boolean> = userPreferencesRepository.showNotInstalledPref
         .stateIn(
             scope = viewModelScope,

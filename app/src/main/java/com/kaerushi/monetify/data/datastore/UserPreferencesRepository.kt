@@ -34,6 +34,26 @@ class UserPreferencesRepository(private val context: Context) {
         it[SHOW_NOT_INSTALLED_APPS] ?: true
     }
 
+    private fun getAppMonetKey(packageName: String) =
+        booleanPreferencesKey("app_${packageName}_monet_enabled")
+    private fun getAppAdsKey(packageName: String) =
+        booleanPreferencesKey("app_${packageName}_ads_disabled")
+    private fun getAppIconPackKey(packageName: String) =
+        stringPreferencesKey("app_${packageName}_icon_pack")
+
+    fun getAppMonetEnabled(packageName: String): Flow<Boolean> =
+        context.dataStore.data.map {
+            it[getAppMonetKey(packageName)] ?: false
+        }
+    fun getAppAdsDisabled(packageName: String): Flow<Boolean> =
+        context.dataStore.data.map {
+            it[getAppAdsKey(packageName)] ?: false
+        }
+    fun getAppIconPack(packageName: String): Flow<String> =
+        context.dataStore.data.map {
+            it[getAppIconPackKey(packageName)] ?: "Default"
+        }
+
     suspend fun setTheme(theme: AppTheme) {
         context.dataStore.edit {
             it[themeKey] = theme.name
@@ -49,6 +69,24 @@ class UserPreferencesRepository(private val context: Context) {
     suspend fun toggleShowInstalledPref(show: Boolean) {
         context.dataStore.edit {
             it[SHOW_NOT_INSTALLED_APPS] = show
+        }
+    }
+
+    suspend fun setAppMonetEnabled(packageName: String, enabled: Boolean) {
+        context.dataStore.edit {
+            it[getAppMonetKey(packageName)] = enabled
+        }
+    }
+
+    suspend fun setAppAdsDisabled(packageName: String, disabled: Boolean) {
+        context.dataStore.edit {
+            it[getAppAdsKey(packageName)] = disabled
+        }
+    }
+
+    suspend fun setAppIconPack(packageName: String, iconPack: String) {
+        context.dataStore.edit {
+            it[getAppIconPackKey(packageName)] = iconPack
         }
     }
 }
