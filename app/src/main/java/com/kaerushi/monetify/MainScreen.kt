@@ -19,7 +19,7 @@ import com.kaerushi.monetify.core.navigation.NavGraph
 import com.kaerushi.monetify.core.ui.components.BottomNavBar
 import com.kaerushi.monetify.core.ui.components.ChangelogBottomSheet
 import com.kaerushi.monetify.core.ui.components.NavBar
-import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
+import com.kaerushi.monetify.data.repository.PreferencesRepository
 import com.kaerushi.monetify.data.viewmodel.AppIconPackViewModel
 import com.kaerushi.monetify.data.viewmodel.ColorSchemeViewModel
 import com.kaerushi.monetify.data.viewmodel.MainViewModel
@@ -32,7 +32,7 @@ fun MainScreen(
     colorSchemeViewModel: ColorSchemeViewModel,
     mainViewModel: MainViewModel,
     appIconPackViewModel: AppIconPackViewModel,
-    repository: UserPreferencesRepository
+    repository: PreferencesRepository
 ) {
     val navController = rememberNavController()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()

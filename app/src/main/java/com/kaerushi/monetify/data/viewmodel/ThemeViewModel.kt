@@ -3,7 +3,7 @@ package com.kaerushi.monetify.data.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
+import com.kaerushi.monetify.data.repository.PreferencesRepository
 import kotlinx.coroutines.launch
 
 enum class AppTheme {
@@ -13,13 +13,13 @@ enum class AppTheme {
 }
 
 class ThemeViewModel(application: Application) : AndroidViewModel(application) {
-    private val userPreferencesRepository = UserPreferencesRepository(application)
+    private val preferencesRepository = PreferencesRepository(application)
 
-    val theme = userPreferencesRepository.theme
+    val theme = preferencesRepository.theme
 
     fun onThemeChanged(newTheme: AppTheme) {
         viewModelScope.launch {
-            userPreferencesRepository.setTheme(newTheme)
+            preferencesRepository.setTheme(newTheme)
         }
     }
 }

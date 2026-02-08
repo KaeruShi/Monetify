@@ -8,12 +8,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.kaerushi.monetify.core.ui.components.PreferenceItem
 import com.kaerushi.monetify.core.ui.components.PreferenceSwitch
 import com.kaerushi.monetify.core.ui.components.PreferenceType
-import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
+import com.kaerushi.monetify.data.repository.PreferencesRepository
 import com.kaerushi.monetify.data.viewmodel.AppIconPack
 import kotlinx.coroutines.launch
 
 @Composable
-fun AppDetails(packageName: String, repository: UserPreferencesRepository) {
+fun AppDetails(packageName: String, repository: PreferencesRepository) {
     val enableMonet by repository.getAppMonetEnabled(packageName).collectAsState(initial = false)
     val disableAds by repository.getAppAdsDisabled(packageName).collectAsState(initial = false)
     val iconPack by repository.getAppIconPack(packageName).collectAsState(initial = AppIconPack.DEFAULT)

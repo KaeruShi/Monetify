@@ -3,17 +3,17 @@ package com.kaerushi.monetify.data.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
+import com.kaerushi.monetify.data.repository.PreferencesRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val preferencesRepository: PreferencesRepository
 ) : ViewModel() {
-    val repository = userPreferencesRepository
-    val uiState: StateFlow<Boolean> = userPreferencesRepository.showNotInstalledPref
+    val repository = preferencesRepository
+    val uiState: StateFlow<Boolean> = preferencesRepository.showNotInstalledPref
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
@@ -22,24 +22,24 @@ class MainViewModel(
 
     fun toggleNotInstalled(isVisible: Boolean) {
         viewModelScope.launch {
-            userPreferencesRepository.toggleShowInstalledPref(isVisible)
+            preferencesRepository.toggleShowInstalledPref(isVisible)
         }
     }
 
     fun toggleWelcomeScreen(show: Boolean) {
         viewModelScope.launch {
-            userPreferencesRepository.toggleShowWelcomeScreenPref(show)
+            preferencesRepository.toggleShowWelcomeScreenPref(show)
         }
     }
 }
 
 class MainViewModelFactory(
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val preferencesRepository: PreferencesRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MainViewModel(userPreferencesRepository) as T
+            return MainViewModel(preferencesRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

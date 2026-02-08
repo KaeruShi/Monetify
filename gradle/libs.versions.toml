@@ -38,7 +38,6 @@ androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runt
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
 
 # Libsu
-de-api = { module = "de.robv.android.xposed:api", version.ref = "apiVersion" }
 libsu-core = { module = "com.github.topjohnwu.libsu:core", version.ref = "libsuVersion" }
 libsu-service = { module = "com.github.topjohnwu.libsu:service", version.ref = "libsuVersion" }
 libsu-nio = { module = "com.github.topjohnwu.libsu:nio", version.ref = "libsuVersion" }

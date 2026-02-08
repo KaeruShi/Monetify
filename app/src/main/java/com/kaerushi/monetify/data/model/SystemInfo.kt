@@ -1,4 +1,4 @@
-package com.kaerushi.monetify.feature.home.model
+package com.kaerushi.monetify.data.model
 
 data class SystemInfo(
     val title: String,
