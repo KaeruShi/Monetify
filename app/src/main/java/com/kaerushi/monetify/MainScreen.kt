@@ -19,13 +19,21 @@ import com.kaerushi.monetify.core.navigation.NavGraph
 import com.kaerushi.monetify.core.ui.components.BottomNavBar
 import com.kaerushi.monetify.core.ui.components.ChangelogBottomSheet
 import com.kaerushi.monetify.core.ui.components.NavBar
+import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
+import com.kaerushi.monetify.data.viewmodel.AppIconPackViewModel
 import com.kaerushi.monetify.data.viewmodel.ColorSchemeViewModel
 import com.kaerushi.monetify.data.viewmodel.ThemeViewModel
 import com.kaerushi.monetify.data.viewmodel.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(themeViewModel: ThemeViewModel, colorSchemeViewModel: ColorSchemeViewModel, mainViewModel: MainViewModel) {
+fun MainScreen(
+    themeViewModel: ThemeViewModel,
+    colorSchemeViewModel: ColorSchemeViewModel,
+    mainViewModel: MainViewModel,
+    appIconPackViewModel: AppIconPackViewModel,
+    repository: UserPreferencesRepository
+) {
     val navController = rememberNavController()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
@@ -54,7 +62,9 @@ fun MainScreen(themeViewModel: ThemeViewModel, colorSchemeViewModel: ColorScheme
             modifier = Modifier.padding(innerPadding),
             themeViewModel = themeViewModel,
             colorSchemeViewModel = colorSchemeViewModel,
-            mainViewModel = mainViewModel
+            mainViewModel = mainViewModel,
+            appIconPackViewModel = appIconPackViewModel,
+            repository = repository
         )
         if (isSheetOpen) {
             ChangelogBottomSheet(

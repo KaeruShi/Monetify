@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.kaerushi.monetify.data.viewmodel.AppTheme
 import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
+import com.kaerushi.monetify.data.viewmodel.AppIconPack
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -18,6 +19,7 @@ class UserPreferencesRepository(private val context: Context) {
 
     companion object {
         val SHOW_NOT_INSTALLED_APPS = booleanPreferencesKey("show_not_installed_apps")
+        val SHOW_APP_ICON_PACK = booleanPreferencesKey("show_app_icon_pack")
     }
 
     private val themeKey = stringPreferencesKey("theme")
@@ -32,6 +34,9 @@ class UserPreferencesRepository(private val context: Context) {
 
     val showNotInstalledPref: Flow<Boolean> = context.dataStore.data.map {
         it[SHOW_NOT_INSTALLED_APPS] ?: true
+    }
+    val showAppIconPack: Flow<Boolean> = context.dataStore.data.map {
+        it[SHOW_APP_ICON_PACK] ?: false
     }
 
     private fun getAppMonetKey(packageName: String) =
@@ -49,9 +54,9 @@ class UserPreferencesRepository(private val context: Context) {
         context.dataStore.data.map {
             it[getAppAdsKey(packageName)] ?: false
         }
-    fun getAppIconPack(packageName: String): Flow<String> =
+    fun getAppIconPack(packageName: String): Flow<AppIconPack> =
         context.dataStore.data.map {
-            it[getAppIconPackKey(packageName)] ?: "Default"
+            AppIconPack.valueOf(it[getAppIconPackKey(packageName)] ?: AppIconPack.DEFAULT.name)
         }
 
     suspend fun setTheme(theme: AppTheme) {
@@ -71,6 +76,11 @@ class UserPreferencesRepository(private val context: Context) {
             it[SHOW_NOT_INSTALLED_APPS] = show
         }
     }
+    suspend fun toggleShowAppIconPack(show: Boolean) {
+        context.dataStore.edit {
+            it[SHOW_APP_ICON_PACK] = show
+        }
+    }
 
     suspend fun setAppMonetEnabled(packageName: String, enabled: Boolean) {
         context.dataStore.edit {
@@ -84,9 +94,9 @@ class UserPreferencesRepository(private val context: Context) {
         }
     }
 
-    suspend fun setAppIconPack(packageName: String, iconPack: String) {
+    suspend fun setAppIconPack(packageName: String, iconPack: AppIconPack) {
         context.dataStore.edit {
-            it[getAppIconPackKey(packageName)] = iconPack
+            it[getAppIconPackKey(packageName)] = iconPack.name
         }
     }
 }
