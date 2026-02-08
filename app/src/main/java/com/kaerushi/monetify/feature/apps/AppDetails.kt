@@ -9,13 +9,14 @@ import com.kaerushi.monetify.core.ui.components.PreferenceItem
 import com.kaerushi.monetify.core.ui.components.PreferenceSwitch
 import com.kaerushi.monetify.core.ui.components.PreferenceType
 import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
+import com.kaerushi.monetify.data.viewmodel.AppIconPack
 import kotlinx.coroutines.launch
 
 @Composable
 fun AppDetails(packageName: String, repository: UserPreferencesRepository) {
     val enableMonet by repository.getAppMonetEnabled(packageName).collectAsState(initial = false)
     val disableAds by repository.getAppAdsDisabled(packageName).collectAsState(initial = false)
-    val iconPack by repository.getAppIconPack(packageName).collectAsState(initial = "Default")
+    val iconPack by repository.getAppIconPack(packageName).collectAsState(initial = AppIconPack.DEFAULT)
     val scope = rememberCoroutineScope()
 
     Column {
@@ -41,10 +42,12 @@ fun AppDetails(packageName: String, repository: UserPreferencesRepository) {
         )
         PreferenceItem(
             onClick = {
-
+                scope.launch {
+                    repository.toggleShowAppIconPack(true)
+                }
             },
             title = "Icon Pack",
-            summary = "Default",
+            summary = iconPack.toString().lowercase().replaceFirstChar { it.uppercase() },
             type = PreferenceType.BOTTOM,
             isChild = true
         )

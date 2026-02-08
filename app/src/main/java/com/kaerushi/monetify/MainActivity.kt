@@ -19,6 +19,7 @@ import com.kaerushi.monetify.data.viewmodel.ColorSchemeViewModel
 import com.kaerushi.monetify.core.ui.theme.MonetifyTheme
 import com.kaerushi.monetify.data.viewmodel.ThemeViewModel
 import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
+import com.kaerushi.monetify.data.viewmodel.AppIconPackViewModel
 import com.kaerushi.monetify.data.viewmodel.MainViewModel
 import com.kaerushi.monetify.data.viewmodel.MainViewModelFactory
 
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val themeViewModel: ThemeViewModel = viewModel()
             val colorSchemeViewModel: ColorSchemeViewModel = viewModel()
+            val appIconPackViewModel: AppIconPackViewModel = viewModel()
             val userPreferencesRepository = UserPreferencesRepository(applicationContext)
             val mainViewModel: MainViewModel = viewModel(
                 factory = MainViewModelFactory(userPreferencesRepository)
@@ -60,7 +62,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen(themeViewModel, colorSchemeViewModel, mainViewModel)
+                    MainScreen(themeViewModel, colorSchemeViewModel, mainViewModel, appIconPackViewModel, userPreferencesRepository)
                 }
             }
         }

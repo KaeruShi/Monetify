@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
+import com.kaerushi.monetify.data.viewmodel.AppIconPackViewModel
 import com.kaerushi.monetify.data.viewmodel.ColorSchemeViewModel
 import com.kaerushi.monetify.data.viewmodel.ThemeViewModel
 import com.kaerushi.monetify.data.viewmodel.MainViewModel
@@ -26,7 +28,9 @@ fun NavGraph(
     modifier: Modifier = Modifier,
     themeViewModel: ThemeViewModel,
     colorSchemeViewModel: ColorSchemeViewModel,
-    mainViewModel: MainViewModel
+    mainViewModel: MainViewModel,
+    appIconPackViewModel: AppIconPackViewModel,
+    repository: UserPreferencesRepository
 ) {
     NavHost(
         navController = navController,
@@ -80,7 +84,7 @@ fun NavGraph(
         }
     ) {
         composable(route = Screen.Home.route) { HomeScreen() }
-        composable(route = Screen.Apps.route) { AppsScreen(mainViewModel) }
+        composable(route = Screen.Apps.route) { AppsScreen(mainViewModel, appIconPackViewModel, repository) }
         composable(route = Screen.Settings.route) {
             SettingsScreen(
                 themeViewModel = themeViewModel,
