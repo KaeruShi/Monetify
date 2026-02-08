@@ -53,6 +53,8 @@ android {
 }
 
 dependencies {
+    compileOnly(libs.xposed.api)
+
     implementation(libs.libsu.core)
     implementation(libs.libsu.service)
     implementation(libs.libsu.nio)
