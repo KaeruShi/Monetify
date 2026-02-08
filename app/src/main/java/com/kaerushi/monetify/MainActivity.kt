@@ -23,7 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kaerushi.monetify.core.manager.allPermissionsGranted
 import com.kaerushi.monetify.core.ui.theme.ApplySystemBars
 import com.kaerushi.monetify.core.ui.theme.MonetifyTheme
-import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
+import com.kaerushi.monetify.data.repository.PreferencesRepository
 import com.kaerushi.monetify.data.viewmodel.AppIconPackViewModel
 import com.kaerushi.monetify.data.viewmodel.AppTheme
 import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
@@ -40,13 +40,13 @@ class MainActivity : ComponentActivity() {
             val themeViewModel: ThemeViewModel = viewModel()
             val colorSchemeViewModel: ColorSchemeViewModel = viewModel()
             val appIconPackViewModel: AppIconPackViewModel = viewModel()
-            val userPreferencesRepository = UserPreferencesRepository(applicationContext)
+            val preferencesRepository = PreferencesRepository(applicationContext)
             val mainViewModel: MainViewModel = viewModel(
-                factory = MainViewModelFactory(userPreferencesRepository)
+                factory = MainViewModelFactory(preferencesRepository)
             )
             val appTheme by themeViewModel.theme.collectAsState(initial = AppTheme.SYSTEM)
             val colorSchemeMode by colorSchemeViewModel.colorSchemeMode.collectAsState(initial = ColorSchemeMode.DYNAMIC)
-            val showWelcome by userPreferencesRepository.showWelcomeScreen.collectAsState(initial = true)
+            val showWelcome by preferencesRepository.showWelcomeScreen.collectAsState(initial = true)
             val shouldShowWelcome = showWelcome && !allPermissionsGranted(LocalContext.current)
 
             MonetifyTheme(
@@ -97,7 +97,7 @@ class MainActivity : ComponentActivity() {
                                 colorSchemeViewModel,
                                 mainViewModel,
                                 appIconPackViewModel,
-                                userPreferencesRepository
+                                preferencesRepository
                             )
                         }
                     }

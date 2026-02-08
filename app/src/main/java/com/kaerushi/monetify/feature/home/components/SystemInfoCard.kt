@@ -38,7 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kaerushi.monetify.feature.apps.utils.Utils.getInstalledApps
-import com.kaerushi.monetify.feature.home.model.SystemInfo
+import com.kaerushi.monetify.data.model.SystemInfo
 
 @Composable
 fun SystemInfoCard(systemInfo: List<SystemInfo>) {

@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.kaerushi.monetify.core.ui.components.PreferenceApp
 import com.kaerushi.monetify.core.ui.components.PreferenceType
 import com.kaerushi.monetify.core.ui.dialog.RadioSelectionDialog
-import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
+import com.kaerushi.monetify.data.repository.PreferencesRepository
 import com.kaerushi.monetify.data.viewmodel.AppIconPack
 import com.kaerushi.monetify.data.viewmodel.AppIconPackViewModel
 import com.kaerushi.monetify.data.viewmodel.MainViewModel
@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 fun AppsScreen(
     mainViewModel: MainViewModel,
     appIconPackViewModel: AppIconPackViewModel,
-    repository: UserPreferencesRepository
+    repository: PreferencesRepository
 ) {
     val context = LocalContext.current
     val showNotInstalled by mainViewModel.uiState.collectAsState()
