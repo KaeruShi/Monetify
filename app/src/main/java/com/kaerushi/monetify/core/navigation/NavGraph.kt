@@ -16,8 +16,8 @@ import androidx.navigation.compose.composable
 import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
 import com.kaerushi.monetify.data.viewmodel.AppIconPackViewModel
 import com.kaerushi.monetify.data.viewmodel.ColorSchemeViewModel
-import com.kaerushi.monetify.data.viewmodel.ThemeViewModel
 import com.kaerushi.monetify.data.viewmodel.MainViewModel
+import com.kaerushi.monetify.data.viewmodel.ThemeViewModel
 import com.kaerushi.monetify.feature.apps.AppsScreen
 import com.kaerushi.monetify.feature.home.HomeScreen
 import com.kaerushi.monetify.feature.settings.SettingsScreen

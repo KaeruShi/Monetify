@@ -10,11 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kaerushi.monetify.BuildConfig
+import com.kaerushi.monetify.core.utils.isModuleActive
 import com.kaerushi.monetify.feature.home.components.ActionsAndSupportCard
 import com.kaerushi.monetify.feature.home.components.ModuleStatusCard
 import com.kaerushi.monetify.feature.home.components.SystemInfoCard
 import com.kaerushi.monetify.feature.home.model.SystemInfo
-import com.kaerushi.monetify.core.utils.isModuleActive
 
 @Composable
 fun HomeScreen() {
