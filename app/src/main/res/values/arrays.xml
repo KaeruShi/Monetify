@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="xposedscope">
-        <item>com.instagram.android</item>
-        <item>com.pinterest</item>
-        <item>com.reddit.frontpage</item>
-        <item>com.twitter.android</item>
+        <item>com.kaerushi.monetify</item>
     </string-array>
 </resources>
