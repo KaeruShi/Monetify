@@ -4,6 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -11,7 +18,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.kaerushi.monetify.core.manager.allPermissionsGranted
 import com.kaerushi.monetify.core.ui.theme.ApplySystemBars
 import com.kaerushi.monetify.core.ui.theme.MonetifyTheme
 import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
@@ -37,6 +46,8 @@ class MainActivity : ComponentActivity() {
             )
             val appTheme by themeViewModel.theme.collectAsState(initial = AppTheme.SYSTEM)
             val colorSchemeMode by colorSchemeViewModel.colorSchemeMode.collectAsState(initial = ColorSchemeMode.DYNAMIC)
+            val showWelcome by userPreferencesRepository.showWelcomeScreen.collectAsState(initial = true)
+            val shouldShowWelcome = showWelcome && !allPermissionsGranted(LocalContext.current)
 
             MonetifyTheme(
                 darkTheme = when (appTheme) {
@@ -62,7 +73,34 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen(themeViewModel, colorSchemeViewModel, mainViewModel, appIconPackViewModel, userPreferencesRepository)
+                    AnimatedContent(
+                        targetState = shouldShowWelcome,
+                        transitionSpec = {
+                            ContentTransform(
+                                targetContentEnter = fadeIn(tween(220)) + scaleIn(
+                                    initialScale = 0.95f,
+                                    animationSpec = tween(220)
+                                ),
+                                initialContentExit = fadeOut(tween(180)) + scaleOut(
+                                    targetScale = 0.98f,
+                                    animationSpec = tween(180)
+                                )
+                            )
+                        },
+                        label = "WelcomeScreenTransition"
+                    ) { isWelcome ->
+                        if (isWelcome) {
+                            WelcomeScreen(mainViewModel = mainViewModel)
+                        } else {
+                            MainScreen(
+                                themeViewModel,
+                                colorSchemeViewModel,
+                                mainViewModel,
+                                appIconPackViewModel,
+                                userPreferencesRepository
+                            )
+                        }
+                    }
                 }
             }
         }

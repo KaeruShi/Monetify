@@ -25,6 +25,12 @@ class MainViewModel(
             userPreferencesRepository.toggleShowInstalledPref(isVisible)
         }
     }
+
+    fun toggleWelcomeScreen(show: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.toggleShowWelcomeScreenPref(show)
+        }
+    }
 }
 
 class MainViewModelFactory(
