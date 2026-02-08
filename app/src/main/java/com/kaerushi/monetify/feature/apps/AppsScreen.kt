@@ -20,9 +20,9 @@ import com.kaerushi.monetify.core.ui.components.PreferenceApp
 import com.kaerushi.monetify.core.ui.components.PreferenceType
 import com.kaerushi.monetify.core.ui.dialog.RadioSelectionDialog
 import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
-import com.kaerushi.monetify.data.viewmodel.MainViewModel
 import com.kaerushi.monetify.data.viewmodel.AppIconPack
 import com.kaerushi.monetify.data.viewmodel.AppIconPackViewModel
+import com.kaerushi.monetify.data.viewmodel.MainViewModel
 import com.kaerushi.monetify.feature.apps.utils.Utils.getInstalledApps
 import kotlinx.coroutines.launch
 

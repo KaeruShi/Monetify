@@ -22,8 +22,8 @@ import com.kaerushi.monetify.core.ui.components.NavBar
 import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
 import com.kaerushi.monetify.data.viewmodel.AppIconPackViewModel
 import com.kaerushi.monetify.data.viewmodel.ColorSchemeViewModel
-import com.kaerushi.monetify.data.viewmodel.ThemeViewModel
 import com.kaerushi.monetify.data.viewmodel.MainViewModel
+import com.kaerushi.monetify.data.viewmodel.ThemeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

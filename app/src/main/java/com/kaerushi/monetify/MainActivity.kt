@@ -12,16 +12,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kaerushi.monetify.data.viewmodel.AppTheme
 import com.kaerushi.monetify.core.ui.theme.ApplySystemBars
-import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
-import com.kaerushi.monetify.data.viewmodel.ColorSchemeViewModel
 import com.kaerushi.monetify.core.ui.theme.MonetifyTheme
-import com.kaerushi.monetify.data.viewmodel.ThemeViewModel
 import com.kaerushi.monetify.data.datastore.UserPreferencesRepository
 import com.kaerushi.monetify.data.viewmodel.AppIconPackViewModel
+import com.kaerushi.monetify.data.viewmodel.AppTheme
+import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
+import com.kaerushi.monetify.data.viewmodel.ColorSchemeViewModel
 import com.kaerushi.monetify.data.viewmodel.MainViewModel
 import com.kaerushi.monetify.data.viewmodel.MainViewModelFactory
+import com.kaerushi.monetify.data.viewmodel.ThemeViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
