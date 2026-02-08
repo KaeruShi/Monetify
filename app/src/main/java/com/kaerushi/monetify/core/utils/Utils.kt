@@ -1,3 +1,5 @@
 package com.kaerushi.monetify.core.utils
 
-fun isModuleActive(): Boolean = false
+import com.highcapable.yukihookapi.YukiHookAPI
+
+fun isModuleActive(): Boolean = YukiHookAPI.Status.isModuleActive
