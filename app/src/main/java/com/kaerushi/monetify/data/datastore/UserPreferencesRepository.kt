@@ -20,6 +20,7 @@ class UserPreferencesRepository(private val context: Context) {
     companion object {
         val SHOW_NOT_INSTALLED_APPS = booleanPreferencesKey("show_not_installed_apps")
         val SHOW_APP_ICON_PACK = booleanPreferencesKey("show_app_icon_pack")
+        val SHOW_WELCOME_SCREEN = booleanPreferencesKey("show_welcome_screen")
     }
 
     private val themeKey = stringPreferencesKey("theme")
@@ -37,6 +38,9 @@ class UserPreferencesRepository(private val context: Context) {
     }
     val showAppIconPack: Flow<Boolean> = context.dataStore.data.map {
         it[SHOW_APP_ICON_PACK] ?: false
+    }
+    val showWelcomeScreen: Flow<Boolean> = context.dataStore.data.map {
+        it[SHOW_WELCOME_SCREEN] ?: true
     }
 
     private fun getAppMonetKey(packageName: String) =
@@ -74,6 +78,11 @@ class UserPreferencesRepository(private val context: Context) {
     suspend fun toggleShowInstalledPref(show: Boolean) {
         context.dataStore.edit {
             it[SHOW_NOT_INSTALLED_APPS] = show
+        }
+    }
+    suspend fun toggleShowWelcomeScreenPref(show: Boolean) {
+        context.dataStore.edit {
+            it[SHOW_WELCOME_SCREEN] = show
         }
     }
     suspend fun toggleShowAppIconPack(show: Boolean) {

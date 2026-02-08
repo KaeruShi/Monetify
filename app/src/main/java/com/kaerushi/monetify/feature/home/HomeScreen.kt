@@ -21,7 +21,7 @@ fun HomeScreen() {
     val moduleTitle = if (isModuleActive()) "Module Active" else "Module Inactive"
     val moduleSubtitle = if (isModuleActive()) BuildConfig.VERSION_NAME else "Please active module in LSPosed."
     val deviceInfo = listOf(
-        SystemInfo("Android Version", Build.VERSION.SDK_INT_FULL.toString()),
+        SystemInfo("Android Version", Build.VERSION.SDK_INT.toString()),
         SystemInfo("Device Model", Build.BOARD),
         SystemInfo("Manufacturer", Build.MANUFACTURER)
     )
