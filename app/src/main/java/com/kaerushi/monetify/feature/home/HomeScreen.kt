@@ -9,8 +9,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.highcapable.yukihookapi.YukiHookAPI
 import com.kaerushi.monetify.BuildConfig
-import com.kaerushi.monetify.core.utils.isModuleActive
 import com.kaerushi.monetify.feature.home.components.ActionsAndSupportCard
 import com.kaerushi.monetify.feature.home.components.ModuleStatusCard
 import com.kaerushi.monetify.feature.home.components.SystemInfoCard
@@ -18,8 +18,9 @@ import com.kaerushi.monetify.data.model.SystemInfo
 
 @Composable
 fun HomeScreen() {
-    val moduleTitle = if (isModuleActive()) "Module Active" else "Module Inactive"
-    val moduleSubtitle = if (isModuleActive()) BuildConfig.VERSION_NAME else "Please active module in LSPosed."
+    val isModuleActive = YukiHookAPI.Status.isXposedModuleActive
+    val moduleTitle = if (isModuleActive) "Module Active" else "Module Inactive"
+    val moduleSubtitle = if (isModuleActive) BuildConfig.VERSION_NAME else "Please active module in LSPosed."
     val deviceInfo = listOf(
         SystemInfo("Android Version", Build.VERSION.SDK_INT.toString()),
         SystemInfo("Device Model", Build.BOARD),
@@ -33,7 +34,7 @@ fun HomeScreen() {
         verticalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(bottom = 16.dp)
     ) {
-        item { ModuleStatusCard(moduleTitle, moduleSubtitle, isModuleActive()) }
+        item { ModuleStatusCard(moduleTitle, moduleSubtitle, isModuleActive) }
         item { SystemInfoCard(deviceInfo) }
         item { ActionsAndSupportCard() }
     }
