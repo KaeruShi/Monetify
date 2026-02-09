@@ -19,3 +19,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn java.lang.reflect.AnnotatedType
+-dontwarn java.lang.reflect.AnnotatedElement
+-dontwarn java.lang.reflect.AnnotatedParameterizedType
+-dontwarn java.lang.reflect.AnnotatedArrayType
+-dontwarn java.lang.reflect.AnnotatedWildcardType
+
+-keepattributes Signature
+-keep,allowobfuscation class * extends com.highcapable.kavaref.extension.TypeRef
+-keepclassmembers class * extends com.highcapable.kavaref.extension.TypeRef {
+    <init>(...);
+}
+-keep class com.highcapable.kavaref.extension.TypeRef {*;}
