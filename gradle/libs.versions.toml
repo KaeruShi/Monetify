@@ -1,6 +1,5 @@
 [versions]
 agp = "8.13.2"
-apiVersion = "82"
 kotlin = "2.3.10"
 coreKtx = "1.17.0"
 kotlinxCoroutinesAndroid = "1.10.2"
@@ -43,7 +42,8 @@ libsu-service = { module = "com.github.topjohnwu.libsu:service", version.ref = "
 libsu-nio = { module = "com.github.topjohnwu.libsu:nio", version.ref = "libsuVersion" }
 
 # Xposed
-xposed-api = { module = "de.robv.android.xposed:api", version.ref = "xposed" }
+#xposed-api = { group = "de.robv.android.xposed", name = "api", version.ref = "xposed" }
+#xposed-api-sources = { group = "de.robv.android.xposed", name = "api", version.ref = "xposed", classifier = "sources" }
 
 # Optional add-on libraries
 androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }

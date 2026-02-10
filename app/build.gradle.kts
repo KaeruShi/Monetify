@@ -53,7 +53,9 @@ android {
 }
 
 dependencies {
-    compileOnly(libs.xposed.api)
+
+    compileOnly("de.robv.android.xposed:api:82:sources")
+    compileOnly("de.robv.android.xposed:api:82")
 
     implementation(libs.libsu.core)
     implementation(libs.libsu.service)
