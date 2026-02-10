@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Card
@@ -26,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,8 +39,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kaerushi.monetify.data.INSTAGRAM_PACKAGE_NAME
+import com.kaerushi.monetify.data.PINTEREST_PACKAGE_NAME
+import com.kaerushi.monetify.data.REDDIT_PACKAGE_NAME
+import com.kaerushi.monetify.data.X_PACKAGE_NAME
 import com.kaerushi.monetify.feature.apps.utils.Utils.getInstalledApps
 import com.kaerushi.monetify.data.model.SystemInfo
+import com.kaerushi.monetify.receiver.HookedAppState
 
 @Composable
 fun SystemInfoCard(systemInfo: List<SystemInfo>) {
@@ -70,6 +77,7 @@ private fun SystemInfoList(systemInfo: List<SystemInfo>) {
 @Composable
 private fun HookedAppList() {
     val context = LocalContext.current
+    val hooked by HookedAppState.hooked.collectAsState()
     var showHookedApps by remember { mutableStateOf(false) }
     val apps = remember { getInstalledApps(context, false) }
     val rotateIcon by animateFloatAsState(
@@ -113,7 +121,8 @@ private fun HookedAppList() {
             ) {
                 Column(modifier = Modifier.padding(start = 16.dp, bottom = 16.dp, end = 16.dp)) {
                     apps.forEachIndexed { index, info ->
-                        PackageStatus(info.packageName)
+                        val hookedApp = hooked[info.packageName] == true
+                        PackageStatus(info.packageName, hookedApp)
                     }
                 }
             }
@@ -122,9 +131,9 @@ private fun HookedAppList() {
 }
 
 @Composable
-private fun PackageStatus(pkgName: String) {
-    val itemColor = Color.Red
-    val itemIcon = Icons.Default.Clear
+private fun PackageStatus(pkgName: String, hooked: Boolean) {
+    val itemColor = if (!hooked) Color.Red else Color.Green
+    val itemIcon = if (!hooked) Icons.Default.Clear else Icons.Default.Check
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
         Icon(imageVector = itemIcon,contentDescription = null, modifier = Modifier.size(14.dp),
             tint = itemColor

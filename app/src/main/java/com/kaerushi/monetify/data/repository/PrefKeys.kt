@@ -9,4 +9,8 @@ object PrefKeys {
     val SHOW_WELCOME_SCREEN = booleanPreferencesKey("show_welcome_screen")
     val APP_THEME_KEY = stringPreferencesKey("app_theme")
     val APP_COLOR_SCHEME_KEY = stringPreferencesKey("app_color_scheme")
+    fun hookedAppKey(packageName: String) = booleanPreferencesKey("app_${packageName}_hooked")
+    fun getAppMonetKey(packageName: String) = booleanPreferencesKey("app_${packageName}_monet_enabled")
+    fun getAppAdsKey(packageName: String) = booleanPreferencesKey("app_${packageName}_ads_disabled")
+    fun getAppIconPackKey(packageName: String) = stringPreferencesKey("app_${packageName}_icon_pack")
 }

@@ -6,12 +6,13 @@ import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.kaerushi.monetify.data.SHARED_PREFS_NAME
+import com.kaerushi.monetify.data.repository.PrefKeys.getAppAdsKey
+import com.kaerushi.monetify.data.repository.PrefKeys.getAppIconPackKey
+import com.kaerushi.monetify.data.repository.PrefKeys.getAppMonetKey
 import com.kaerushi.monetify.data.viewmodel.AppIconPack
 import com.kaerushi.monetify.data.viewmodel.AppTheme
 import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
@@ -50,8 +51,7 @@ class PreferencesRepository(private val context: Context) {
     private suspend inline fun <reified T> savePreference(
         key: Preferences.Key<T>,
         value: T,
-        sharedPrefsKey: String,
-        sharedPrefValue: Any
+        sharedPrefsKey: String
     ) {
         try {
             context.dataStore.edit { preferences ->
@@ -79,9 +79,6 @@ class PreferencesRepository(private val context: Context) {
             Log.e(tag, "Error saving preference $sharedPrefsKey: ${e.message}")
         }
     }
-    private fun getAppMonetKey(packageName: String) = booleanPreferencesKey("app_${packageName}_monet_enabled")
-    private fun getAppAdsKey(packageName: String) = booleanPreferencesKey("app_${packageName}_ads_disabled")
-    private fun getAppIconPackKey(packageName: String) = stringPreferencesKey("app_${packageName}_icon_pack")
 
     // Preference Flows
     val theme = context.dataStore.data.map { AppTheme.valueOf(it[PrefKeys.APP_THEME_KEY] ?: AppTheme.SYSTEM.name) }
@@ -92,15 +89,26 @@ class PreferencesRepository(private val context: Context) {
         context.dataStore.data.map { it[PrefKeys.SHOW_NOT_INSTALLED_APPS] ?: true }
     val showAppIconPack: Flow<Boolean> = context.dataStore.data.map { it[PrefKeys.SHOW_APP_ICON_PACK] ?: false }
     val showWelcomeScreen: Flow<Boolean> = context.dataStore.data.map { it[PrefKeys.SHOW_WELCOME_SCREEN] ?: true }
+    val hookedApps: Flow<Map<String, Boolean>> =
+        context.dataStore.data.map { prefs ->
+            prefs.asMap()
+                .filterKeys { it.name.startsWith("app_") && it.name.endsWith("_hooked") }
+                .mapNotNull { (key, value) ->
+                    val pkg = key.name
+                        .removePrefix("app_")
+                        .removeSuffix("_hooked")
 
+                    (value as? Boolean)?.let { pkg to it }
+                }
+                .toMap()
+        }
     fun getAppMonetEnabled(packageName: String): Flow<Boolean> {
         return getPreferenceFlow(getAppMonetKey(packageName), false)
     }
 
-    fun getAppAdsDisabled(packageName: String): Flow<Boolean> =
-        context.dataStore.data.map {
-            it[getAppAdsKey(packageName)] ?: false
-        }
+    fun getAppAdsDisabled(packageName: String): Flow<Boolean> {
+        return getPreferenceFlow(getAppAdsKey(packageName), false)
+    }
 
     fun getAppIconPack(packageName: String): Flow<AppIconPack> =
         context.dataStore.data.map {
@@ -128,8 +136,16 @@ class PreferencesRepository(private val context: Context) {
         context.dataStore.edit { it[PrefKeys.SHOW_APP_ICON_PACK] = show }
     }
 
+    suspend fun setAppHooked(packageName: String, hooked: Boolean) {
+        context.dataStore.edit {
+            it[PrefKeys.hookedAppKey(packageName)] = hooked
+        }
+    }
+    fun isHookedApp(packageName: String): Flow<Boolean> {
+        return getPreferenceFlow(PrefKeys.hookedAppKey(packageName), false)
+    }
     suspend fun setAppMonetEnabled(packageName: String, enabled: Boolean) {
-        savePreference(getAppMonetKey(packageName), enabled, "app_${packageName}_monet_enabled", enabled)
+        savePreference(getAppMonetKey(packageName), enabled, "app_${packageName}_monet_enabled")
     }
 
     suspend fun setAppAdsDisabled(packageName: String, disabled: Boolean) {

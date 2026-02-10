@@ -1,5 +1,8 @@
 package com.kaerushi.monetify
 
+import android.annotation.SuppressLint
+import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,10 +22,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kaerushi.monetify.core.manager.allPermissionsGranted
 import com.kaerushi.monetify.core.ui.theme.ApplySystemBars
 import com.kaerushi.monetify.core.ui.theme.MonetifyTheme
+import com.kaerushi.monetify.data.ACTION_HOOK_STATUS
 import com.kaerushi.monetify.data.repository.PreferencesRepository
 import com.kaerushi.monetify.data.viewmodel.AppIconPackViewModel
 import com.kaerushi.monetify.data.viewmodel.AppTheme
@@ -31,11 +36,21 @@ import com.kaerushi.monetify.data.viewmodel.ColorSchemeViewModel
 import com.kaerushi.monetify.data.viewmodel.MainViewModel
 import com.kaerushi.monetify.data.viewmodel.MainViewModelFactory
 import com.kaerushi.monetify.data.viewmodel.ThemeViewModel
+import com.kaerushi.monetify.receiver.HookStatusReceiver
+import com.kaerushi.monetify.receiver.HookedAppState
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    private val receiver = HookStatusReceiver()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        lifecycleScope.launch {
+            PreferencesRepository(applicationContext).hookedApps.collectLatest { map ->
+                HookedAppState.setAll(map)
+            }
+        }
         setContent {
             val themeViewModel: ThemeViewModel = viewModel()
             val colorSchemeViewModel: ColorSchemeViewModel = viewModel()
@@ -104,5 +119,21 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+    override fun onStart() {
+        super.onStart()
+        val filter = IntentFilter(ACTION_HOOK_STATUS)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(receiver, filter, RECEIVER_EXPORTED)
+        } else {
+            registerReceiver(receiver, filter)
+        }
+    }
+
+    override fun onStop() {
+        unregisterReceiver(receiver)
+        super.onStop()
     }
 }

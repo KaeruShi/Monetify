@@ -28,6 +28,14 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".receiver.HookStatusReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver" >
+            <intent-filter>
+                <action android:name="${applicationId}.ACTION_HOOK_STATUS" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
