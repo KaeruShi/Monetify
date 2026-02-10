@@ -24,10 +24,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.navigation.Screen
 import com.kaerushi.monetify.data.viewmodel.MainViewModel
 
@@ -42,11 +44,11 @@ fun NavBar(
     val showNotInstalled by mainViewModel.uiState.collectAsState()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
-    val title = when (currentRoute) {
-        Screen.Home.route -> Screen.Home.title
-        Screen.Apps.route -> Screen.Apps.title
-        Screen.Settings.route -> Screen.Settings.title
-        else -> "Weeabooify"
+    val titleResId = when (currentRoute) {
+        Screen.Home.route -> Screen.Home.titleResId
+        Screen.Apps.route -> Screen.Apps.titleResId
+        Screen.Settings.route -> Screen.Settings.titleResId
+        else -> null
     }
     var showMenu by remember { mutableStateOf(false) }
 
@@ -109,7 +111,7 @@ fun NavBar(
         },
         title = {
             Text(
-                text = title,
+                text = stringResource(id = titleResId ?: R.string.app_name),
                 modifier = Modifier.padding(start = if (currentRoute != Screen.Home.route) 6.dp else 0.dp)
             )
         },
