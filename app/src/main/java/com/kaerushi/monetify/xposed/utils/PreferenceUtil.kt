@@ -24,10 +24,7 @@ object PreferenceUtil {
     private inline fun <reified T> getPreference(key: String): T? {
         preferences.reload()
         return when (T::class) {
-            Boolean::class -> {
-                YLog.debug("value: ${preferences.getBoolean(key, false)}")
-                preferences.getBoolean(key, false) as? T
-            }
+            Boolean::class -> preferences.getBoolean(key, false) as? T
             Int::class -> preferences.getInt(key, 0) as? T
             Float::class -> preferences.getFloat(key, 0f) as? T
             Long::class -> preferences.getLong(key, 0L) as? T
