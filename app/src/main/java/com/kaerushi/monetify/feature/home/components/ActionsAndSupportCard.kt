@@ -85,12 +85,14 @@ private fun SupportCard() {
                     "Support",
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
-                    modifier = Modifier.padding(bottom = 6.dp)
+                    modifier = Modifier.padding(bottom = 6.dp),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     "If you encounter any issues or have feedback, please visit telegram or github",
                     fontSize = 14.sp,
-                    style = TextStyle(lineHeight = 1.5.em)
+                    style = TextStyle(lineHeight = 1.5.em),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
             IconButton(onClick = {
@@ -101,7 +103,8 @@ private fun SupportCard() {
                         .size(42.dp)
                         .padding(6.dp),
                     painter = painterResource(R.drawable.telegram),
-                    contentDescription = "Telegram"
+                    contentDescription = "Telegram",
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
             IconButton(onClick = {
@@ -112,7 +115,8 @@ private fun SupportCard() {
                         .size(42.dp)
                         .padding(6.dp),
                     painter = painterResource(R.drawable.github),
-                    contentDescription = "GitHub"
+                    contentDescription = "GitHub",
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
         }

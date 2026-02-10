@@ -6,11 +6,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -71,8 +73,8 @@ fun PreferenceItem(
                 .padding(16.dp)
                 .fillMaxWidth()
         ) {
-            Text(text = title, fontWeight = FontWeight.Bold)
-            Text(text = summary, fontSize = 14.sp)
+            Text(text = title, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+            Text(text = summary, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface)
         }
     }
 }
@@ -112,8 +114,8 @@ fun PreferenceSwitch(
                     .padding(16.dp)
                     .weight(1f)
             ) {
-                Text(text = title, fontWeight = FontWeight.Bold)
-                Text(text = summary, fontSize = 14.sp)
+                Text(text = title, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                Text(text = summary, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface)
             }
             Switch(
                 checked = checked,
@@ -178,11 +180,12 @@ fun PreferenceApp(
                         .padding(start = 16.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = title, fontWeight = FontWeight.Bold)
-                    Text(text = summary, fontSize = 14.sp)
+                    Text(text = title, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                    Text(text = summary, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface)
                 }
             }
             AnimatedVisibility(visible = expanded) {
+                HorizontalDivider(modifier = Modifier.height(1.dp))
                 AppDetails(appInfo.packageName, mainViewModel.repository)
             }
         }
