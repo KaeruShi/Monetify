@@ -185,8 +185,10 @@ fun PreferenceApp(
                 }
             }
             AnimatedVisibility(visible = expanded) {
-                HorizontalDivider(modifier = Modifier.height(1.dp))
-                AppDetails(appInfo.packageName, mainViewModel.repository)
+                Column {
+                    HorizontalDivider(modifier = Modifier.height(1.dp))
+                    AppDetails(appInfo.packageName, mainViewModel.repository)
+                }
             }
         }
     }
