@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.ksp)
@@ -43,14 +42,16 @@ android {
         sourceCompatibility = JavaVersion.VERSION_18
         targetCompatibility = JavaVersion.VERSION_18
     }
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_18
-        }
-    }
     buildFeatures {
+        resValues = true
         compose = true
         buildConfig = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_18
     }
 }
 
@@ -75,15 +76,17 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons)
     implementation(libs.androidx.compose.navigation)
+    implementation(libs.androidx.hilt.navigation)
 
     // DataStore Preferences
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.datastore.preferences.core)
 
-    // Gson
+    // Gson and hilt
     implementation(libs.gson)
     implementation(libs.hilt)
     ksp(libs.hilt.ksp)
+    ksp(libs.androidx.hilt.compiler)
 
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.navigation3.runtime)
