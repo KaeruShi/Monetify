@@ -2,6 +2,7 @@ package com.kaerushi.monetify.data.repository
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
@@ -19,78 +20,60 @@ import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = SHARED_PREFS_NAME)
-
-class PreferencesRepository(private val context: Context) {
+@Singleton
+class PreferencesRepository @Inject constructor(
+    private val dataStore: DataStore<Preferences>,
+    private val xposedPrefs: SharedPreferences
+) {
 
     private val tag = "PreferencesRepository"
 
-    @SuppressLint("WorldReadableFiles")
-    private val sharedPrefs = try {
-        context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_WORLD_READABLE)
-    } catch (e: SecurityException) {
-        Log.e(tag, "Failed to access shared preferences: ${e.message}")
-        context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
-    }
-
-    // Generic Preference Flow Getter
     private fun <T> getPreferenceFlow(key: Preferences.Key<T>, defaultValue: T): Flow<T> {
-        return context.dataStore.data.catch { exception ->
+        return dataStore.data.catch { exception ->
             if (exception is IOException) {
                 Log.e(tag, "Error reading preferences: ${exception.message}")
                 emit(emptyPreferences())
-            } else {
-                throw exception
-            }
-        }.map {
-            it[key] ?: defaultValue
-        }
+            } else throw exception
+        }.map { it[key] ?: defaultValue }
     }
 
     private suspend inline fun <reified T> savePreference(
         key: Preferences.Key<T>,
         value: T,
-        sharedPrefsKey: String
+        sharedPrefsKey: String? = null
     ) {
         try {
-            context.dataStore.edit { preferences ->
+            dataStore.edit { preferences ->
                 preferences[key] = value
             }
 
             // Save to SharedPreferences for Xposed
-            val editor = sharedPrefs.edit()
-            when (value) {
-                is Boolean -> {
-                    Log.d(tag, "Preference $sharedPrefsKey saved successfully, value: $value")
-                    editor.putBoolean(sharedPrefsKey, value)
+            if (sharedPrefsKey != null) {
+                val editor = xposedPrefs.edit()
+                when (value) {
+                    is Boolean -> editor.putBoolean(sharedPrefsKey, value)
+                    is String -> editor.putString(sharedPrefsKey, value)
+                    is Float -> editor.putFloat(sharedPrefsKey, value)
+                    is Int -> editor.putInt(sharedPrefsKey, value)
+                    is Long -> editor.putLong(sharedPrefsKey, value)
+                    is Double -> {
+                        val bits = java.lang.Double.doubleToRawLongBits(value)
+                        editor.putLong(sharedPrefsKey, bits)
+                    }
                 }
-                is String -> editor.putString(sharedPrefsKey, value)
-                is Float -> editor.putFloat(sharedPrefsKey, value)
-                is Int -> editor.putInt(sharedPrefsKey, value)
-                is Long -> editor.putLong(sharedPrefsKey, value)
-                is Double -> {
-                    val bits = java.lang.Double.doubleToRawLongBits(value)
-                    editor.putLong(sharedPrefsKey, bits)
-                }
+                editor.apply()
             }
-            editor.apply()
         } catch (e: Exception) {
             Log.e(tag, "Error saving preference $sharedPrefsKey: ${e.message}")
         }
     }
 
-    // Preference Flows
-    val theme = context.dataStore.data.map { AppTheme.valueOf(it[PrefKeys.APP_THEME_KEY] ?: AppTheme.SYSTEM.name) }
-    val colorSchemeMode = context.dataStore.data.map {
-        ColorSchemeMode.valueOf(it[PrefKeys.APP_COLOR_SCHEME_KEY] ?: ColorSchemeMode.DYNAMIC.name)
-    }
-    val showNotInstalledPref: Flow<Boolean> =
-        context.dataStore.data.map { it[PrefKeys.SHOW_NOT_INSTALLED_APPS] ?: true }
-    val showAppIconPack: Flow<Boolean> = context.dataStore.data.map { it[PrefKeys.SHOW_APP_ICON_PACK] ?: false }
-    val showWelcomeScreen: Flow<Boolean> = context.dataStore.data.map { it[PrefKeys.SHOW_WELCOME_SCREEN] ?: true }
+    // Hooked apps preference flows
     val hookedApps: Flow<Map<String, Boolean>> =
-        context.dataStore.data.map { prefs ->
+        dataStore.data.map { prefs ->
             prefs.asMap()
                 .filterKeys { it.name.startsWith("app_") && it.name.endsWith("_hooked") }
                 .mapNotNull { (key, value) ->
@@ -102,61 +85,40 @@ class PreferencesRepository(private val context: Context) {
                 }
                 .toMap()
         }
-    fun getAppMonetEnabled(packageName: String): Flow<Boolean> {
-        return getPreferenceFlow(getAppMonetKey(packageName), false)
-    }
 
-    fun getAppAdsDisabled(packageName: String): Flow<Boolean> {
-        return getPreferenceFlow(getAppAdsKey(packageName), false)
-    }
+    suspend fun setAppHooked(packageName: String, hooked: Boolean) =
+        savePreference(PrefKeys.hookedAppKey(packageName), hooked)
 
-    fun getAppIconPack(packageName: String): Flow<AppIconPack> =
-        context.dataStore.data.map {
-            AppIconPack.valueOf(it[getAppIconPackKey(packageName)] ?: AppIconPack.DEFAULT.name)
-        }
+    // Preference Flows
+    val theme = getPreferenceFlow(PrefKeys.APP_THEME_KEY, AppTheme.SYSTEM.name).map {
+        AppTheme.valueOf(it)
+    }
+    val colorSchemeMode = getPreferenceFlow(PrefKeys.APP_COLOR_SCHEME_KEY, ColorSchemeMode.DYNAMIC.name)
+        .map { ColorSchemeMode.valueOf(it) }
+    val showNotInstalledPref = getPreferenceFlow(PrefKeys.SHOW_NOT_INSTALLED_APPS, true)
+    val showAppIconPack = getPreferenceFlow(PrefKeys.SHOW_APP_ICON_PACK, false)
+    val showWelcomeScreen = getPreferenceFlow(PrefKeys.SHOW_WELCOME_SCREEN, true)
+
+    fun getAppMonetEnabled(packageName: String) = getPreferenceFlow(getAppMonetKey(packageName), false)
+    fun getAppAdsDisabled(packageName: String) = getPreferenceFlow(getAppAdsKey(packageName), false)
+    fun getAppIconPack(packageName: String) =
+        getPreferenceFlow(getAppIconPackKey(packageName), AppIconPack.DEFAULT.name)
+            .map { AppIconPack.valueOf(it) }
 
     // Preference Setters
-    suspend fun setTheme(theme: AppTheme) {
-        context.dataStore.edit { it[PrefKeys.APP_THEME_KEY] = theme.name }
-    }
-
-    suspend fun setColorSchemeMode(mode: ColorSchemeMode) {
-        context.dataStore.edit { it[PrefKeys.APP_COLOR_SCHEME_KEY] = mode.name }
-    }
-
-    suspend fun toggleShowInstalledPref(show: Boolean) {
-        context.dataStore.edit { it[PrefKeys.SHOW_NOT_INSTALLED_APPS] = show }
-    }
-
-    suspend fun toggleShowWelcomeScreenPref(show: Boolean) {
-        context.dataStore.edit { it[PrefKeys.SHOW_WELCOME_SCREEN] = show }
-    }
-
-    suspend fun toggleShowAppIconPack(show: Boolean) {
-        context.dataStore.edit { it[PrefKeys.SHOW_APP_ICON_PACK] = show }
-    }
-
-    suspend fun setAppHooked(packageName: String, hooked: Boolean) {
-        context.dataStore.edit {
-            it[PrefKeys.hookedAppKey(packageName)] = hooked
-        }
-    }
-    fun isHookedApp(packageName: String): Flow<Boolean> {
-        return getPreferenceFlow(PrefKeys.hookedAppKey(packageName), false)
-    }
-    suspend fun setAppMonetEnabled(packageName: String, enabled: Boolean) {
+    suspend fun toggleShowInstalledPref(show: Boolean) = savePreference(PrefKeys.SHOW_NOT_INSTALLED_APPS, show)
+    suspend fun toggleShowWelcomeScreenPref(show: Boolean) = savePreference(PrefKeys.SHOW_WELCOME_SCREEN, show)
+    suspend fun toggleShowAppIconPack(show: Boolean) = savePreference(PrefKeys.SHOW_APP_ICON_PACK, show)
+    suspend fun setTheme(theme: AppTheme) = savePreference(PrefKeys.APP_THEME_KEY, theme.name)
+    suspend fun setColorSchemeMode(mode: ColorSchemeMode) = savePreference(PrefKeys.APP_COLOR_SCHEME_KEY, mode.name)
+    suspend fun setAppMonetEnabled(packageName: String, enabled: Boolean) =
         savePreference(getAppMonetKey(packageName), enabled, "app_${packageName}_monet_enabled")
-    }
 
-    suspend fun setAppAdsDisabled(packageName: String, disabled: Boolean) {
-        context.dataStore.edit {
-            it[getAppAdsKey(packageName)] = disabled
-        }
-    }
+    suspend fun setAppAdsDisabled(packageName: String, disabled: Boolean) =
+        savePreference(getAppAdsKey(packageName), disabled, "app_${packageName}_ads_disabled")
 
-    suspend fun setAppIconPack(packageName: String, iconPack: AppIconPack) {
-        context.dataStore.edit {
-            it[getAppIconPackKey(packageName)] = iconPack.name
-        }
-    }
+    suspend fun setAppIconPack(packageName: String, iconPack: AppIconPack) = savePreference(
+        getAppIconPackKey(packageName),
+        iconPack.name
+    )
 }

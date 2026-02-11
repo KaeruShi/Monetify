@@ -9,11 +9,15 @@ import com.kaerushi.monetify.data.EXTRA_HOOKED
 import com.kaerushi.monetify.data.EXTRA_PACKAGE
 import com.kaerushi.monetify.data.repository.PreferencesRepository
 import com.kaerushi.monetify.xposed.utils.HookStatusUtil
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HookStatusReceiver : BroadcastReceiver() {
+    @Inject lateinit var repository: PreferencesRepository
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != ACTION_HOOK_STATUS) return
         val pkg = intent.getStringExtra(EXTRA_PACKAGE) ?: return
@@ -22,9 +26,11 @@ class HookStatusReceiver : BroadcastReceiver() {
 
         val pending = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
-            runCatching {
-                PreferencesRepository(context.applicationContext).setAppHooked(pkg, hooked)
-            }.also { pending.finish() }
+            try {
+                repository.setAppHooked(pkg, hooked)
+            } finally {
+                pending.finish()
+            }
         }
     }
 }

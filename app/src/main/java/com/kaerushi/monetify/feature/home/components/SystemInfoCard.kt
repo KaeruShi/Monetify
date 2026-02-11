@@ -39,13 +39,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.kaerushi.monetify.data.INSTAGRAM_PACKAGE_NAME
-import com.kaerushi.monetify.data.PINTEREST_PACKAGE_NAME
-import com.kaerushi.monetify.data.REDDIT_PACKAGE_NAME
-import com.kaerushi.monetify.data.X_PACKAGE_NAME
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.feature.apps.utils.Utils.getInstalledApps
 import com.kaerushi.monetify.data.model.SystemInfo
-import com.kaerushi.monetify.receiver.HookedAppState
+import com.kaerushi.monetify.data.viewmodel.HomeViewModel
 
 @Composable
 fun SystemInfoCard(systemInfo: List<SystemInfo>) {
@@ -75,9 +72,9 @@ private fun SystemInfoList(systemInfo: List<SystemInfo>) {
 }
 
 @Composable
-private fun HookedAppList() {
+private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
     val context = LocalContext.current
-    val hooked by HookedAppState.hooked.collectAsState()
+    val hooked by viewModel.hookedAppsState.collectAsState()
     var showHookedApps by remember { mutableStateOf(false) }
     val apps = remember { getInstalledApps(context, false) }
     val rotateIcon by animateFloatAsState(
@@ -120,7 +117,7 @@ private fun HookedAppList() {
                 exit = fadeOut() + shrinkVertically()
             ) {
                 Column(modifier = Modifier.padding(start = 16.dp, bottom = 16.dp, end = 16.dp)) {
-                    apps.forEachIndexed { index, info ->
+                    apps.forEachIndexed { _, info ->
                         val hookedApp = hooked[info.packageName] == true
                         PackageStatus(info.packageName, hookedApp)
                     }

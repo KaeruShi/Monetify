@@ -27,11 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.navigation.Screen
-import com.kaerushi.monetify.data.viewmodel.MainViewModel
+import com.kaerushi.monetify.data.viewmodel.AppsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,9 +40,9 @@ fun NavBar(
     navController: NavController,
     scrollBehavior: TopAppBarScrollBehavior,
     onShowChangelog: () -> Unit,
-    mainViewModel: MainViewModel
+    viewModel: AppsViewModel = hiltViewModel()
 ) {
-    val showNotInstalled by mainViewModel.uiState.collectAsState()
+    val showNotInstalled by viewModel.notInstalledState.collectAsState()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
     val titleResId = when (currentRoute) {
@@ -89,7 +90,7 @@ fun NavBar(
                             },
                             onClick = {
                                 showMenu = false
-                                mainViewModel.toggleNotInstalled(!showNotInstalled)
+                                viewModel.toggleNotInstalled(!showNotInstalled)
                             }
                         )
                     }

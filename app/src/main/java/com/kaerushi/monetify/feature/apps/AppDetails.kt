@@ -4,27 +4,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.core.ui.components.PreferenceItem
 import com.kaerushi.monetify.core.ui.components.PreferenceSwitch
 import com.kaerushi.monetify.core.ui.components.PreferenceType
-import com.kaerushi.monetify.data.repository.PreferencesRepository
-import com.kaerushi.monetify.data.viewmodel.AppIconPack
-import kotlinx.coroutines.launch
+import com.kaerushi.monetify.data.viewmodel.AppsViewModel
 
 @Composable
-fun AppDetails(packageName: String, repository: PreferencesRepository) {
-    val enableMonet by repository.getAppMonetEnabled(packageName).collectAsState(initial = false)
-    val disableAds by repository.getAppAdsDisabled(packageName).collectAsState(initial = false)
-    val iconPack by repository.getAppIconPack(packageName).collectAsState(initial = AppIconPack.DEFAULT)
-    val scope = rememberCoroutineScope()
+fun AppDetails(packageName: String, viewModel: AppsViewModel = hiltViewModel()) {
+    val enableMonet by viewModel.enableMonetState(packageName).collectAsState()
+    val disableAds by viewModel.disableAdsState(packageName).collectAsState()
+    val iconPack by viewModel.iconPackState(packageName).collectAsState()
 
     Column {
         PreferenceSwitch(
             checked = enableMonet,
-            onCheckedChange = {
-                scope.launch { repository.setAppMonetEnabled(packageName, it) }
-            },
+            onCheckedChange = {viewModel.setMonetEnabled(packageName, it) },
             title = "Enable Monet",
             summary = "Apply system dynamic colors",
             type = PreferenceType.TOP,
@@ -32,20 +27,14 @@ fun AppDetails(packageName: String, repository: PreferencesRepository) {
         )
         PreferenceSwitch(
             checked = disableAds,
-            onCheckedChange = {
-                scope.launch { repository.setAppAdsDisabled(packageName, it) }
-            },
+            onCheckedChange = { viewModel.setAdsDisabled(packageName, it) },
             title = "Disable Ads (BETA)",
             summary = "Remove ads services",
             type = PreferenceType.MID,
             isChild = true
         )
         PreferenceItem(
-            onClick = {
-                scope.launch {
-                    repository.toggleShowAppIconPack(true)
-                }
-            },
+            onClick = { viewModel.toggleShowIconPack(true) },
             title = "Icon Pack",
             summary = iconPack.toString().lowercase().replaceFirstChar { it.uppercase() },
             type = PreferenceType.BOTTOM,

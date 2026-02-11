@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import com.kaerushi.monetify.data.model.AppInfo
-import com.kaerushi.monetify.data.viewmodel.MainViewModel
+import com.kaerushi.monetify.data.viewmodel.AppsViewModel
 import com.kaerushi.monetify.feature.apps.AppDetails
 
 @Composable
@@ -140,7 +140,7 @@ fun PreferenceApp(
     expanded: Boolean,
     onClick: () -> Unit,
     appInfo: AppInfo,
-    mainViewModel: MainViewModel
+    appsViewModel: AppsViewModel
 ) {
     val shape = when (type) {
         PreferenceType.MID -> RoundedCornerShape(4.dp)
@@ -187,7 +187,7 @@ fun PreferenceApp(
             AnimatedVisibility(visible = expanded) {
                 Column {
                     HorizontalDivider(modifier = Modifier.height(1.dp))
-                    AppDetails(appInfo.packageName, mainViewModel.repository)
+                    AppDetails(appInfo.packageName)
                 }
             }
         }

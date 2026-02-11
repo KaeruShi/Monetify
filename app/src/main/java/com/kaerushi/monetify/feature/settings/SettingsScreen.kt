@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.BuildConfig
 import com.kaerushi.monetify.core.ui.components.PreferenceCategory
 import com.kaerushi.monetify.core.ui.components.PreferenceItem
@@ -21,19 +22,18 @@ import com.kaerushi.monetify.core.ui.components.PreferenceType
 import com.kaerushi.monetify.core.ui.dialog.RadioSelectionDialog
 import com.kaerushi.monetify.data.viewmodel.AppTheme
 import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
-import com.kaerushi.monetify.data.viewmodel.ColorSchemeViewModel
-import com.kaerushi.monetify.data.viewmodel.ThemeViewModel
+import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
 
 @Composable
-fun SettingsScreen(themeViewModel: ThemeViewModel, colorSchemeViewModel: ColorSchemeViewModel) {
-    val selectedTheme by themeViewModel.theme.collectAsState(initial = AppTheme.SYSTEM)
-    var showThemePreference by rememberSaveable { mutableStateOf(false) }
-    val themeLabel = selectedTheme.name.lowercase().replaceFirstChar { it.uppercase() }
-    val selectedColorScheme by colorSchemeViewModel.colorSchemeMode.collectAsState(initial = ColorSchemeMode.DYNAMIC)
-    var showColorPreference by rememberSaveable { mutableStateOf(false) }
-    val colorLabel = selectedColorScheme.name.lowercase().replaceFirstChar { it.uppercase() }
-    var showLanguagePreference by rememberSaveable { mutableStateOf(false) }
+fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
+    val selectedTheme by viewModel.themeState.collectAsState()
+    val selectedColorScheme by viewModel.colorSchemeState.collectAsState()
     var selectedLanguage by rememberSaveable { mutableStateOf(AppLanguage.ENGLISH) }
+    var showThemePreference by rememberSaveable { mutableStateOf(false) }
+    var showColorPreference by rememberSaveable { mutableStateOf(false) }
+    var showLanguagePreference by rememberSaveable { mutableStateOf(false) }
+    val themeLabel = selectedTheme.name.lowercase().replaceFirstChar { it.uppercase() }
+    val colorLabel = selectedColorScheme.name.lowercase().replaceFirstChar { it.uppercase() }
     val languageLabel = selectedLanguage.name.lowercase().replaceFirstChar { it.uppercase() }
     val uriHandler = LocalUriHandler.current
 
@@ -84,7 +84,7 @@ fun SettingsScreen(themeViewModel: ThemeViewModel, colorSchemeViewModel: ColorSc
             options = AppTheme.entries,
             selected = selectedTheme,
             optionText = { it.name.lowercase().replaceFirstChar { c -> c.uppercase() } },
-            onSelect = { themeViewModel.onThemeChanged(it) },
+            onSelect = { appTheme -> viewModel.setAppTheme(appTheme) },
             onDismiss = { showThemePreference = false },
             dismissText = "Close"
         )
@@ -95,7 +95,7 @@ fun SettingsScreen(themeViewModel: ThemeViewModel, colorSchemeViewModel: ColorSc
             options = ColorSchemeMode.entries,
             selected = selectedColorScheme,
             optionText = { it.name.lowercase().replaceFirstChar { c -> c.uppercase() } },
-            onSelect = { colorSchemeViewModel.onColorSchemeModeChanged(it) },
+            onSelect = { viewModel.setAppColorScheme(it) },
             onDismiss = { showColorPreference = false },
             dismissText = "Close"
         )

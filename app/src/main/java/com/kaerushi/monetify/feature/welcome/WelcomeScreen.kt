@@ -1,4 +1,4 @@
-package com.kaerushi.monetify.core.ui
+package com.kaerushi.monetify.feature.welcome
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -32,14 +32,15 @@ import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.manager.rememberPermissionState
 import com.kaerushi.monetify.core.manager.requestNotification
 import com.kaerushi.monetify.core.manager.requestStorage
-import com.kaerushi.monetify.data.viewmodel.MainViewModel
+import com.kaerushi.monetify.data.viewmodel.HomeViewModel
 
 @Composable
-fun WelcomeScreen(mainViewModel: MainViewModel) {
+fun WelcomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val context = LocalContext.current
     val (rootGranted, storageGranted, notificationGranted) = rememberPermissionState(context)
     Surface(
@@ -111,7 +112,7 @@ fun WelcomeScreen(mainViewModel: MainViewModel) {
                 )
             }
             Button(
-                onClick = { mainViewModel.toggleWelcomeScreen(false) },
+                onClick = { viewModel.toggleShowWelcomeScreen(false) },
                 enabled = rootGranted.value && storageGranted.value && notificationGranted.value,
                 modifier = Modifier
                     .align(Alignment.End)
