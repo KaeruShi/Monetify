@@ -3,6 +3,7 @@ package com.kaerushi.monetify.core.ui.components
 import android.graphics.drawable.Drawable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,18 +18,39 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.data.model.AppInfo
-import com.kaerushi.monetify.data.viewmodel.AppsViewModel
+import com.kaerushi.monetify.data.viewmodel.AppTheme
+import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
 import com.kaerushi.monetify.feature.apps.AppDetails
+
+@Composable
+fun childColor() =
+    if (isSystemInDarkTheme()) MaterialTheme.colorScheme.surfaceContainer
+    else lerp(MaterialTheme.colorScheme.surfaceVariant, Color.Black, 0.03f)
+@Composable
+fun getChildColor(viewModel: SettingsViewModel = hiltViewModel()) : Color {
+    val appTheme by viewModel.themeState.collectAsState()
+    return when (appTheme) {
+        AppTheme.SYSTEM -> childColor()
+        AppTheme.LIGHT -> lerp(MaterialTheme.colorScheme.surfaceVariant, Color.Black, 0.03f)
+        AppTheme.DARK -> MaterialTheme.colorScheme.surfaceContainer
+    }
+}
+
 
 @Composable
 fun PreferenceCategory(title: String) {
@@ -64,7 +86,7 @@ fun PreferenceItem(
         onClick = onClick,
         shape = if (!isChild) shape else RoundedCornerShape(0.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isChild) MaterialTheme.colorScheme.surfaceContainerHigh
+            containerColor = if (isChild) getChildColor()
             else MaterialTheme.colorScheme.surfaceContainerHighest
         )
     ) {
@@ -104,7 +126,7 @@ fun PreferenceSwitch(
         onClick = { onCheckedChange(!checked) },
         shape = if (!isChild) shape else RoundedCornerShape(0.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isChild) MaterialTheme.colorScheme.surfaceContainerHigh
+            containerColor = if (isChild) getChildColor()
             else MaterialTheme.colorScheme.surfaceContainerHighest
         )
     ) {
@@ -139,8 +161,7 @@ fun PreferenceApp(
     type: PreferenceType = PreferenceType.MID,
     expanded: Boolean,
     onClick: () -> Unit,
-    appInfo: AppInfo,
-    appsViewModel: AppsViewModel
+    appInfo: AppInfo
 ) {
     val shape = when (type) {
         PreferenceType.MID -> RoundedCornerShape(4.dp)
