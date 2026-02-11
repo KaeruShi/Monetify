@@ -1,4 +1,4 @@
-package com.kaerushi.monetify
+package com.kaerushi.monetify.core.ui
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -32,6 +32,7 @@ import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.manager.rememberPermissionState
 import com.kaerushi.monetify.core.manager.requestNotification
 import com.kaerushi.monetify.core.manager.requestStorage

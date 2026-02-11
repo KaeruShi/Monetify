@@ -1,4 +1,4 @@
-package com.kaerushi.monetify
+package com.kaerushi.monetify.core.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api

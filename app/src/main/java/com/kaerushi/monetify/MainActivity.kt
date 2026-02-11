@@ -25,6 +25,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kaerushi.monetify.core.manager.allPermissionsGranted
+import com.kaerushi.monetify.core.ui.MainScreen
+import com.kaerushi.monetify.core.ui.WelcomeScreen
 import com.kaerushi.monetify.core.ui.theme.ApplySystemBars
 import com.kaerushi.monetify.core.ui.theme.MonetifyTheme
 import com.kaerushi.monetify.data.ACTION_HOOK_STATUS
