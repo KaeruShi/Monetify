@@ -55,5 +55,5 @@ class AppsViewModel @Inject constructor(
 }
 
 enum class AppIconPack {
-    DEFAULT, DUOLTONE, FILLED, OUTLINED
+    DEFAULT, DUOTONE, FILLED, OUTLINED
 }
