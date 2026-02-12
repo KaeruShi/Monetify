@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -46,16 +48,17 @@ fun ActionsAndSupportCard() {
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun ImportExportRow(onImport: () -> Unit, onExport: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        OutlinedButton(modifier = Modifier.weight(1f), onClick = onImport) {
+        OutlinedButton(modifier = Modifier.weight(1f), onClick = onImport, shapes = ButtonDefaults.shapes()) {
             Text("Import")
         }
-        Button(modifier = Modifier.weight(1f), onClick = onExport) {
+        Button(modifier = Modifier.weight(1f), onClick = onExport, shapes = ButtonDefaults.shapes()) {
             Text("Export")
         }
     }

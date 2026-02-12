@@ -2,7 +2,15 @@ package com.kaerushi.monetify.core.ui.components
 
 import android.graphics.drawable.Drawable
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,10 +18,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -41,8 +55,9 @@ import com.kaerushi.monetify.feature.apps.AppDetails
 fun childColor() =
     if (isSystemInDarkTheme()) MaterialTheme.colorScheme.surfaceContainer
     else lerp(MaterialTheme.colorScheme.surfaceVariant, Color.Black, 0.03f)
+
 @Composable
-fun getChildColor(viewModel: SettingsViewModel = hiltViewModel()) : Color {
+fun getChildColor(viewModel: SettingsViewModel = hiltViewModel()): Color {
     val appTheme by viewModel.themeState.collectAsState()
     return when (appTheme) {
         AppTheme.SYSTEM -> childColor()
@@ -160,7 +175,8 @@ fun PreferenceApp(
     enabled: Boolean = true,
     type: PreferenceType = PreferenceType.MID,
     expanded: Boolean,
-    onClick: () -> Unit,
+    onClickItem: () -> Unit,
+    onClickLaunch: () -> Unit,
     appInfo: AppInfo
 ) {
     val shape = when (type) {
@@ -178,11 +194,13 @@ fun PreferenceApp(
     val contentAlpha = if (enabled) 1f else 0.3f
     Card(
         shape = shape,
-        onClick = { onClick() },
+        onClick = { onClickItem() },
         modifier = modifier.alpha(contentAlpha)
     ) {
         Column {
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)) {
                 if (icon != null) {
                     Image(
                         bitmap = icon.toBitmap().asImageBitmap(),
@@ -199,15 +217,40 @@ fun PreferenceApp(
                 Column(
                     modifier = Modifier
                         .padding(start = 16.dp)
-                        .fillMaxWidth()
+                        .weight(1f)
                 ) {
                     Text(text = title, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                     Text(text = summary, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface)
                 }
+                AnimatedVisibility(visible = expanded,
+                    enter = scaleIn(
+                        initialScale = 0.6f,
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                            stiffness = Spring.StiffnessMedium
+                        )
+                    ) + fadeIn(),
+                    exit = scaleOut(
+                        targetScale = 0.6f,
+                        animationSpec = tween(250)
+                    ) + fadeOut(tween(200))) {
+                    IconButton(onClick = { onClickLaunch() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                            contentDescription = null,
+                            modifier = Modifier.background(
+                                color = MaterialTheme.colorScheme.primaryContainer,
+                                shape = CircleShape
+                            )
+                                .size(40.dp)
+                                .padding(8.dp)
+                        )
+                    }
+                }
             }
             AnimatedVisibility(visible = expanded) {
                 Column {
-                    HorizontalDivider(modifier = Modifier.height(1.dp))
+                    HorizontalDivider(modifier = Modifier.height(0.8.dp))
                     AppDetails(appInfo.packageName)
                 }
             }
