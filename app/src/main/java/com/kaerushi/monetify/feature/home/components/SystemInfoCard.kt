@@ -1,9 +1,8 @@
 package com.kaerushi.monetify.feature.home.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -35,7 +34,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -79,10 +77,7 @@ private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
     val apps = remember { getInstalledApps(context, false) }
     val rotateIcon by animateFloatAsState(
         targetValue = if (showHookedApps) -180f else 0f,
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessMedium
-        ),
+        animationSpec = tween(300),
         label = "rotation"
     )
 
@@ -129,7 +124,7 @@ private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
 
 @Composable
 private fun PackageStatus(pkgName: String, hooked: Boolean) {
-    val itemColor = if (!hooked) Color.Red else Color.Green
+    val itemColor = if (!hooked) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.tertiary
     val itemIcon = if (!hooked) Icons.Default.Clear else Icons.Default.Check
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
         Icon(imageVector = itemIcon,contentDescription = null, modifier = Modifier.size(14.dp),

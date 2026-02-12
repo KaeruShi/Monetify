@@ -22,7 +22,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -30,6 +31,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -159,7 +161,15 @@ fun PreferenceSwitch(
                 onCheckedChange = onCheckedChange,
                 modifier = Modifier
                     .padding(end = 16.dp)
-                    .align(Alignment.CenterVertically)
+                    .align(Alignment.CenterVertically),
+                thumbContent = {
+                    val thumbIcon = if (checked) Icons.Rounded.Check else Icons.Rounded.Close
+                    Icon(
+                        imageVector = thumbIcon,
+                        contentDescription = null,
+                        modifier = Modifier.size(SwitchDefaults.IconSize)
+                    )
+                }
             )
         }
     }
@@ -237,6 +247,7 @@ fun PreferenceApp(
                     IconButton(onClick = { onClickLaunch() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
                             contentDescription = null,
                             modifier = Modifier.background(
                                 color = MaterialTheme.colorScheme.primaryContainer,
