@@ -4,6 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import com.kaerushi.monetify.R
+import com.kaerushi.monetify.data.INSTAGRAM_PACKAGE_NAME
+import com.kaerushi.monetify.data.PINTEREST_PACKAGE_NAME
+import com.kaerushi.monetify.data.REDDIT_PACKAGE_NAME
+import com.kaerushi.monetify.data.SPOTIFY_PACKAGE_NAME
+import com.kaerushi.monetify.data.SUBSTRATUM_LITE_PACKAGE_NAME
+import com.kaerushi.monetify.data.X_PACKAGE_NAME
 import com.kaerushi.monetify.data.model.AppInfo
 
 object Utils {
@@ -12,10 +18,12 @@ object Utils {
         val packageManager = context.packageManager
         val apps = mutableListOf<AppInfo>()
         val targetApps = listOf(
-            Triple("Instagram", "com.instagram.android", R.drawable.app_ig),
-            Triple("X", "com.twitter.android", R.drawable.app_twitter),
-            Triple("Pinterest", "com.pinterest", R.drawable.app_pinterest),
-            Triple("Reddit", "com.reddit.frontpage", R.drawable.app_reddit)
+            Triple("Instagram", INSTAGRAM_PACKAGE_NAME, R.drawable.app_ig),
+            Triple("X", X_PACKAGE_NAME, R.drawable.app_twitter),
+            Triple("Pinterest", PINTEREST_PACKAGE_NAME, R.drawable.app_pinterest),
+            Triple("Reddit", REDDIT_PACKAGE_NAME, R.drawable.app_reddit),
+            Triple("Substratum Lite", SUBSTRATUM_LITE_PACKAGE_NAME, R.drawable.app_subslite),
+            Triple("Spotify", SPOTIFY_PACKAGE_NAME, R.drawable.app_spotify)
         )
         for ((displayName, packageName, altIcon) in targetApps) {
             try {
@@ -25,7 +33,7 @@ object Utils {
                 val icon = packageManager.getApplicationIcon(appInfo)
 
                 apps.add(AppInfo(appName, packageName, versionName, icon, altIcon))
-            } catch (e: PackageManager.NameNotFoundException) {
+            } catch (_: PackageManager.NameNotFoundException) {
                 if (showUninstalled)
                     apps.add(AppInfo(displayName, packageName, "Not Installed!", null, altIcon, false))
             }
