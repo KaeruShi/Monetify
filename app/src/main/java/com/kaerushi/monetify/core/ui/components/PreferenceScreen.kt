@@ -247,14 +247,14 @@ fun PreferenceApp(
                     IconButton(onClick = { onClickLaunch() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
                             contentDescription = null,
                             modifier = Modifier.background(
                                 color = MaterialTheme.colorScheme.primaryContainer,
                                 shape = CircleShape
                             )
                                 .size(40.dp)
-                                .padding(8.dp)
+                                .padding(8.dp),
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer,
                         )
                     }
                 }
