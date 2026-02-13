@@ -39,6 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.lerp
@@ -221,7 +222,7 @@ fun PreferenceApp(
                     Image(
                         painter = painterResource(altIcon),
                         contentDescription = null,
-                        modifier = Modifier.size(42.dp)
+                        modifier = Modifier.size(42.dp).clip(CircleShape)
                     )
                 }
                 Column(

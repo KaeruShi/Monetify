@@ -3,12 +3,10 @@ package com.kaerushi.monetify.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.kaerushi.monetify.data.ACTION_HOOK_STATUS
 import com.kaerushi.monetify.data.EXTRA_HOOKED
 import com.kaerushi.monetify.data.EXTRA_PACKAGE
 import com.kaerushi.monetify.data.repository.PreferencesRepository
-import com.kaerushi.monetify.xposed.utils.HookStatusUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

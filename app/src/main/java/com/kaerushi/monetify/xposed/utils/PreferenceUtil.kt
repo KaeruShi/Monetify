@@ -5,7 +5,6 @@ import com.highcapable.yukihookapi.hook.log.YLog
 import com.kaerushi.monetify.data.PACKAGE_NAME
 import com.kaerushi.monetify.data.SHARED_PREFS_NAME
 import de.robv.android.xposed.XSharedPreferences
-import de.robv.android.xposed.XposedBridge
 
 object PreferenceUtil {
     private const val TAG = "PreferenceUtil"

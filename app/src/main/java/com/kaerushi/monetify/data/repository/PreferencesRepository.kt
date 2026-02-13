@@ -1,7 +1,5 @@
 package com.kaerushi.monetify.data.repository
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.datastore.core.DataStore
@@ -9,8 +7,6 @@ import androidx.datastore.core.IOException
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.preferencesDataStore
-import com.kaerushi.monetify.data.SHARED_PREFS_NAME
 import com.kaerushi.monetify.data.repository.PrefKeys.getAppAdsKey
 import com.kaerushi.monetify.data.repository.PrefKeys.getAppIconPackKey
 import com.kaerushi.monetify.data.repository.PrefKeys.getAppMonetKey

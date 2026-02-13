@@ -3,8 +3,6 @@ package com.kaerushi.monetify.xposed.hooks
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.res.Resources
-import android.graphics.Color
 import android.os.Bundle
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
@@ -12,8 +10,6 @@ import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.kaerushi.monetify.xposed.utils.HookStatusUtil
 import com.kaerushi.monetify.xposed.utils.HookStatusUtil.shouldSend
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
-import androidx.core.graphics.toColorInt
-import com.highcapable.yukihookapi.hook.log.YLog
 
 object PinterestHooks : YukiBaseHooker() {
     @OptIn(LegacyResourcesHook::class)
