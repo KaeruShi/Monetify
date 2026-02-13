@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.kaerushi.monetify.core.ui.MainScreen
 import com.kaerushi.monetify.core.ui.theme.MonetifyTheme
 import com.kaerushi.monetify.data.ACTION_HOOK_STATUS
 import com.kaerushi.monetify.receiver.HookStatusReceiver

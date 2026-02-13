@@ -1,4 +1,4 @@
-package com.kaerushi.monetify
+package com.kaerushi.monetify.core.ui
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ContentTransform
