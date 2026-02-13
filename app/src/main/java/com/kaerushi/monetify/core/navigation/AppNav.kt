@@ -1,4 +1,4 @@
-package com.kaerushi.monetify.core.ui
+package com.kaerushi.monetify.core.navigation
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -25,7 +25,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.kaerushi.monetify.core.navigation.Screen
 import com.kaerushi.monetify.core.ui.components.BottomNavBar
 import com.kaerushi.monetify.core.ui.components.ChangelogBottomSheet
 import com.kaerushi.monetify.core.ui.components.NavBar

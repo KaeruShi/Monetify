@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.core.manager.allPermissionsGranted
-import com.kaerushi.monetify.core.ui.AppNav
+import com.kaerushi.monetify.core.navigation.AppNav
 import com.kaerushi.monetify.data.viewmodel.HomeViewModel
 import com.kaerushi.monetify.feature.welcome.WelcomeScreen
 
