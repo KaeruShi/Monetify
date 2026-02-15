@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import com.kaerushi.monetify.R
-import com.kaerushi.monetify.data.INSTAGRAM_PACKAGE_NAME
 import com.kaerushi.monetify.data.PINTEREST_PACKAGE_NAME
 import com.kaerushi.monetify.data.REDDIT_PACKAGE_NAME
 import com.kaerushi.monetify.data.SPOTIFY_PACKAGE_NAME
@@ -18,8 +17,7 @@ object Utils {
         val packageManager = context.packageManager
         val apps = mutableListOf<AppInfo>()
         val targetApps = listOf(
-            Triple("Instagram", INSTAGRAM_PACKAGE_NAME, R.drawable.app_ig),
-            Triple("X", X_PACKAGE_NAME, R.drawable.app_twitter),
+            Triple("X", X_PACKAGE_NAME, R.drawable.app_x),
             Triple("Pinterest", PINTEREST_PACKAGE_NAME, R.drawable.app_pinterest),
             Triple("Reddit", REDDIT_PACKAGE_NAME, R.drawable.app_reddit),
             Triple("Substratum Lite", SUBSTRATUM_LITE_PACKAGE_NAME, R.drawable.app_subslite),

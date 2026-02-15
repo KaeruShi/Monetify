@@ -30,6 +30,7 @@ import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.ui.components.PreferenceApp
 import com.kaerushi.monetify.core.ui.components.PreferenceType
 import com.kaerushi.monetify.core.ui.dialog.RadioSelectionDialog
+import com.kaerushi.monetify.core.util.Utils.launchApp
 import com.kaerushi.monetify.data.viewmodel.AppIconPack
 import com.kaerushi.monetify.data.viewmodel.AppsViewModel
 import com.kaerushi.monetify.feature.apps.utils.Utils.getInstalledApps
@@ -97,7 +98,7 @@ fun AppsScreen(viewModel: AppsViewModel = hiltViewModel()) {
                         expandedKey = if (isExpanded) null else appInfo.packageName
                     },
                     onClickLaunch = {
-                        Shell.cmd("am force-stop ${appInfo.packageName} && monkey -p ${appInfo.packageName} -c android.intent.category.LAUNCHER 1").exec()
+                        context.launchApp(appInfo.packageName)
                     }
                 )
             }
