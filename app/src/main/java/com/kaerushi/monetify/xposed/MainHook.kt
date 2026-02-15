@@ -11,9 +11,15 @@ import com.kaerushi.monetify.xposed.hooks.TwitterHooks
 @InjectYukiHookWithXposed(isUsingResourcesHook = true)
 object MainHook : IYukiHookXposedInit {
     override fun onHook() = encase {
-        loadHooker(PinterestHooks)
-        loadHooker(RedditHooks)
-        loadHooker(SubstratumLiteHooks)
-        loadHooker(TwitterHooks)
+        HookRegistry.hooks.forEach { loadHooker(it) }
     }
+}
+
+private object HookRegistry {
+    val hooks = listOf(
+        PinterestHooks,
+        RedditHooks,
+        SubstratumLiteHooks,
+        TwitterHooks
+    )
 }

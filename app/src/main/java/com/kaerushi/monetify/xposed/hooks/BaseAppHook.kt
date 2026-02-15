@@ -1,0 +1,38 @@
+package com.kaerushi.monetify.xposed.hooks
+
+import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
+import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
+import com.kaerushi.monetify.data.viewmodel.AppIconPack
+import com.kaerushi.monetify.xposed.utils.PreferenceUtil
+
+abstract class BaseAppHook : YukiBaseHooker() {
+    protected abstract val pkgName: String
+    protected abstract val duotoneDrawables: Map<String, Int>
+
+    @LegacyResourcesHook
+    override fun onHook() {
+        loadApp(packageName) {
+            getIconPackDrawables()?.let { drawables ->
+                resources().hook {
+                    drawables.forEach { (resName, replacementDrawable) ->
+                        injectResource {
+                            conditions {
+                                name = resName
+                                drawable()
+                            }
+                            replaceToModuleResource(replacementDrawable)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getIconPackDrawables(): Map<String, Int>? {
+        return when (PreferenceUtil.getAppIconPack(packageName)) {
+            AppIconPack.DEFAULT.name -> null
+            AppIconPack.DUOTONE.name -> duotoneDrawables
+            else -> null
+        }
+    }
+}
