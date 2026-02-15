@@ -36,6 +36,14 @@ object RedditHooks : BaseAppHook() {
         "icon_close_fill" to R.drawable.duotone_cross,
         "icon_filter" to R.drawable.duotone_option,
         "icon_filter_fill" to R.drawable.duotone_option,
-        "icon_settings" to R.drawable.duotone_settings
+        "icon_settings" to R.drawable.duotone_settings,
+        "icon_menu" to R.drawable.duotone_menu,
+        "icon_menu_24" to R.drawable.duotone_menu,
+        "icon_save" to R.drawable.duotone_bookmark,
+        "icon_save_fill" to R.drawable.duotone_bookmark_filled,
+        "icon_report" to R.drawable.duotone_report_flag,
+        "icon_download" to R.drawable.duotone_download,
+        "icon_duplicate" to R.drawable.duotone_stack_flip_small,
+        "icon_block" to R.drawable.duotone_user_ban
     )
 }
