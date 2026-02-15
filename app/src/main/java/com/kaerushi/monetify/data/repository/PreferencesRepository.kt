@@ -115,6 +115,6 @@ class PreferencesRepository @Inject constructor(
 
     suspend fun setAppIconPack(packageName: String, iconPack: AppIconPack) = savePreference(
         getAppIconPackKey(packageName),
-        iconPack.name
+        iconPack.name, "app_${packageName}_icon_pack"
     )
 }

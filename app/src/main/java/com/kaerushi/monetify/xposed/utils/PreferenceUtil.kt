@@ -19,6 +19,10 @@ object PreferenceUtil {
         val key = "app_${packageName}_monet_enabled"
         return getPreference<Boolean>(key) ?: false
     }
+    fun getAppIconPack(packageName: String): String? {
+        val key = "app_${packageName}_icon_pack"
+        return getPreference<String>(key)
+    }
 
     private inline fun <reified T> getPreference(key: String): T? {
         preferences.reload()

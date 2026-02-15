@@ -2,7 +2,6 @@
 <resources>
     <string-array name="xposed_scope">
         <item>com.pinterest</item>
-        <item>com.instagram.android</item>
         <item>com.reddit.frontpage</item>
         <item>projekt.substratum.lite</item>
         <item>com.twitter.android</item>
