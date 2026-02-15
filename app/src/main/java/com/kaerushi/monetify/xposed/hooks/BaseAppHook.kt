@@ -11,7 +11,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
 
     @LegacyResourcesHook
     override fun onHook() {
-        loadApp(packageName) {
+        loadApp(pkgName) {
             getIconPackDrawables()?.let { drawables ->
                 resources().hook {
                     drawables.forEach { (resName, replacementDrawable) ->
@@ -25,8 +25,11 @@ abstract class BaseAppHook : YukiBaseHooker() {
                     }
                 }
             }
+            hookClass()
         }
     }
+
+    protected open fun hookClass() {}
 
     private fun getIconPackDrawables(): Map<String, Int>? {
         return when (PreferenceUtil.getAppIconPack(packageName)) {
