@@ -1,5 +1,6 @@
 [versions]
 agp = "9.0.0"
+material = "1.13.0"
 yukihookapi = "1.3.1"
 kavaref-core = "1.0.2"
 kavaref-extension = "1.0.2"
@@ -21,6 +22,7 @@ material-icons = "1.7.8"
 datastore = "1.2.0"
 libsuVersion = "6.0.0"
 xposed = "82"
+dexkit = "2.0.7"
 gson = "2.13.2"
 hilt = "2.59.1"
 hilt-navigation = "1.3.0"
@@ -56,11 +58,13 @@ libsu-service = { module = "com.github.topjohnwu.libsu:service", version.ref = "
 libsu-nio = { module = "com.github.topjohnwu.libsu:nio", version.ref = "libsuVersion" }
 
 # Xposed
+material = { module = "com.google.android.material:material", version.ref = "material" }
 xposed-api = { module = "de.robv.android.xposed:api", version.ref = "xposed" }
 yukihookapi-api = { module = "com.highcapable.yukihookapi:api", version.ref = "yukihookapi" }
 yukihookapi-ksp-xposed = { module = "com.highcapable.yukihookapi:ksp-xposed", version.ref = "yukihookapi" }
 kavaref-core = { module = "com.highcapable.kavaref:kavaref-core", version.ref = "kavaref-core" }
 kavaref-extension = { module = "com.highcapable.kavaref:kavaref-extension", version.ref = "kavaref-extension" }
+dexkit = { module = "org.luckypray:dexkit", version.ref = "dexkit" }
 
 # Optional add-on libraries
 androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }

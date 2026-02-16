@@ -2,7 +2,9 @@ package com.kaerushi.monetify.xposed.hooks
 
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
+import com.highcapable.yukihookapi.hook.log.YLog
 import com.kaerushi.monetify.data.viewmodel.AppIconPack
+import com.kaerushi.monetify.xposed.MainHook
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
 
 abstract class BaseAppHook : YukiBaseHooker() {
@@ -29,7 +31,12 @@ abstract class BaseAppHook : YukiBaseHooker() {
         }
     }
 
-    protected open fun hookClass() {}
+    protected open fun hookClass() {
+        if (!MainHook.dexKitLoaded) {
+            YLog.error("DexKit not loaded")
+            return
+        }
+    }
 
     private fun getIconPackDrawables(): Map<String, Int>? {
         return when (PreferenceUtil.getAppIconPack(packageName)) {

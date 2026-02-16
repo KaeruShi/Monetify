@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.Packaging
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -19,6 +20,12 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0 Initial Release"
+        ndk {
+            abiFilters.add("armeabi-v7a")
+            abiFilters.add("arm64-v8a")
+            abiFilters.add("x86_64")
+            abiFilters.add("x86")
+        }
     }
     buildTypes {
         debug {
@@ -47,6 +54,11 @@ android {
         compose = true
         buildConfig = true
     }
+    packaging {
+        resources {
+            excludes += "**"
+        }
+    }
 }
 
 kotlin {
@@ -61,6 +73,7 @@ dependencies {
     implementation(libs.kavaref.core)
     implementation(libs.kavaref.extension)
     ksp(libs.yukihookapi.ksp.xposed)
+    implementation(libs.dexkit)
 
     implementation(libs.libsu.core)
     implementation(libs.libsu.service)
@@ -77,6 +90,7 @@ dependencies {
     implementation(libs.androidx.compose.material.icons)
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.hilt.navigation)
+    implementation(libs.material)
 
     // DataStore Preferences
     implementation(libs.androidx.datastore.preferences)
