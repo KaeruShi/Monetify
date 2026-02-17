@@ -20,3 +20,4 @@ captures/
 # OS
 .DS_Store
 /monetify.jks
+/gradle/gradle-daemon-jvm.properties
