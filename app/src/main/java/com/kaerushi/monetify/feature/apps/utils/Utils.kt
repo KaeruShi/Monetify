@@ -21,7 +21,7 @@ object Utils {
             Triple("Pinterest", PINTEREST_PACKAGE_NAME, R.drawable.app_pinterest),
             Triple("Reddit", REDDIT_PACKAGE_NAME, R.drawable.app_reddit),
             Triple("Substratum Lite", SUBSTRATUM_LITE_PACKAGE_NAME, R.drawable.app_subslite),
-            Triple("Spotify", SPOTIFY_PACKAGE_NAME, R.drawable.app_spotify)
+//            Triple("Spotify", SPOTIFY_PACKAGE_NAME, R.drawable.app_spotify)
         )
         for ((displayName, packageName, altIcon) in targetApps) {
             try {
