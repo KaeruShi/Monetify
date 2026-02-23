@@ -2,7 +2,7 @@
 
 # Monetify
 
-An Xposed module that brings Material You (Monet) dynamic theming to third-party apps by modifying icons and color resources at runtime, allowing apps to seamlessly match your system theme.
+A Xposed module that brings Material You (Monet) dynamic theming to third-party apps by modifying icons and color resources at runtime, allowing apps to seamlessly match your system theme.
 
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-12%2B-green.svg)](https://developer.android.com)
@@ -14,7 +14,7 @@ An Xposed module that brings Material You (Monet) dynamic theming to third-party
 - 🧩 **MVVM architecture** with clear separation between UI, ViewModel, and data layers  
 - 💉 **Dagger Hilt** for dependency injection across application, ViewModel, and system components  
 - 🎨 **Jetpack Compose** for building declarative, state-driven UI components  
-- 🌈 **Material Expressive (Material You)** with dynamic color support and adaptive theming  
+- 🌈 **Material Expressive** with dynamic color support and adaptive theming  
 - 🎭 **Xposed-based icon replacement** to modify third-party app drawable resources at runtime  
 - 🎨 **Runtime color hooking** to override third-party app color resources using the system Monet palette  
 
@@ -22,7 +22,6 @@ An Xposed module that brings Material You (Monet) dynamic theming to third-party
 
 - Pinterest  
 - Reddit
-- Spotify
 - X
 - Substratum Lite
 
@@ -39,10 +38,6 @@ An Xposed module that brings Material You (Monet) dynamic theming to third-party
 3. Activate the module in LSPosed/Xposed Framework
 4. Open Monetify and configure your apps
 5. Enjoy! 🎉
-
-## 📸 Screenshots
-
-*Coming soon!*
 
 ## 🛠️ Building from Source
 
