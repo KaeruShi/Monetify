@@ -1,4 +1,3 @@
-import com.android.build.api.dsl.Packaging
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -19,7 +18,7 @@ android {
         minSdk = 31
         targetSdk = 36
         versionCode = 1
-        versionName = "1.0 Initial Release"
+        versionName = "0.1 Initial Release"
         ndk {
             abiFilters.add("armeabi-v7a")
             abiFilters.add("arm64-v8a")
