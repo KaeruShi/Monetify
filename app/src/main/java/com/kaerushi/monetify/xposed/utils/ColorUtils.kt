@@ -11,6 +11,7 @@ object ColorUtils {
             context.getColor(android.R.color.system_accent1_600)
         else
             context.getColor(android.R.color.system_accent1_100)
+    fun colorPrimaryDark(context: Context): Int = context.getColor(android.R.color.system_accent1_100)
 
     fun colorOnPrimary(context: Context): Int =
         if (!isNightMode(context))
@@ -103,6 +104,8 @@ object ColorUtils {
             context.getColor(android.R.color.system_neutral1_100)
         else
             context.getColor(android.R.color.system_neutral1_800)
+    fun colorSurfaceContainerLight(context: Context): Int = context.getColor(android.R.color.system_neutral1_100)
+    fun colorSurfaceContainerDark(context: Context): Int = context.getColor(android.R.color.system_neutral1_800)
 
     fun colorOnSurface(context: Context): Int =
         if (!isNightMode(context))
@@ -147,6 +150,7 @@ object ColorUtils {
             context.getColor(android.R.color.system_neutral1_50)
         else
             context.getColor(android.R.color.system_neutral1_900)
+    fun colorSurfaceDark(context: Context) = context.getColor(android.R.color.system_neutral1_900)
 
 
     fun colorOutlineVariant(context: Context): Int {
