@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Monetify</string>
+    <string name="monetify_slogan">Настройте свое приложение с красивыми темами Monet</string>
+    <string name="apps_title">Приложения</string>
+    <string name="settings_title">Настройки</string>
+    <string name="module_active_title">Модуль Активен</string>
+    <string name="module_inactive_title">Модуль Неактивен</string>
+    <string name="module_inactive_subtitle">Пожалуйста, активируйте модуль в LSPosed.</string>
+    <string name="android_version_title">Версия Android</string>
+    <string name="device_model_title">Модель Устройства</string>
+    <string name="manufacturer_title">Производитель</string>
+    <string name="apps_hooked_title">Подключенные Приложения</string>
+    <string name="tap_to_show">Нажмите, чтобы показать</string>
+    <string name="tap_to_hide">Нажмите, чтобы скрыть</string>
+    <string name="import_title">Импорт</string>
+    <string name="export_title">Экспорт</string>
+    <string name="support_title">Поддержка</string>
+    <string name="support_desc">Если у вас возникли проблемы или есть отзывы, посетите telegram или github</string>
+    <string name="theme_title">Тема</string>
+    <string name="color_scheme_title">Цветовая Схема</string>
+    <string name="language_title">Язык</string>
+    <string name="about_title">О программе</string>
+    <string name="credits_title">Благодарности</string>
+    <string name="credits_subtitle">Спасибо всем участникам</string>
+    <string name="support_subtitle">Купите мне кофе</string>
+    <string name="close_title">Закрыть</string>
+    <string name="changelog_title">Список Изменений</string>
+    <string name="check_for_updates_title">Проверить Обновления</string>
+    <string name="show_not_installed">Показать Неустановленные</string>
+    <string name="hide_not_installed">Скрыть Неустановленные</string>
+</resources>

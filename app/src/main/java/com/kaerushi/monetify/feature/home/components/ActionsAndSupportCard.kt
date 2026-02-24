@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -52,10 +53,10 @@ private fun ImportExportRow(onImport: () -> Unit, onExport: () -> Unit) {
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         OutlinedButton(modifier = Modifier.weight(1f), onClick = onImport, shapes = ButtonDefaults.shapes()) {
-            Text("Import")
+            Text(stringResource(R.string.import_title))
         }
         Button(modifier = Modifier.weight(1f), onClick = onExport, shapes = ButtonDefaults.shapes()) {
-            Text("Export")
+            Text(stringResource(R.string.export_title))
         }
     }
 }
@@ -81,14 +82,14 @@ private fun SupportCard() {
                     .padding(end = 8.dp)
             ) {
                 Text(
-                    "Support",
+                    stringResource(R.string.support_title),
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     modifier = Modifier.padding(bottom = 6.dp),
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
-                    "If you encounter any issues or have feedback, please visit telegram or github",
+                    stringResource(R.string.support_desc),
                     fontSize = 14.sp,
                     style = TextStyle(lineHeight = 1.5.em),
                     color = MaterialTheme.colorScheme.onSurface

@@ -35,9 +35,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.kaerushi.monetify.R
 import com.kaerushi.monetify.data.model.SystemInfo
 import com.kaerushi.monetify.data.viewmodel.HomeViewModel
 import com.kaerushi.monetify.feature.apps.utils.Utils.getInstalledApps
@@ -97,11 +99,13 @@ private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
-                    Text("Apps Hooked")
-                    Text(if (!showHookedApps) "Tap to show" else "Tap to hide", fontSize = 14.sp)
+                    Text(stringResource(R.string.apps_hooked_title))
+                    Text(if (!showHookedApps) stringResource(R.string.tap_to_show) else stringResource(R.string.tap_to_hide), fontSize = 14.sp)
                 }
                 Icon(
-                    modifier = Modifier.padding(end = 6.dp).rotate(rotateIcon),
+                    modifier = Modifier
+                        .padding(end = 6.dp)
+                        .rotate(rotateIcon),
                     imageVector = Icons.Default.KeyboardArrowDown,
                     contentDescription = if (showHookedApps) "Collapse" else "Expand",
                 )

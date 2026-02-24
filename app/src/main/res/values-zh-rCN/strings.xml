@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Monetify</string>
+    <string name="monetify_slogan">使用精美的 Monet 主题自定义您的应用</string>
+    <string name="apps_title">应用</string>
+    <string name="settings_title">设置</string>
+    <string name="module_active_title">模块已激活</string>
+    <string name="module_inactive_title">模块未激活</string>
+    <string name="module_inactive_subtitle">请在 LSPosed 中激活模块。</string>
+    <string name="android_version_title">Android 版本</string>
+    <string name="device_model_title">设备型号</string>
+    <string name="manufacturer_title">制造商</string>
+    <string name="apps_hooked_title">已挂钩应用</string>
+    <string name="tap_to_show">点击显示</string>
+    <string name="tap_to_hide">点击隐藏</string>
+    <string name="import_title">导入</string>
+    <string name="export_title">导出</string>
+    <string name="support_title">支持</string>
+    <string name="support_desc">如果您遇到任何问题或有反馈，请访问 telegram 或 github</string>
+    <string name="theme_title">主题</string>
+    <string name="color_scheme_title">配色方案</string>
+    <string name="language_title">语言</string>
+    <string name="about_title">关于</string>
+    <string name="credits_title">致谢</string>
+    <string name="credits_subtitle">感谢所有贡献者</string>
+    <string name="support_subtitle">请我喝杯咖啡</string>
+    <string name="close_title">关闭</string>
+    <string name="changelog_title">更新日志</string>
+    <string name="check_for_updates_title">检查更新</string>
+    <string name="show_not_installed">显示未安装</string>
+    <string name="hide_not_installed">隐藏未安装</string>
+</resources>
