@@ -36,7 +36,6 @@ fun <T> RadioSelectionDialog(
     confirmText: String? = null,
     dismissText: String = "Cancel"
 ) {
-
     Dialog(onDismissRequest = onDismiss) {
         Surface(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(24.dp), color =
             MaterialTheme.colorScheme.surfaceContainer) {
@@ -50,7 +49,7 @@ fun <T> RadioSelectionDialog(
                 )
 
                 // Options List
-                LazyColumn() {
+                LazyColumn {
                     itemsIndexed(options) { _, option ->
                         val isSelected = option == selected
                         RadioOptionItem(

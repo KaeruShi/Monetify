@@ -1,4 +1,4 @@
-package com.kaerushi.monetify.data.module
+package com.kaerushi.monetify
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,6 +7,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.kaerushi.monetify.data.SHARED_PREFS_NAME
 import dagger.Module
 import dagger.Provides
@@ -17,7 +19,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataStoreModule {
+object MonetifyModule {
 
     @Singleton
     @Provides
@@ -36,5 +38,13 @@ object DataStoreModule {
         } catch (_: SecurityException) {
             context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
         }
+    }
+
+    @Singleton
+    @Provides
+    fun provideGson(): Gson {
+        return GsonBuilder()
+            .setPrettyPrinting()
+            .create()
     }
 }
