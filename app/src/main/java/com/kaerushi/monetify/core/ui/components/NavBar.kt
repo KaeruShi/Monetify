@@ -84,7 +84,9 @@ fun NavBar(
                         DropdownMenuItem(
                             text = {
                                 Text(
-                                    if (!showNotInstalled) "Show Not Installed" else "Hide Not Installed",
+                                    if (!showNotInstalled) stringResource(R.string.show_not_installed) else stringResource(
+                                        R.string.hide_not_installed
+                                    ),
                                     modifier = Modifier.padding(start = 6.dp)
                                 )
                             },
@@ -95,14 +97,14 @@ fun NavBar(
                         )
                     }
                     DropdownMenuItem(
-                        text = { Text("Changelog", modifier = Modifier.padding(start = 6.dp)) },
+                        text = { Text(stringResource(R.string.changelog_title), modifier = Modifier.padding(start = 6.dp)) },
                         onClick = {
                             showMenu = false
                             onShowChangelog()
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text("Check For Updates", modifier = Modifier.padding(start = 6.dp)) },
+                        text = { Text(stringResource(R.string.check_for_updates_title), modifier = Modifier.padding(start = 6.dp)) },
                         onClick = {
                             showMenu = false
                         }

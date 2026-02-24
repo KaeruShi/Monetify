@@ -22,10 +22,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.BuildConfig
+import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.ui.dialog.TextInputDialog
 import com.kaerushi.monetify.core.util.Utils.isModuleActive
 import com.kaerushi.monetify.data.model.SystemInfo
@@ -40,8 +42,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val moduleTitle = if (isModuleActive) "Module Active" else "Module Inactive"
-    val moduleSubtitle = if (isModuleActive) BuildConfig.VERSION_NAME else "Please active module in LSPosed."
+    val moduleTitle = if (isModuleActive) stringResource(R.string.module_active_title) else stringResource(R.string.module_inactive_title)
+    val moduleSubtitle = if (isModuleActive) BuildConfig.VERSION_NAME else stringResource(R.string.module_inactive_subtitle)
     var showExportDialog by rememberSaveable { mutableStateOf(false) }
     var exportName by rememberSaveable { mutableStateOf("") }
     var showImportConfirmDialog by rememberSaveable { mutableStateOf(false) }
@@ -51,9 +53,9 @@ fun HomeScreen(
     val backupState by viewModel.backupState.collectAsState()
 
     val deviceInfo = listOf(
-        SystemInfo("Android Version", Build.VERSION.SDK_INT.toString()),
-        SystemInfo("Device Model", Build.BOARD),
-        SystemInfo("Manufacturer", Build.MANUFACTURER)
+        SystemInfo(stringResource(R.string.android_version_title), Build.VERSION.SDK_INT.toString()),
+        SystemInfo(stringResource(R.string.device_model_title), Build.BOARD),
+        SystemInfo(stringResource(R.string.manufacturer_title), Build.MANUFACTURER)
     )
 
     // Export launcher
