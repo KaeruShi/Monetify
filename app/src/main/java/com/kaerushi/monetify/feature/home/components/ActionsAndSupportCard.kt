@@ -29,19 +29,15 @@ import androidx.compose.ui.unit.sp
 import com.kaerushi.monetify.R
 
 @Composable
-fun ActionsAndSupportCard() {
+fun ActionsAndSupportCard(onImport: () -> Unit, onExport: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             ImportExportRow(
-                onImport = {
-
-                },
-                onExport = {
-
-                }
+                onImport = onImport,
+                onExport = onExport
             )
             SupportCard()
         }
@@ -111,7 +107,7 @@ private fun SupportCard() {
                 )
             }
             IconButton(onClick = {
-                uriHandler.openUri("https://github.com/kaerushi")
+                uriHandler.openUri("https://github.com/kaerushi/Monetify")
             }) {
                 Icon(
                     modifier = Modifier
