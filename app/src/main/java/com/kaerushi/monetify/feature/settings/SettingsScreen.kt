@@ -18,14 +18,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.BuildConfig
-import com.kaerushi.monetify.MainActivity
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.ui.components.PreferenceCategory
 import com.kaerushi.monetify.core.ui.components.PreferenceItem
 import com.kaerushi.monetify.core.ui.components.PreferenceType
+import com.kaerushi.monetify.core.ui.dialog.AlertDialog
 import com.kaerushi.monetify.core.ui.dialog.RadioSelectionDialog
-import com.kaerushi.monetify.core.util.Utils
-import com.kaerushi.monetify.core.util.Utils.applyLocale
 import com.kaerushi.monetify.data.viewmodel.AppTheme
 import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
 import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
@@ -38,6 +36,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
     var showThemePreference by rememberSaveable { mutableStateOf(false) }
     var showColorPreference by rememberSaveable { mutableStateOf(false) }
     var showLanguagePreference by rememberSaveable { mutableStateOf(false) }
+    var showResetDefaultDialog by rememberSaveable { mutableStateOf(false) }
     val themeLabel = selectedTheme.name.lowercase().replaceFirstChar { it.uppercase() }
     val colorLabel = selectedColorScheme.name.lowercase().replaceFirstChar { it.uppercase() }
     val languageLabel = selectedLanguage.name.lowercase().replaceFirstChar { it.uppercase() }
@@ -47,10 +46,12 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+            .padding(start = 16.dp, end = 16.dp)
     ) {
         item {
-            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(2.dp),
+                modifier = Modifier.padding(bottom = 16.dp)) {
+//                PreferenceCategory("Appearance")
                 PreferenceItem(
                     onClick = { showThemePreference = true },
                     title = stringResource(R.string.theme_title),
@@ -63,6 +64,14 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
                     title = stringResource(R.string.language_title),
                     summary = languageLabel,
                     type = PreferenceType.BOTTOM
+                )
+
+                PreferenceCategory(stringResource(R.string.advanced))
+                PreferenceItem(
+                    onClick = { showResetDefaultDialog = true },
+                    title = stringResource(R.string.reset_default_title),
+                    summary = stringResource(R.string.reset_default_subtitle),
+                    type = PreferenceType.ROUND
                 )
 
                 PreferenceCategory(stringResource(R.string.about_title))
@@ -118,6 +127,19 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
             },
             onDismiss = { showLanguagePreference = false },
             dismissText = stringResource(R.string.close_title)
+        )
+    }
+    if (showResetDefaultDialog) {
+        AlertDialog(
+            title = stringResource(R.string.are_you_sure),
+            desc = stringResource(R.string.reset_xposed_desc),
+            onConfirm = {
+                viewModel.resetToDefaults()
+                showResetDefaultDialog = false
+            },
+            onDismiss = { showResetDefaultDialog = false },
+            confirmText = stringResource(R.string.yes),
+            dismissText = stringResource(R.string.cancel)
         )
     }
 }

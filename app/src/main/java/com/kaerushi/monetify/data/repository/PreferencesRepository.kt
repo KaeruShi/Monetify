@@ -122,4 +122,23 @@ class PreferencesRepository @Inject constructor(
         getAppIconPackKey(packageName),
         iconPack.name, "app_${packageName}_icon_pack"
     )
+
+    suspend fun resetXposedPrefs() {
+        val excludedKeys = setOf(
+            PrefKeys.APP_THEME_KEY,
+            PrefKeys.APP_LANGUAGE_KEY,
+            PrefKeys.APP_COLOR_SCHEME_KEY,
+            PrefKeys.SHOW_NOT_INSTALLED_APPS,
+            PrefKeys.SHOW_APP_ICON_PACK,
+            PrefKeys.SHOW_WELCOME_SCREEN,
+        )
+        dataStore.edit { preferences ->
+            preferences.asMap().keys.filter {
+                it !in excludedKeys
+            }.forEach {
+                preferences.remove(it)
+            }
+        }
+        xposedPrefs.edit().clear().apply()
+    }
 }

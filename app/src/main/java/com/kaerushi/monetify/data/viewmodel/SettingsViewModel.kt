@@ -33,6 +33,11 @@ class SettingsViewModel @Inject constructor(private val repo: PreferencesReposit
             Utils.applyLocale(context, language)
         }
     }
+    fun resetToDefaults() {
+        viewModelScope.launch {
+            repo.resetXposedPrefs()
+        }
+    }
 }
 enum class AppTheme {
     SYSTEM, LIGHT, DARK
