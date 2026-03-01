@@ -74,7 +74,6 @@ fun getChildColor(viewModel: SettingsViewModel = hiltViewModel()): Color {
 fun PreferenceCategory(title: String) {
     Text(
         fontSize = 16.sp,
-        fontWeight = FontWeight.Medium,
         text = title,
         color = MaterialTheme.colorScheme.primary,
         modifier = Modifier

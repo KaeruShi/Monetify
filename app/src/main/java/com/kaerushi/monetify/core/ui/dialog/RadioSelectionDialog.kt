@@ -43,7 +43,7 @@ fun <T> RadioSelectionDialog(
                 // Title
                 Text(
                     text = title,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.Medium,
                     fontSize = 24.sp,
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 12.dp)
                 )
