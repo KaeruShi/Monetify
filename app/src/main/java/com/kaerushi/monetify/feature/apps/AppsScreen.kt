@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -57,7 +58,7 @@ fun AppsScreen(viewModel: AppsViewModel = hiltViewModel()) {
                 tint = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(12.dp))
-            Text("No apps found :(", fontSize = 20.sp)
+            Text(stringResource(R.string.no_apps_found), fontSize = 20.sp)
         }
     } else {
         LazyColumn(
@@ -77,9 +78,7 @@ fun AppsScreen(viewModel: AppsViewModel = hiltViewModel()) {
                     else -> 0.dp
                 }
                 PreferenceApp(
-                    modifier = Modifier
-                        .animateItem()
-                        .padding(bottom = extraPadding),
+                    modifier = Modifier.animateItem().padding(bottom = extraPadding),
                     icon = appInfo.icon,
                     altIcon = appInfo.altIcon,
                     title = appInfo.name,
@@ -110,7 +109,7 @@ fun AppsScreen(viewModel: AppsViewModel = hiltViewModel()) {
             val selectedIconPack by viewModel.iconPackState(pkg).collectAsState()
 
             RadioSelectionDialog(
-                title = "Select Icon Pack",
+                title = stringResource(R.string.select_icon_pack_title),
                 options = AppIconPack.entries,
                 selected = selectedIconPack,
                 optionText = { it -> it.toString().lowercase().replaceFirstChar { it.uppercase() } },
@@ -119,7 +118,7 @@ fun AppsScreen(viewModel: AppsViewModel = hiltViewModel()) {
                     viewModel.toggleShowIconPack(false)
                 },
                 onDismiss = { viewModel.toggleShowIconPack(false) },
-                dismissText = "Close"
+                dismissText = stringResource(R.string.close_title)
             )
         }
     }

@@ -63,7 +63,7 @@ fun WelcomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                         .align(Alignment.CenterHorizontally)
                 )
                 Text(
-                    text = "Welcome to Monetify!",
+                    text = stringResource(R.string.welcome_title),
                     fontSize = 32.sp,
                     modifier = Modifier
                         .padding(top = 16.dp)
@@ -82,8 +82,8 @@ fun WelcomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                 Spacer(modifier = Modifier.height(8.dp))
                 PermissionItem(
                     icon = R.drawable.supersu,
-                    permissionName = "Root Access",
-                    permissionDescription = "Required for applying themes to apps",
+                    permissionName = stringResource(R.string.root_access_title),
+                    permissionDescription = stringResource(R.string.root_access_subtitle),
                     onClick = {
                         if (!rootGranted.value) {
                             Toast.makeText(context, "Root access denied", Toast.LENGTH_SHORT).show()
@@ -94,8 +94,8 @@ fun WelcomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                 Spacer(modifier = Modifier.height(6.dp))
                 PermissionItem(
                     icon = R.drawable.storage,
-                    permissionName = "Storage Access",
-                    permissionDescription = "Needed to read and apply custom themes",
+                    permissionName = stringResource(R.string.storage_access_title),
+                    permissionDescription = stringResource(R.string.storage_access_subtitle),
                     onClick = {
                         if (!storageGranted.value) requestStorage(context)
                     },
@@ -104,8 +104,8 @@ fun WelcomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                 Spacer(modifier = Modifier.height(6.dp))
                 PermissionItem(
                     icon = R.drawable.notification,
-                    permissionName = "Notification Access",
-                    permissionDescription = "To customize notification colors and styles",
+                    permissionName = stringResource(R.string.notification_access_title),
+                    permissionDescription = stringResource(R.string.notification_access_subtitle),
                     onClick = {
                         if (!notificationGranted.value) requestNotification(context)
                     },
@@ -119,7 +119,7 @@ fun WelcomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     .align(Alignment.End)
                     .padding(bottom = 32.dp)
             ) {
-                Text("Continue")
+                Text(stringResource(R.string.continue_title))
             }
         }
     }

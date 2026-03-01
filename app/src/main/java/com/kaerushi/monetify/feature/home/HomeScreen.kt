@@ -120,16 +120,18 @@ fun HomeScreen(
     // Export dialog
     if (showExportDialog) {
         TextInputDialog(
-            title = "Export Config",
+            title = stringResource(R.string.export_config_title),
+            label = stringResource(R.string.config_name),
             initialText = exportName,
             onConfirm = {
                 showExportDialog = false
                 val fileName = "$it.json"
+                exportName = it
                 exportLauncher.launch(fileName)
             },
             onDismiss = { showExportDialog = false },
-            confirmText = "Export",
-            dismissText = "Cancel"
+            confirmText = stringResource(R.string.export),
+            dismissText = stringResource(R.string.cancel)
         )
     }
 
@@ -140,9 +142,9 @@ fun HomeScreen(
                 showImportConfirmDialog = false
                 pendingImportUri = null
             },
-            title = { Text("Import Configuration") },
+            title = { Text(stringResource(R.string.import_configuration_title)) },
             text = {
-                Text("Do you want to import the configuration '$importConfigName'?\n\nThis will replace all current settings.")
+                Text(stringResource(R.string.import_config_subtitle, importConfigName))
             },
             confirmButton = {
                 TextButton(
@@ -156,7 +158,7 @@ fun HomeScreen(
                         pendingImportUri = null
                     }
                 ) {
-                    Text("Import")
+                    Text(stringResource(R.string.import_title))
                 }
             },
             dismissButton = {
@@ -166,7 +168,7 @@ fun HomeScreen(
                         pendingImportUri = null
                     }
                 ) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )
@@ -176,7 +178,7 @@ fun HomeScreen(
     if (backupState is BackupState.Loading) {
         AlertDialog(
             onDismissRequest = { },
-            title = { Text("Please wait") },
+            title = { Text(stringResource(R.string.please_wait)) },
             text = {
                 CircularProgressIndicator()
             },
