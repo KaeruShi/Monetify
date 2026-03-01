@@ -52,4 +52,10 @@
     <string name="notification_access_title">Acesso a Notificações</string>
     <string name="notification_access_subtitle">Para personalizar cores e estilos de notificação</string>
     <string name="continue_title">Continuar</string>
+    <string name="advanced">Avançado</string>
+    <string name="reset_default_title">Restaurar Padrão</string>
+    <string name="reset_default_subtitle">Restaurar todos os apps modificados ao padrão</string>
+    <string name="are_you_sure">Você tem certeza?</string>
+    <string name="reset_xposed_desc">Esta opção reverterá todas as alterações do xposed hook</string>
+    <string name="yes">Sim</string>
 </resources>

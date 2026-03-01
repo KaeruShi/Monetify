@@ -52,4 +52,10 @@
     <string name="notification_access_title">通知权限</string>
     <string name="notification_access_subtitle">自定义通知颜色和样式</string>
     <string name="continue_title">继续</string>
+    <string name="advanced">高级</string>
+    <string name="reset_default_title">恢复默认</string>
+    <string name="reset_default_subtitle">将所有修改的应用恢复为默认</string>
+    <string name="are_you_sure">您确定吗？</string>
+    <string name="reset_xposed_desc">此选项将撤销所有 xposed hook 更改</string>
+    <string name="yes">是</string>
 </resources>

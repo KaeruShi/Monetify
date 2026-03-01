@@ -52,4 +52,10 @@
     <string name="notification_access_title">Akses Notifikasi</string>
     <string name="notification_access_subtitle">Untuk menyesuaikan warna dan gaya notifikasi</string>
     <string name="continue_title">Lanjutkan</string>
+    <string name="advanced">Lanjutan</string>
+    <string name="reset_default_title">Reset Default</string>
+    <string name="reset_default_subtitle">Reset semua aplikasi yang dimodifikasi ke default</string>
+    <string name="are_you_sure">Apakah Anda yakin?</string>
+    <string name="reset_xposed_desc">Opsi ini akan mengembalikan semua perubahan xposed hook</string>
+    <string name="yes">Ya</string>
 </resources>

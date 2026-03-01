@@ -52,4 +52,10 @@
     <string name="notification_access_title">Доступ к Уведомлениям</string>
     <string name="notification_access_subtitle">Для настройки цветов и стилей уведомлений</string>
     <string name="continue_title">Продолжить</string>
+    <string name="advanced">Расширенные</string>
+    <string name="reset_default_title">Сбросить по умолчанию</string>
+    <string name="reset_default_subtitle">Сбросить все измененные приложения по умолчанию</string>
+    <string name="are_you_sure">Вы уверены?</string>
+    <string name="reset_xposed_desc">Эта опция отменит все изменения xposed hook</string>
+    <string name="yes">Да</string>
 </resources>
