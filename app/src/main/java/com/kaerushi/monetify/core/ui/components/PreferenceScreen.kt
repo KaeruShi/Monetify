@@ -12,6 +12,7 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -73,19 +74,19 @@ fun getChildColor(viewModel: SettingsViewModel = hiltViewModel()): Color {
 @Composable
 fun PreferenceCategory(title: String) {
     Text(
-        fontSize = 16.sp,
+        fontSize = 15.sp,
         text = title,
         color = MaterialTheme.colorScheme.primary,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 14.dp, bottom = 8.dp)
+            .padding(start = 14.dp, end = 16.dp, top = 16.dp, bottom = 8.dp)
     )
 }
 
 @Composable
 fun PreferenceItem(
     onClick: () -> Unit, title: String, summary: String, type: PreferenceType = PreferenceType.MID,
-    isChild: Boolean = false
+    isChild: Boolean = false, icon: Int? = null
 ) {
     val shape = when (type) {
         PreferenceType.MID -> RoundedCornerShape(4.dp)
@@ -107,13 +108,27 @@ fun PreferenceItem(
             else MaterialTheme.colorScheme.surfaceContainerHighest
         )
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = title, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
-            Text(text = summary, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface)
+            if (icon != null) {
+                Icon(
+                    painter = painterResource(icon),
+                    contentDescription = null,
+                    modifier = Modifier.background(
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                        shape = RoundedCornerShape(16.dp)
+                    ).size(48.dp).padding(12.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+            }
+            Column(modifier = Modifier.padding(start = if (icon != null) 16.dp else 0.dp)) {
+                Text(text = title, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                Text(text = summary, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface)
+            }
         }
     }
 }
@@ -208,9 +223,11 @@ fun PreferenceApp(
         modifier = modifier.alpha(contentAlpha)
     ) {
         Column {
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
                 if (icon != null) {
                     Image(
                         bitmap = icon.toBitmap().asImageBitmap(),
@@ -221,7 +238,9 @@ fun PreferenceApp(
                     Image(
                         painter = painterResource(altIcon),
                         contentDescription = null,
-                        modifier = Modifier.size(42.dp).clip(CircleShape)
+                        modifier = Modifier
+                            .size(42.dp)
+                            .clip(CircleShape)
                     )
                 }
                 Column(
@@ -232,7 +251,8 @@ fun PreferenceApp(
                     Text(text = title, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                     Text(text = summary, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface)
                 }
-                AnimatedVisibility(visible = expanded,
+                AnimatedVisibility(
+                    visible = expanded,
                     enter = scaleIn(
                         initialScale = 0.6f,
                         animationSpec = spring(
@@ -243,15 +263,17 @@ fun PreferenceApp(
                     exit = scaleOut(
                         targetScale = 0.6f,
                         animationSpec = tween(250)
-                    ) + fadeOut(tween(200))) {
+                    ) + fadeOut(tween(200))
+                ) {
                     IconButton(onClick = { onClickLaunch() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                             contentDescription = null,
-                            modifier = Modifier.background(
-                                color = MaterialTheme.colorScheme.primaryContainer,
-                                shape = CircleShape
-                            )
+                            modifier = Modifier
+                                .background(
+                                    color = MaterialTheme.colorScheme.primaryContainer,
+                                    shape = CircleShape
+                                )
                                 .size(40.dp)
                                 .padding(8.dp),
                             tint = MaterialTheme.colorScheme.onPrimaryContainer,

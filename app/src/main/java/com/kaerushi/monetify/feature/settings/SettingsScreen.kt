@@ -49,20 +49,29 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
             .padding(start = 16.dp, end = 16.dp)
     ) {
         item {
-            Column(verticalArrangement = Arrangement.spacedBy(2.dp),
-                modifier = Modifier.padding(bottom = 16.dp)) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+                modifier = Modifier.padding(bottom = 16.dp)
+            ) {
 //                PreferenceCategory("Appearance")
                 PreferenceItem(
                     onClick = { showThemePreference = true },
                     title = stringResource(R.string.theme_title),
                     summary = themeLabel,
+                    icon = R.drawable.dark_theme,
                     type = PreferenceType.TOP
                 )
-                PreferenceItem(onClick = { showColorPreference = true }, title = stringResource(R.string.color_scheme_title), summary = colorLabel)
+                PreferenceItem(
+                    onClick = { showColorPreference = true },
+                    title = stringResource(R.string.color_scheme_title),
+                    summary = colorLabel,
+                    icon = R.drawable.color_scheme
+                )
                 PreferenceItem(
                     onClick = { showLanguagePreference = true },
                     title = stringResource(R.string.language_title),
                     summary = languageLabel,
+                    icon = R.drawable.language_outline,
                     type = PreferenceType.BOTTOM
                 )
 
@@ -71,6 +80,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
                     onClick = { showResetDefaultDialog = true },
                     title = stringResource(R.string.reset_default_title),
                     summary = stringResource(R.string.reset_default_subtitle),
+                    icon = R.drawable.reset_wrench_rounded,
                     type = PreferenceType.ROUND
                 )
 
@@ -81,13 +91,18 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
                     summary = BuildConfig.VERSION_NAME,
                     type = PreferenceType.TOP
                 )
-                PreferenceItem(onClick = {}, title = stringResource(R.string.credits_title), summary = stringResource(R.string.credits_subtitle))
+                PreferenceItem(
+                    onClick = {}, title = stringResource(R.string.credits_title),
+                    summary = stringResource(R.string.credits_subtitle),
+                    icon = R.drawable.user_group
+                )
                 PreferenceItem(
                     onClick = {
                         uriHandler.openUri("https://ko-fi.com/kaerushi")
                     },
                     title = stringResource(R.string.support_title),
                     summary = stringResource(R.string.support_subtitle),
+                    icon = R.drawable.star_fall_linear,
                     type = PreferenceType.BOTTOM
                 )
             }
@@ -123,7 +138,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
             selected = selectedLanguage,
             optionText = { language -> language.name.lowercase().replaceFirstChar { it.uppercase() } },
             onSelect = {
-                viewModel.setAppLanguage(context,it)
+                viewModel.setAppLanguage(context, it)
             },
             onDismiss = { showLanguagePreference = false },
             dismissText = stringResource(R.string.close_title)
