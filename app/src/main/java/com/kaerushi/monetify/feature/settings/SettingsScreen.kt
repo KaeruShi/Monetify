@@ -12,16 +12,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.BuildConfig
+import com.kaerushi.monetify.MainActivity
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.ui.components.PreferenceCategory
 import com.kaerushi.monetify.core.ui.components.PreferenceItem
 import com.kaerushi.monetify.core.ui.components.PreferenceType
 import com.kaerushi.monetify.core.ui.dialog.RadioSelectionDialog
+import com.kaerushi.monetify.core.util.Utils
+import com.kaerushi.monetify.core.util.Utils.applyLocale
 import com.kaerushi.monetify.data.viewmodel.AppTheme
 import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
 import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
@@ -30,7 +34,7 @@ import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
 fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
     val selectedTheme by viewModel.themeState.collectAsState()
     val selectedColorScheme by viewModel.colorSchemeState.collectAsState()
-    var selectedLanguage by rememberSaveable { mutableStateOf(AppLanguage.ENGLISH) }
+    val selectedLanguage by viewModel.languageState.collectAsState()
     var showThemePreference by rememberSaveable { mutableStateOf(false) }
     var showColorPreference by rememberSaveable { mutableStateOf(false) }
     var showLanguagePreference by rememberSaveable { mutableStateOf(false) }
@@ -38,6 +42,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
     val colorLabel = selectedColorScheme.name.lowercase().replaceFirstChar { it.uppercase() }
     val languageLabel = selectedLanguage.name.lowercase().replaceFirstChar { it.uppercase() }
     val uriHandler = LocalUriHandler.current
+    val context = LocalContext.current
 
     LazyColumn(
         modifier = Modifier
@@ -85,7 +90,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
             title = stringResource(R.string.theme_title),
             options = AppTheme.entries,
             selected = selectedTheme,
-            optionText = { it.name.lowercase().replaceFirstChar { c -> c.uppercase() } },
+            optionText = { it.name.lowercase().replaceFirstChar { it.uppercase() } },
             onSelect = { appTheme -> viewModel.setAppTheme(appTheme) },
             onDismiss = { showThemePreference = false },
             dismissText = stringResource(R.string.close_title)
@@ -96,7 +101,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
             title = stringResource(R.string.color_scheme_title),
             options = ColorSchemeMode.entries,
             selected = selectedColorScheme,
-            optionText = { it.name.lowercase().replaceFirstChar { c -> c.uppercase() } },
+            optionText = { it -> it.name.lowercase().replaceFirstChar { it.uppercase() } },
             onSelect = { viewModel.setAppColorScheme(it) },
             onDismiss = { showColorPreference = false },
             dismissText = stringResource(R.string.close_title)
@@ -107,14 +112,16 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
             title = stringResource(R.string.language_title),
             options = AppLanguage.entries,
             selected = selectedLanguage,
-            optionText = { it.name.lowercase().replaceFirstChar { c -> c.uppercase() } },
-            onSelect = { selectedLanguage = it },
+            optionText = { language -> language.name.lowercase().replaceFirstChar { it.uppercase() } },
+            onSelect = {
+                viewModel.setAppLanguage(context,it)
+            },
             onDismiss = { showLanguagePreference = false },
             dismissText = stringResource(R.string.close_title)
         )
     }
 }
 
-enum class AppLanguage {
-    ENGLISH, INDONESIA, CHINESE
+enum class AppLanguage(val code: String) {
+    ENGLISH("en"), INDONESIA("in"), CHINESE("zh-CN"), PORTUGUESE("pt"), RUSSIAN("ru")
 }

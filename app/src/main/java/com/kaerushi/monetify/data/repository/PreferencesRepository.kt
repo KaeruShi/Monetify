@@ -13,6 +13,7 @@ import com.kaerushi.monetify.data.repository.PrefKeys.getAppMonetKey
 import com.kaerushi.monetify.data.viewmodel.AppIconPack
 import com.kaerushi.monetify.data.viewmodel.AppTheme
 import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
+import com.kaerushi.monetify.feature.settings.AppLanguage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -89,6 +90,9 @@ class PreferencesRepository @Inject constructor(
     val theme = getPreferenceFlow(PrefKeys.APP_THEME_KEY, AppTheme.SYSTEM.name).map {
         AppTheme.valueOf(it)
     }
+    val language = getPreferenceFlow(PrefKeys.APP_LANGUAGE_KEY, AppLanguage.ENGLISH.code).map { code ->
+        AppLanguage.entries.find { it.code == code } ?: AppLanguage.ENGLISH
+    }
     val colorSchemeMode = getPreferenceFlow(PrefKeys.APP_COLOR_SCHEME_KEY, ColorSchemeMode.DYNAMIC.name)
         .map { ColorSchemeMode.valueOf(it) }
     val showNotInstalledPref = getPreferenceFlow(PrefKeys.SHOW_NOT_INSTALLED_APPS, true)
@@ -106,6 +110,7 @@ class PreferencesRepository @Inject constructor(
     suspend fun toggleShowWelcomeScreenPref(show: Boolean) = savePreference(PrefKeys.SHOW_WELCOME_SCREEN, show)
     suspend fun toggleShowAppIconPack(show: Boolean) = savePreference(PrefKeys.SHOW_APP_ICON_PACK, show)
     suspend fun setTheme(theme: AppTheme) = savePreference(PrefKeys.APP_THEME_KEY, theme.name)
+    suspend fun setLanguage(language: AppLanguage) = savePreference(PrefKeys.APP_LANGUAGE_KEY, language.code, "app_language")
     suspend fun setColorSchemeMode(mode: ColorSchemeMode) = savePreference(PrefKeys.APP_COLOR_SCHEME_KEY, mode.name)
     suspend fun setAppMonetEnabled(packageName: String, enabled: Boolean) =
         savePreference(getAppMonetKey(packageName), enabled, "app_${packageName}_monet_enabled")

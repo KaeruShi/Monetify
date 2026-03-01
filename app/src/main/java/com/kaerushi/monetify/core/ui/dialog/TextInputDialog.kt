@@ -25,6 +25,7 @@ import androidx.compose.ui.window.Dialog
 @Composable
 fun TextInputDialog(
     title: String,
+    label: String = "",
     initialText: String = "",
     onConfirm: (String) -> Unit,
     onDismiss: () -> Unit,
@@ -43,7 +44,7 @@ fun TextInputDialog(
                     text = title,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 12.dp)
+                    modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 0.dp)
                 )
 
                 // Input Field
@@ -53,7 +54,7 @@ fun TextInputDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 12.dp),
-                    label = { Text("Config name") }
+                    label = { Text(label) }
                 )
 
                 // Action Buttons
