@@ -62,8 +62,8 @@ fun NavBar(
                     Icon(
                         painter = painterResource(R.drawable.monetify_icon_mono),
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.padding(5.dp)
+                        modifier = Modifier.padding(5.dp),
+                        tint = null
                     )
                 }
             }
