@@ -95,6 +95,7 @@ class PreferencesRepository @Inject constructor(
     }
     val colorSchemeMode = getPreferenceFlow(PrefKeys.APP_COLOR_SCHEME_KEY, ColorSchemeMode.DYNAMIC.name)
         .map { ColorSchemeMode.valueOf(it) }
+    val killBeforeLaunch = getPreferenceFlow(PrefKeys.KILL_BEFORE_LAUNCH, true)
     val showNotInstalledPref = getPreferenceFlow(PrefKeys.SHOW_NOT_INSTALLED_APPS, true)
     val showAppIconPack = getPreferenceFlow(PrefKeys.SHOW_APP_ICON_PACK, false)
     val showWelcomeScreen = getPreferenceFlow(PrefKeys.SHOW_WELCOME_SCREEN, true)
@@ -112,6 +113,9 @@ class PreferencesRepository @Inject constructor(
     suspend fun setTheme(theme: AppTheme) = savePreference(PrefKeys.APP_THEME_KEY, theme.name)
     suspend fun setLanguage(language: AppLanguage) = savePreference(PrefKeys.APP_LANGUAGE_KEY, language.code, "app_language")
     suspend fun setColorSchemeMode(mode: ColorSchemeMode) = savePreference(PrefKeys.APP_COLOR_SCHEME_KEY, mode.name)
+    suspend fun toggleKillBeforeLaunch(kill: Boolean) = savePreference(PrefKeys.KILL_BEFORE_LAUNCH, kill)
+
+    // Xposed
     suspend fun setAppMonetEnabled(packageName: String, enabled: Boolean) =
         savePreference(getAppMonetKey(packageName), enabled, "app_${packageName}_monet_enabled")
 

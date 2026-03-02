@@ -20,6 +20,8 @@ class SettingsViewModel @Inject constructor(private val repo: PreferencesReposit
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ColorSchemeMode.DYNAMIC)
     val languageState = repo.language
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AppLanguage.ENGLISH)
+    val killBeforeLaunchState = repo.killBeforeLaunch
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
 
     fun setAppTheme(theme: AppTheme) {
         viewModelScope.launch { repo.setTheme(theme) }
@@ -32,6 +34,9 @@ class SettingsViewModel @Inject constructor(private val repo: PreferencesReposit
             repo.setLanguage(language)
             Utils.applyLocale(context, language)
         }
+    }
+    fun setKillBeforeLaunch(kill: Boolean) {
+        viewModelScope.launch { repo.toggleKillBeforeLaunch(kill) }
     }
     fun resetToDefaults() {
         viewModelScope.launch {

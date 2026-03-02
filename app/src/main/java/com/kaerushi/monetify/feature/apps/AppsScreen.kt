@@ -34,14 +34,16 @@ import com.kaerushi.monetify.core.ui.dialog.RadioSelectionDialog
 import com.kaerushi.monetify.core.util.Utils.launchApp
 import com.kaerushi.monetify.data.viewmodel.AppIconPack
 import com.kaerushi.monetify.data.viewmodel.AppsViewModel
+import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
 import com.kaerushi.monetify.feature.apps.utils.Utils.getInstalledApps
 import com.topjohnwu.superuser.Shell
 
 @Composable
-fun AppsScreen(viewModel: AppsViewModel = hiltViewModel()) {
+fun AppsScreen(viewModel: AppsViewModel = hiltViewModel(), settingsViewModel: SettingsViewModel = hiltViewModel()) {
     val context = LocalContext.current
     val showNotInstalled by viewModel.notInstalledState.collectAsState()
     val showIconPack by viewModel.showIconPackState.collectAsState()
+    val killBeforeLaunch by settingsViewModel.killBeforeLaunchState.collectAsState()
     val apps = remember(showNotInstalled) { getInstalledApps(context.applicationContext, showNotInstalled) }
     var expandedKey by rememberSaveable { mutableStateOf<String?>(null) }
 
@@ -97,7 +99,7 @@ fun AppsScreen(viewModel: AppsViewModel = hiltViewModel()) {
                         expandedKey = if (isExpanded) null else appInfo.packageName
                     },
                     onClickLaunch = {
-                        context.launchApp(appInfo.packageName)
+                        context.launchApp(appInfo.packageName, killBeforeLaunch)
                     }
                 )
             }

@@ -5,14 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.LocaleList
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import com.highcapable.yukihookapi.YukiHookAPI
 import com.kaerushi.monetify.feature.settings.AppLanguage
+import com.topjohnwu.superuser.Shell
 
 object Utils {
     val isModuleActive = YukiHookAPI.Status.isXposedModuleActive
-    fun Context.launchApp(pkgName: String) {
+    fun Context.launchApp(pkgName: String, kill: Boolean) {
+        if (kill) Shell.cmd("am force-stop $pkgName").exec()
         try {
             val launchIntent = this.packageManager.getLaunchIntentForPackage(pkgName)
             if (launchIntent != null) {

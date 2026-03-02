@@ -21,6 +21,7 @@ import com.kaerushi.monetify.BuildConfig
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.ui.components.PreferenceCategory
 import com.kaerushi.monetify.core.ui.components.PreferenceItem
+import com.kaerushi.monetify.core.ui.components.PreferenceSwitch
 import com.kaerushi.monetify.core.ui.components.PreferenceType
 import com.kaerushi.monetify.core.ui.dialog.AlertDialog
 import com.kaerushi.monetify.core.ui.dialog.RadioSelectionDialog
@@ -33,6 +34,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
     val selectedTheme by viewModel.themeState.collectAsState()
     val selectedColorScheme by viewModel.colorSchemeState.collectAsState()
     val selectedLanguage by viewModel.languageState.collectAsState()
+    val killBeforeLaunch by viewModel.killBeforeLaunchState.collectAsState()
     var showThemePreference by rememberSaveable { mutableStateOf(false) }
     var showColorPreference by rememberSaveable { mutableStateOf(false) }
     var showLanguagePreference by rememberSaveable { mutableStateOf(false) }
@@ -81,7 +83,15 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
                     title = stringResource(R.string.reset_default_title),
                     summary = stringResource(R.string.reset_default_subtitle),
                     icon = R.drawable.reset_wrench_rounded,
-                    type = PreferenceType.ROUND
+                    type = PreferenceType.TOP
+                )
+                PreferenceSwitch(
+                    title = stringResource(R.string.kill_before_launch_title),
+                    summary = stringResource(R.string.kill_before_launch_subtitle),
+                    icon = R.drawable.info_square,
+                    checked = killBeforeLaunch,
+                    onCheckedChange = { viewModel.setKillBeforeLaunch(it) },
+                    type = PreferenceType.BOTTOM
                 )
 
                 PreferenceCategory(stringResource(R.string.about_title))
