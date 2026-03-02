@@ -11,6 +11,7 @@ object ColorUtils {
             context.getColor(android.R.color.system_accent1_600)
         else
             context.getColor(android.R.color.system_accent1_100)
+    fun colorPrimaryLight(context: Context): Int = context.getColor(android.R.color.system_accent1_600)
     fun colorPrimaryDark(context: Context): Int = context.getColor(android.R.color.system_accent1_100)
 
     fun colorOnPrimary(context: Context): Int =
@@ -150,6 +151,7 @@ object ColorUtils {
             context.getColor(android.R.color.system_neutral1_50)
         else
             context.getColor(android.R.color.system_neutral1_900)
+    fun colorSurfaceLight(context: Context) = context.getColor(android.R.color.system_neutral1_50)
     fun colorSurfaceDark(context: Context) = context.getColor(android.R.color.system_neutral1_900)
 
 
