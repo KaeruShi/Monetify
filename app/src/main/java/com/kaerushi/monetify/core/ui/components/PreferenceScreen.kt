@@ -118,10 +118,13 @@ fun PreferenceItem(
                 Icon(
                     painter = painterResource(icon),
                     contentDescription = null,
-                    modifier = Modifier.background(
-                        color = MaterialTheme.colorScheme.surfaceContainer,
-                        shape = RoundedCornerShape(16.dp)
-                    ).size(48.dp).padding(12.dp),
+                    modifier = Modifier
+                        .background(
+                            color = MaterialTheme.colorScheme.surfaceContainer,
+                            shape = RoundedCornerShape(16.dp)
+                        )
+                        .size(48.dp)
+                        .padding(12.dp),
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
@@ -140,7 +143,8 @@ fun PreferenceSwitch(
     title: String,
     summary: String,
     type: PreferenceType = PreferenceType.MID,
-    isChild: Boolean = false
+    isChild: Boolean = false,
+    icon: Int? = null
 ) {
     val shape = when (type) {
         PreferenceType.MID -> RoundedCornerShape(4.dp)
@@ -162,11 +166,28 @@ fun PreferenceSwitch(
             else MaterialTheme.colorScheme.surfaceContainerHighest
         )
     ) {
-        Row() {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (icon != null) {
+                Icon(
+                    painter = painterResource(icon),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .background(
+                            color = MaterialTheme.colorScheme.surfaceContainer,
+                            shape = RoundedCornerShape(16.dp)
+                        )
+                        .size(48.dp)
+                        .padding(12.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+            }
             Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .weight(1f)
+                modifier = Modifier.padding(start = if (icon != null) 16.dp else 0.dp, end = 16.dp).weight(1f)
             ) {
                 Text(text = title, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                 Text(text = summary, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface)
@@ -174,9 +195,6 @@ fun PreferenceSwitch(
             Switch(
                 checked = checked,
                 onCheckedChange = onCheckedChange,
-                modifier = Modifier
-                    .padding(end = 16.dp)
-                    .align(Alignment.CenterVertically),
                 thumbContent = {
                     val thumbIcon = if (checked) Icons.Rounded.Check else Icons.Rounded.Close
                     Icon(
