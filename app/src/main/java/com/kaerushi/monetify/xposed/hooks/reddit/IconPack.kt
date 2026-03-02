@@ -1,11 +1,9 @@
-package com.kaerushi.monetify.xposed.hooks
+package com.kaerushi.monetify.xposed.hooks.reddit
 
 import com.kaerushi.monetify.R
-import com.kaerushi.monetify.data.REDDIT_PACKAGE_NAME
 
-object RedditHooks : BaseAppHook() {
-    override val pkgName: String = REDDIT_PACKAGE_NAME
-    override val duotoneDrawables: Map<String, Int> = mapOf(
+object IconPack {
+    val duotoneDrawables = mapOf(
         "icon_home" to R.drawable.duotone_home,
         "icon_home_fill" to R.drawable.duotone_home_fill,
         "icon_home_24" to R.drawable.duotone_home,

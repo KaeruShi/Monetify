@@ -1,11 +1,9 @@
-package com.kaerushi.monetify.xposed.hooks
+package com.kaerushi.monetify.xposed.hooks.pinterest
 
 import com.kaerushi.monetify.R
-import com.kaerushi.monetify.data.PINTEREST_PACKAGE_NAME
 
-object PinterestHooks : BaseAppHook() {
-    override val pkgName: String = PINTEREST_PACKAGE_NAME
-    override val duotoneDrawables: Map<String, Int> = mapOf(
+object IconPack {
+    val duotoneDrawables: Map<String, Int> = mapOf(
         "ic_vr_home_gestalt" to R.drawable.duotone_home,
         "ic_vr_home_fill_gestalt" to R.drawable.duotone_home_fill,
         "ic_vr_search_gestalt" to R.drawable.duotone_search,

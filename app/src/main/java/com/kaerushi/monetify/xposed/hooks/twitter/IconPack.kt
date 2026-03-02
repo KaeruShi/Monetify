@@ -1,20 +1,9 @@
-package com.kaerushi.monetify.xposed.hooks
+package com.kaerushi.monetify.xposed.hooks.twitter
 
-import android.app.Activity
-import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.kaerushi.monetify.R
-import com.kaerushi.monetify.data.X_PACKAGE_NAME
-import com.kaerushi.monetify.xposed.utils.ColorUtils.colorPrimary
-import com.kaerushi.monetify.xposed.utils.ColorUtils.colorSurface
-import com.kaerushi.monetify.xposed.utils.ColorUtils.colorSurfaceContainer
-import com.kaerushi.monetify.xposed.utils.ColorUtils.colorSurfaceContainerDark
-import com.kaerushi.monetify.xposed.utils.ColorUtils.colorSurfaceContainerLight
-import com.kaerushi.monetify.xposed.utils.PreferenceUtil.getAppMonetEnabled
-import com.kaerushi.monetify.xposed.utils.Utils.isNightMode
 
-object TwitterHooks : BaseAppHook() {
-    override val pkgName: String = X_PACKAGE_NAME
-    override val duotoneDrawables: Map<String, Int> = mapOf(
+object IconPack {
+    val duotoneDrawables: Map<String, Int> = mapOf(
         "ic_vector_home_stroke" to R.drawable.duotone_home,
         "ic_vector_home" to R.drawable.duotone_home_fill,
         "ic_vector_search" to R.drawable.duotone_search_fill,
@@ -94,32 +83,4 @@ object TwitterHooks : BaseAppHook() {
         "ic_vector_calendar" to R.drawable.duotone_calendar,
         "ic_vector_star_rising" to R.drawable.duotone_star_shooting
     )
-
-    override fun hookOnCreate(instance: Activity) {
-        if (getAppMonetEnabled(pkgName)) applyMonetMainActivity(instance)
-    }
-
-    @OptIn(LegacyResourcesHook::class)
-    private fun applyMonetMainActivity(activity: Activity) {
-        injectColor(
-            "twitter_blue_opacity_30",
-            "twitter_blue_opacity_50",
-            "twitter_blue_opacity_58",
-            "blue_500",
-            "twitter_blue",
-            "text_black"
-        ) {
-            colorPrimary(activity)
-        }
-        injectColor("appBackground", "ps__black") {
-            colorSurface(activity)
-        }
-        injectColor("black") {
-            if (isNightMode(activity)) colorSurfaceContainerDark(activity) else colorSurfaceContainerLight(activity)
-        }
-        if (!isNightMode(activity))
-            injectColor("white") {
-                colorSurfaceContainer(activity)
-            }
-    }
 }
