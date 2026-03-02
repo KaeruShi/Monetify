@@ -89,7 +89,8 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
                     onClick = {},
                     title = stringResource(R.string.app_name),
                     summary = BuildConfig.VERSION_NAME,
-                    type = PreferenceType.TOP
+                    type = PreferenceType.TOP,
+                    icon = R.drawable.monetify_icon_mono
                 )
                 PreferenceItem(
                     onClick = {}, title = stringResource(R.string.credits_title),

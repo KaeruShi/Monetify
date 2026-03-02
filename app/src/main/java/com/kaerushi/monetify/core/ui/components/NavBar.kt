@@ -24,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -59,8 +60,10 @@ fun NavBar(
             if (currentRoute == Screen.Home.route) {
                 IconButton(onClick = {/* DO NOTHING*/ }) {
                     Icon(
-                        imageVector = Icons.Default.Star,
-                        contentDescription = null
+                        painter = painterResource(R.drawable.monetify_icon_mono),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.padding(5.dp)
                     )
                 }
             }
