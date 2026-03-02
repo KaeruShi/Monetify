@@ -22,7 +22,7 @@
     <string name="about_title">Sobre</string>
     <string name="credits_title">Créditos</string>
     <string name="credits_subtitle">Obrigado a todos os contribuidores</string>
-    <string name="support_subtitle">Me pague um café</string>
+    <string name="support_subtitle">Dê uma estrela no Github</string>
     <string name="close_title">Fechar</string>
     <string name="changelog_title">Registro de Alterações</string>
     <string name="check_for_updates_title">Verificar Atualizações</string>
@@ -58,4 +58,6 @@
     <string name="are_you_sure">Você tem certeza?</string>
     <string name="reset_xposed_desc">Esta opção reverterá todas as alterações do xposed hook</string>
     <string name="yes">Sim</string>
+    <string name="kill_before_launch_title">Fechar Antes de Iniciar</string>
+    <string name="kill_before_launch_subtitle">Às vezes você precisa fechar o app host para aplicar as alterações</string>
 </resources>
