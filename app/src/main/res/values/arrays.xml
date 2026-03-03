@@ -6,5 +6,6 @@
         <item>projekt.substratum.lite</item>
         <item>com.twitter.android</item>
         <item>com.spotify.music</item>
+        <item>com.google.android.youtube</item>
     </string-array>
 </resources>

@@ -8,6 +8,7 @@ import com.kaerushi.monetify.xposed.hooks.pinterest.PinterestHooks
 import com.kaerushi.monetify.xposed.hooks.reddit.RedditHooks
 import com.kaerushi.monetify.xposed.hooks.subslite.SubstratumLiteHooks
 import com.kaerushi.monetify.xposed.hooks.twitter.TwitterHooks
+import com.kaerushi.monetify.xposed.hooks.youtube.YoutubeHooks
 
 @InjectYukiHookWithXposed(isUsingResourcesHook = true)
 object MainHook : IYukiHookXposedInit {
@@ -35,6 +36,7 @@ private object HookRegistry {
         PinterestHooks,
         RedditHooks,
         SubstratumLiteHooks,
-        TwitterHooks
+        TwitterHooks,
+        YoutubeHooks
     )
 }

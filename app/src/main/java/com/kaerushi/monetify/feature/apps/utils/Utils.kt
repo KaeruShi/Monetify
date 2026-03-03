@@ -9,6 +9,7 @@ import com.kaerushi.monetify.data.REDDIT_PACKAGE_NAME
 import com.kaerushi.monetify.data.SPOTIFY_PACKAGE_NAME
 import com.kaerushi.monetify.data.SUBSTRATUM_LITE_PACKAGE_NAME
 import com.kaerushi.monetify.data.X_PACKAGE_NAME
+import com.kaerushi.monetify.data.YOUTUBE_PACKAGE_NAME
 import com.kaerushi.monetify.data.model.AppInfo
 
 object Utils {
@@ -21,6 +22,7 @@ object Utils {
             Triple("Pinterest", PINTEREST_PACKAGE_NAME, R.drawable.app_pinterest),
             Triple("Reddit", REDDIT_PACKAGE_NAME, R.drawable.app_reddit),
             Triple("Substratum Lite", SUBSTRATUM_LITE_PACKAGE_NAME, R.drawable.app_subslite),
+            Triple("Youtube", YOUTUBE_PACKAGE_NAME, R.drawable.app_youtube)
 //            Triple("Spotify", SPOTIFY_PACKAGE_NAME, R.drawable.app_spotify)
         )
         for ((displayName, packageName, altIcon) in targetApps) {
