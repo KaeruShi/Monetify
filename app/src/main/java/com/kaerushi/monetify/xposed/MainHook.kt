@@ -37,6 +37,6 @@ private object HookRegistry {
         RedditHooks,
         SubstratumLiteHooks,
         TwitterHooks,
-        YoutubeHooks
+//        YoutubeHooks
     )
 }
