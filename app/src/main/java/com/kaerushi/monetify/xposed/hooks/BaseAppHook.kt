@@ -37,10 +37,6 @@ abstract class BaseAppHook : YukiBaseHooker() {
     }
 
     protected open fun hookClass() {
-        if (!MainHook.dexKitLoaded) {
-            YLog.error("DexKit not loaded")
-            return
-        }
         Activity::class.java.resolve().firstMethod { name = "onCreate"; parameters(Bundle::class.java) }.hook {
             after {
                 val instance = instance<Activity>()
