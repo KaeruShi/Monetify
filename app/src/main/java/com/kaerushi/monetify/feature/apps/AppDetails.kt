@@ -13,7 +13,7 @@ import com.kaerushi.monetify.core.ui.components.PreferenceType
 import com.kaerushi.monetify.data.viewmodel.AppsViewModel
 
 @Composable
-fun AppDetails(packageName: String, viewModel: AppsViewModel = hiltViewModel()) {
+fun AppDetails(packageName: String, showDisableAds: Boolean = false, viewModel: AppsViewModel = hiltViewModel()) {
     val enableMonet by viewModel.enableMonetState(packageName).collectAsState()
     val disableAds by viewModel.disableAdsState(packageName).collectAsState()
     val iconPack by viewModel.iconPackState(packageName).collectAsState()
@@ -27,14 +27,16 @@ fun AppDetails(packageName: String, viewModel: AppsViewModel = hiltViewModel()) 
             type = PreferenceType.TOP,
             true
         )
-        PreferenceSwitch(
-            checked = disableAds,
-            onCheckedChange = { viewModel.setAdsDisabled(packageName, it) },
-            title = stringResource(R.string.disable_ads_title),
-            summary = stringResource(R.string.disable_ads_subtitle),
-            type = PreferenceType.MID,
-            isChild = true
-        )
+        if (showDisableAds) {
+            PreferenceSwitch(
+                checked = disableAds,
+                onCheckedChange = { viewModel.setAdsDisabled(packageName, it) },
+                title = stringResource(R.string.disable_ads_title),
+                summary = stringResource(R.string.disable_ads_subtitle),
+                type = PreferenceType.MID,
+                isChild = true
+            )
+        }
         PreferenceItem(
             onClick = { viewModel.toggleShowIconPack(true) },
             title = stringResource(R.string.icon_pack_tile),

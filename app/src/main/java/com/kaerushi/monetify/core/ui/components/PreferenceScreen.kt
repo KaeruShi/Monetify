@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.kaerushi.monetify.data.REDDIT_PACKAGE_NAME
 import com.kaerushi.monetify.data.model.AppInfo
 import com.kaerushi.monetify.data.viewmodel.AppTheme
 import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
@@ -301,8 +302,12 @@ fun PreferenceApp(
             }
             AnimatedVisibility(visible = expanded) {
                 Column {
+                    val showDisableAds = when(appInfo.packageName) {
+                        REDDIT_PACKAGE_NAME -> true
+                        else -> false
+                    }
                     HorizontalDivider(modifier = Modifier.height(0.8.dp))
-                    AppDetails(appInfo.packageName)
+                    AppDetails(appInfo.packageName, showDisableAds)
                 }
             }
         }
