@@ -24,7 +24,7 @@ object ColorUtils {
         if (!isNightMode(context))
             context.getColor(android.R.color.system_accent1_100)
         else
-            context.getColor(android.R.color.system_accent1_100)
+            context.getColor(android.R.color.system_accent1_800)
 
     fun colorOnPrimaryContainer(context: Context): Int =
         context.getColor(android.R.color.system_accent1_900)
