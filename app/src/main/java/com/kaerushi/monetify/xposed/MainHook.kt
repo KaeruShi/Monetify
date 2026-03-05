@@ -4,6 +4,7 @@ import com.highcapable.yukihookapi.annotation.xposed.InjectYukiHookWithXposed
 import com.highcapable.yukihookapi.hook.factory.encase
 import com.highcapable.yukihookapi.hook.log.YLog
 import com.highcapable.yukihookapi.hook.xposed.proxy.IYukiHookXposedInit
+import com.kaerushi.monetify.xposed.hooks.files.FilesHooks
 import com.kaerushi.monetify.xposed.hooks.pinterest.PinterestHooks
 import com.kaerushi.monetify.xposed.hooks.reddit.RedditHooks
 import com.kaerushi.monetify.xposed.hooks.subslite.SubstratumLiteHooks
@@ -37,6 +38,7 @@ private object HookRegistry {
         RedditHooks,
         SubstratumLiteHooks,
         TwitterHooks,
+        FilesHooks
 //        YoutubeHooks
     )
 }
