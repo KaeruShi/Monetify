@@ -53,6 +53,7 @@ fun NavBar(
         Screen.Home.route -> Screen.Home.titleResId
         Screen.Apps.route -> Screen.Apps.titleResId
         Screen.Settings.route -> Screen.Settings.titleResId
+        Screen.About.route -> Screen.About.titleResId
         else -> null
     }
     var showMenu by remember { mutableStateOf(false) }
@@ -114,7 +115,7 @@ fun NavBar(
                         text = { Text(stringResource(R.string.check_for_updates_title), modifier = Modifier.padding(start = 6.dp)) },
                         onClick = {
                             showMenu = false
-                            cnViewModel.fetchChangelog()
+                            cnViewModel.checkForUpdates()
                         }
                     )
                 }

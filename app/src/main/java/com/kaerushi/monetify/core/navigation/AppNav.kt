@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.kaerushi.monetify.core.navigation
 
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -15,6 +17,8 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,25 +39,39 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kaerushi.monetify.R
+import com.kaerushi.monetify.core.ui.AboutScreen
 import com.kaerushi.monetify.core.ui.components.BottomNavBar
 import com.kaerushi.monetify.core.ui.components.ChangelogBottomSheet
 import com.kaerushi.monetify.core.ui.components.NavBar
 import com.kaerushi.monetify.core.ui.dialog.AlertDialog
 import com.kaerushi.monetify.data.viewmodel.ChangelogViewModel
+import com.kaerushi.monetify.data.viewmodel.UpdateEvent
 import com.kaerushi.monetify.feature.apps.AppsScreen
 import com.kaerushi.monetify.feature.home.HomeScreen
 import com.kaerushi.monetify.feature.settings.SettingsScreen
-import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNav() {
     val cnViewModel: ChangelogViewModel = viewModel()
     val release by cnViewModel.release.collectAsState()
-    val updateAvailable by cnViewModel.updateAvailable.collectAsState()
     val navController = rememberNavController()
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
+
+    // Separate scroll behaviors for each top-level destination to preserve their scroll state independently
+    val homeScrollBehavior = topAppBarScrollBehavior()
+    val appsScrollBehavior = topAppBarScrollBehavior()
+    val settingsScrollBehavior = topAppBarScrollBehavior()
+    val aboutScrollBehavior = topAppBarScrollBehavior()
+
+    val scrollBehavior = when (currentRoute) {
+        Screen.Apps.route -> appsScrollBehavior
+        Screen.Settings.route -> settingsScrollBehavior
+        Screen.About.route -> aboutScrollBehavior
+        else -> homeScrollBehavior
+    }
+
     val sheetState = rememberModalBottomSheetState()
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     var showUpdateDialog by remember { mutableStateOf(false) }
@@ -61,16 +79,11 @@ fun AppNav() {
     val uriHandler = LocalUriHandler.current
     val latestMsg = stringResource(R.string.already_on_the_latest_version)
 
-    LaunchedEffect(currentRoute) {
-        scrollBehavior.state.contentOffset = 0f
-        scrollBehavior.state.heightOffset = 0f
-    }
-
     LaunchedEffect(Unit) {
         cnViewModel.event.collect { event ->
             when(event) {
-                "update" -> showUpdateDialog = true
-                "latest" -> snackBarHostState.showSnackbar(latestMsg)
+                UpdateEvent.UpdateAvailable -> showUpdateDialog = true
+                UpdateEvent.LatestVersion -> snackBarHostState.showSnackbar(latestMsg)
             }
         }
     }
@@ -142,7 +155,12 @@ fun AppNav() {
         ) {
             composable(route = Screen.Home.route) { HomeScreen() }
             composable(route = Screen.Apps.route) { AppsScreen() }
-            composable(route = Screen.Settings.route) { SettingsScreen() }
+            composable(route = Screen.Settings.route) {
+                SettingsScreen(
+                    onNavigateToAbout = { navController.navigate(Screen.About.route) }
+                )
+            }
+            composable(route = Screen.About.route) { AboutScreen() }
         }
         if (isSheetOpen) {
             ChangelogBottomSheet(
@@ -169,9 +187,15 @@ fun AppNav() {
     }
 }
 
+@Composable
+private fun topAppBarScrollBehavior(): TopAppBarScrollBehavior {
+    return TopAppBarDefaults.pinnedScrollBehavior(rememberSaveable(saver = TopAppBarState.Saver) {
+        TopAppBarState(-Float.MAX_VALUE, 0f, 0f) })
+}
+
 // Helper function to determine navigation direction
 private fun isForwardNavigation(from: String?, to: String?): Boolean {
-    val order = listOf(Screen.Home.route, Screen.Apps.route, Screen.Settings.route)
+    val order = listOf(Screen.Home.route, Screen.Apps.route, Screen.Settings.route, Screen.About.route)
     val fromIndex = order.indexOf(from)
     val toIndex = order.indexOf(to)
     return toIndex > fromIndex

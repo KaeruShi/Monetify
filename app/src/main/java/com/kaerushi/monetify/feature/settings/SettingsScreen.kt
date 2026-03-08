@@ -30,7 +30,10 @@ import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
 import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
 
 @Composable
-fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
+fun SettingsScreen(
+    onNavigateToAbout: () -> Unit,
+    viewModel: SettingsViewModel = hiltViewModel()
+) {
     val selectedTheme by viewModel.themeState.collectAsState()
     val selectedColorScheme by viewModel.colorSchemeState.collectAsState()
     val selectedLanguage by viewModel.languageState.collectAsState()
@@ -96,20 +99,15 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
 
                 PreferenceCategory(stringResource(R.string.about_title))
                 PreferenceItem(
-                    onClick = {},
+                    onClick = onNavigateToAbout,
                     title = stringResource(R.string.app_name),
                     summary = BuildConfig.VERSION_NAME,
                     type = PreferenceType.TOP,
                     icon = R.drawable.monetify_icon_mono
                 )
                 PreferenceItem(
-                    onClick = {}, title = stringResource(R.string.credits_title),
-                    summary = stringResource(R.string.credits_subtitle),
-                    icon = R.drawable.user_group
-                )
-                PreferenceItem(
                     onClick = {
-                        uriHandler.openUri("https://github.com/kaerushi/monetify")
+                        uriHandler.openUri("https://ko-fi.com/kaerushi")
                     },
                     title = stringResource(R.string.support_title),
                     summary = stringResource(R.string.support_subtitle),
