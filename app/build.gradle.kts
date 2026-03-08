@@ -91,6 +91,10 @@ dependencies {
     implementation(libs.androidx.hilt.navigation)
     implementation(libs.material)
 
+    // Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
     // DataStore Preferences
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.datastore.preferences.core)
