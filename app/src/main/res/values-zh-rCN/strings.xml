@@ -15,14 +15,14 @@
     <string name="import_title">导入</string>
     <string name="export_title">导出</string>
     <string name="support_title">支持</string>
-    <string name="support_desc">如果您遇到任何问题或有反馈，请访问 telegram 或 github</string>
+    <string name="support_desc">如果您遇到任何问题 or 有反馈，请访问 telegram 或 github</string>
     <string name="theme_title">主题</string>
     <string name="color_scheme_title">配色方案</string>
     <string name="language_title">语言</string>
     <string name="about_title">关于</string>
     <string name="credits_title">致谢</string>
     <string name="credits_subtitle">感谢所有贡献者</string>
-    <string name="support_subtitle">在 Github 上点个星星</string>
+    <string name="support_subtitle">请我喝杯咖啡</string>
     <string name="close_title">关闭</string>
     <string name="changelog_title">更新日志</string>
     <string name="check_for_updates_title">检查更新</string>
@@ -60,4 +60,11 @@
     <string name="yes">是</string>
     <string name="kill_before_launch_title">启动前强制停止</string>
     <string name="kill_before_launch_subtitle">有时需要强制停止宿主应用才能应用更改</string>
+    <string name="warning_title">警告！</string>
+    <string name="app_under_development">此应用目前正在积极开发中。部分功能仍处于实验阶段，可能无法按预期工作。感谢您的理解，欢迎任何反馈，帮助我们改善体验。</string>
+    <string name="dont_show_this_again">不再显示</string>
+    <string name="already_on_the_latest_version">您已是最新版本</string>
+    <string name="developer">开发者</string>
+    <string name="source_code">源码</string>
+    <string name="contribution_desc">我们始终欢迎并非常感谢您的贡献！无论是修复错别字、改进文档、重构代码还是添加新功能，每一次贡献都很重要 ❤️</string>
 </resources>

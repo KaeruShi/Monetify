@@ -22,7 +22,7 @@
     <string name="about_title">About</string>
     <string name="credits_title">Credits</string>
     <string name="credits_subtitle">Thanks to all contributors</string>
-    <string name="support_subtitle">Give a star on Github</string>
+    <string name="support_subtitle">Buy me a coffee</string>
     <string name="close_title">Close</string>
     <string name="changelog_title">Changelog</string>
     <string name="check_for_updates_title">Check For Updates</string>
@@ -60,4 +60,11 @@
     <string name="yes">Yes</string>
     <string name="kill_before_launch_title">Kill Before Launch</string>
     <string name="kill_before_launch_subtitle">Sometimes you need to kill host app to apply changes</string>
+    <string name="warning_title">WARNING!</string>
+    <string name="app_under_development">This app is currently under active development. Some features are still experimental and may not function as intended. We appreciate your understanding and welcome any feedback to help us improve the experience.</string>
+    <string name="dont_show_this_again">Don\'t show this again</string>
+    <string name="already_on_the_latest_version">You\'re already on the latest version.</string>
+    <string name="developer">Developer</string>
+    <string name="source_code">Source code</string>
+    <string name="contribution_desc">Contributions are always welcome and greatly appreciated! Whether you’re fixing a small typo, improving documentation, refactoring code, or adding a brand-new feature — every contribution matters ❤️</string>
 </resources>

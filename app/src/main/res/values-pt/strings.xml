@@ -22,7 +22,7 @@
     <string name="about_title">Sobre</string>
     <string name="credits_title">Créditos</string>
     <string name="credits_subtitle">Obrigado a todos os contribuidores</string>
-    <string name="support_subtitle">Dê uma estrela no Github</string>
+    <string name="support_subtitle">Me pague um café</string>
     <string name="close_title">Fechar</string>
     <string name="changelog_title">Registro de Alterações</string>
     <string name="check_for_updates_title">Verificar Atualizações</string>
@@ -60,4 +60,11 @@
     <string name="yes">Sim</string>
     <string name="kill_before_launch_title">Fechar Antes de Iniciar</string>
     <string name="kill_before_launch_subtitle">Às vezes você precisa fechar o app host para aplicar as alterações</string>
+    <string name="warning_title">AVISO!</string>
+    <string name="app_under_development">Este aplicativo está atualmente em desenvolvimento ativo. Alguns recursos ainda são experimentais e podem não funcionar conforme pretendido. Agradecemos sua compreensão e bem-vindos qualquer feedback para nos ajudar a melhorar a experiência.</string>
+    <string name="dont_show_this_again">Não mostrar novamente</string>
+    <string name="already_on_the_latest_version">Você já está na versão mais recente</string>
+    <string name="developer">Desenvolvedor</string>
+    <string name="source_code">Código fonte</string>
+    <string name="contribution_desc">Contribuições são sempre bem-vindas e muito apreciadas! Seja corrigindo um pequeno erro de digitação, melhorando a documentação, refatorando o código ou adicionando um novo recurso — cada contribuição importa ❤️</string>
 </resources>

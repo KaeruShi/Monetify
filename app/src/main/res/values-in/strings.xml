@@ -22,7 +22,7 @@
     <string name="about_title">Tentang</string>
     <string name="credits_title">Kredit</string>
     <string name="credits_subtitle">Terima kasih kepada semua kontributor</string>
-    <string name="support_subtitle">Beri bintang di Github</string>
+    <string name="support_subtitle">Traktir saya kopi</string>
     <string name="close_title">Tutup</string>
     <string name="changelog_title">Catatan Perubahan</string>
     <string name="check_for_updates_title">Periksa Pembaruan</string>
@@ -60,4 +60,11 @@
     <string name="yes">Ya</string>
     <string name="kill_before_launch_title">Kill Sebelum Memulai</string>
     <string name="kill_before_launch_subtitle">Terkadang Anda perlu kill aplikasi host untuk menerapkan perubahan</string>
+    <string name="warning_title">PERINGATAN!</string>
+    <string name="app_under_development">Saat ini aplikasi sedang dalam pengembangan aktif. Beberapa fitur masih bersifat eksperimental dan mungkin tidak berfungsi sesuai kebutuhan. Kami menghargai pemahaman Anda dan menyambut baik umpan balik untuk membantu kami meningkatkan pengalaman.</string>
+    <string name="dont_show_this_again">Jangan tampilkan lagi</string>
+    <string name="already_on_the_latest_version">Sudah di versi terbaru</string>
+    <string name="developer">Pengembang</string>
+    <string name="source_code">Kode sumber</string>
+    <string name="contribution_desc">Kontribusi selalu disambut dan sangat dihargai! Baik Anda memperbaiki typo kecil, meningkatkan dokumentasi, melakukan refaktorisasi kode, atau menambahkan fitur baru — setiap kontribusi sangat berarti ❤️</string>
 </resources>

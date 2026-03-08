@@ -22,7 +22,7 @@
     <string name="about_title">О программе</string>
     <string name="credits_title">Благодарности</string>
     <string name="credits_subtitle">Спасибо всем участникам</string>
-    <string name="support_subtitle">Поставьте звезду на Github</string>
+    <string name="support_subtitle">Угостите меня кофе</string>
     <string name="close_title">Закрыть</string>
     <string name="changelog_title">Список Изменений</string>
     <string name="check_for_updates_title">Проверить Обновления</string>
@@ -60,4 +60,11 @@
     <string name="yes">Да</string>
     <string name="kill_before_launch_title">Закрыть Перед Запуском</string>
     <string name="kill_before_launch_subtitle">Иногда нужно закрыть хост-приложение для применения изменений</string>
+    <string name="warning_title">ПРЕДУПРЕЖДЕНИЕ!</string>
+    <string name="app_under_development">Это приложение в настоящее время находится в активной разработке. Некоторые функции все еще являются экспериментальными и могут работать не так, как ожидалось. Мы ценим ваше понимание и приветствуем любые отзывы, которые помогут нам улучшить опыт.</string>
+    <string name="dont_show_this_again">Больше не показывать</string>
+    <string name="already_on_the_latest_version">У вас уже установлена последняя версия</string>
+    <string name="developer">Разработчик</string>
+    <string name="source_code">Исходный код</string>
+    <string name="contribution_desc">Мы всегда рады вкладу в проект! Будь то исправление опечатки, улучшение документации, рефакторинг кода или добавление новых функций — каждый вклад важен ❤️</string>
 </resources>
