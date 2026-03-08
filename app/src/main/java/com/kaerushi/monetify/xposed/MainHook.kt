@@ -17,11 +17,14 @@ import com.kaerushi.monetify.xposed.hooks.reddit.RedditHooks
 import com.kaerushi.monetify.xposed.hooks.subslite.SubstratumLiteHooks
 import com.kaerushi.monetify.xposed.hooks.twitter.TwitterHooks
 import androidx.core.graphics.drawable.toDrawable
+import org.luckypray.dexkit.DexKitBridge
 
 @InjectYukiHookWithXposed(isUsingResourcesHook = true)
 object MainHook : IYukiHookXposedInit {
     @Volatile var dexKitLoaded: Boolean = false
         private set
+
+    lateinit var bridge: DexKitBridge
 
 //    private lateinit var modRes: XModuleResources
 
@@ -44,9 +47,9 @@ object MainHook : IYukiHookXposedInit {
             YLog.error("DexKit native load failed: $it")
         }.getOrDefault(false)
 
-        if (dexKitLoaded) {
-            YLog.debug("DexKit loaded")
-        }
+//        if (dexKitLoaded) {
+//            YLog.debug("DexKit loaded")
+//        }
 
         HookRegistry.hooks.forEach { loadHooker(it) }
     }

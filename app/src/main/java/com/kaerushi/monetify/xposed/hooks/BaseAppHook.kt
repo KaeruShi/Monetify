@@ -9,8 +9,10 @@ import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
 import com.kaerushi.monetify.data.viewmodel.AppIconPack
 import com.kaerushi.monetify.xposed.MainHook
+import com.kaerushi.monetify.xposed.MainHook.bridge
 import com.kaerushi.monetify.xposed.utils.HookStatusUtil
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
+import org.luckypray.dexkit.DexKitBridge
 
 abstract class BaseAppHook : YukiBaseHooker() {
     protected abstract val pkgName: String
@@ -19,6 +21,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
     @LegacyResourcesHook
     override fun onHook() {
         loadApp(pkgName) {
+            bridge = DexKitBridge.create(appInfo.sourceDir)
             getIconPackDrawables()?.let { drawables ->
                 resources().hook {
                     drawables.forEach { (resName, replacementDrawable) ->
