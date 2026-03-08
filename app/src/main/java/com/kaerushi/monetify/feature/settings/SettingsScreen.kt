@@ -109,7 +109,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
                 )
                 PreferenceItem(
                     onClick = {
-                        uriHandler.openUri("https://ko-fi.com/kaerushi")
+                        uriHandler.openUri("https://github.com/kaerushi/monetify")
                     },
                     title = stringResource(R.string.support_title),
                     summary = stringResource(R.string.support_subtitle),
