@@ -20,7 +20,6 @@ object IconPack {
         "ic_eject" to R.drawable.duotone_eject,
         "ic_menu_delete" to R.drawable.duotone_delete,
         "ic_menu_delete_m3" to R.drawable.duotone_delete,
-
         "ic_doc_apk" to R.drawable.duotone_android,
         "ic_doc_codes" to R.drawable.duotone_code,
         "ic_hamburger" to R.drawable.duotone_menu,
