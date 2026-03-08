@@ -11,42 +11,74 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.ui.components.BottomNavBar
 import com.kaerushi.monetify.core.ui.components.ChangelogBottomSheet
 import com.kaerushi.monetify.core.ui.components.NavBar
+import com.kaerushi.monetify.core.ui.dialog.AlertDialog
+import com.kaerushi.monetify.data.viewmodel.ChangelogViewModel
 import com.kaerushi.monetify.feature.apps.AppsScreen
 import com.kaerushi.monetify.feature.home.HomeScreen
 import com.kaerushi.monetify.feature.settings.SettingsScreen
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNav() {
+    val cnViewModel: ChangelogViewModel = viewModel()
+    val release by cnViewModel.release.collectAsState()
+    val updateAvailable by cnViewModel.updateAvailable.collectAsState()
     val navController = rememberNavController()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     val sheetState = rememberModalBottomSheetState()
-    var isSheetOpen by rememberSaveable {
-        mutableStateOf(false)
-    }
+    var isSheetOpen by rememberSaveable { mutableStateOf(false) }
+    var showUpdateDialog by remember { mutableStateOf(false) }
+    val snackBarHostState = remember { SnackbarHostState() }
+    val uriHandler = LocalUriHandler.current
+    val latestMsg = stringResource(R.string.already_on_the_latest_version)
+
     LaunchedEffect(currentRoute) {
         scrollBehavior.state.contentOffset = 0f
         scrollBehavior.state.heightOffset = 0f
     }
+
+    LaunchedEffect(Unit) {
+        cnViewModel.event.collect { event ->
+            when(event) {
+                "update" -> showUpdateDialog = true
+                "latest" -> snackBarHostState.showSnackbar(latestMsg)
+            }
+        }
+    }
+
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackBarHostState)
+        },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             NavBar(
@@ -116,6 +148,22 @@ fun AppNav() {
             ChangelogBottomSheet(
                 onDismiss = { isSheetOpen = false },
                 sheetState = sheetState
+            )
+        }
+
+        if (showUpdateDialog) {
+            AlertDialog(
+                title = "Update Available!",
+                desc = "Version ${release?.tagName}",
+                content = {
+                    Text("Changelog:\n${release?.body}")
+                },
+                onDismiss = { showUpdateDialog = false },
+                onConfirm = {
+                    showUpdateDialog = false
+                    uriHandler.openUri(release!!.htmlUrl)
+                },
+                confirmText = "Update"
             )
         }
     }

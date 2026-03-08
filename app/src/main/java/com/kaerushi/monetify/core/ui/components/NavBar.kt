@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,11 +28,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.navigation.Screen
 import com.kaerushi.monetify.data.viewmodel.AppsViewModel
+import com.kaerushi.monetify.data.viewmodel.ChangelogViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,6 +44,8 @@ fun NavBar(
     onShowChangelog: () -> Unit,
     viewModel: AppsViewModel = hiltViewModel()
 ) {
+    val cnViewModel: ChangelogViewModel = viewModel()
+    var isCheckingUpdate by remember { mutableStateOf(false) }
     val showNotInstalled by viewModel.notInstalledState.collectAsState()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
@@ -104,12 +107,14 @@ fun NavBar(
                         onClick = {
                             showMenu = false
                             onShowChangelog()
+                            cnViewModel.fetchChangelog()
                         }
                     )
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.check_for_updates_title), modifier = Modifier.padding(start = 6.dp)) },
                         onClick = {
                             showMenu = false
+                            cnViewModel.fetchChangelog()
                         }
                     )
                 }
