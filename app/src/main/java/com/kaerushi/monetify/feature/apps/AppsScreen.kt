@@ -1,14 +1,18 @@
 package com.kaerushi.monetify.feature.apps
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,6 +34,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.ui.components.PreferenceApp
 import com.kaerushi.monetify.core.ui.components.PreferenceType
+import com.kaerushi.monetify.core.ui.dialog.AlertDialog
 import com.kaerushi.monetify.core.ui.dialog.RadioSelectionDialog
 import com.kaerushi.monetify.core.util.Utils.launchApp
 import com.kaerushi.monetify.data.viewmodel.AppIconPack
@@ -43,6 +48,8 @@ fun AppsScreen(viewModel: AppsViewModel = hiltViewModel(), settingsViewModel: Se
     val context = LocalContext.current
     val showNotInstalled by viewModel.notInstalledState.collectAsState()
     val showIconPack by viewModel.showIconPackState.collectAsState()
+    val showWarningState by viewModel.showWarningState.collectAsState()
+    var showWarning by remember(showWarningState) { mutableStateOf(showWarningState) }
     val killBeforeLaunch by settingsViewModel.killBeforeLaunchState.collectAsState()
     val apps = remember(showNotInstalled) { getInstalledApps(context.applicationContext, showNotInstalled) }
     var expandedKey by rememberSaveable { mutableStateOf<String?>(null) }
@@ -80,7 +87,9 @@ fun AppsScreen(viewModel: AppsViewModel = hiltViewModel(), settingsViewModel: Se
                     else -> 0.dp
                 }
                 PreferenceApp(
-                    modifier = Modifier.animateItem().padding(bottom = extraPadding),
+                    modifier = Modifier
+                        .animateItem()
+                        .padding(bottom = extraPadding),
                     icon = appInfo.icon,
                     altIcon = appInfo.altIcon,
                     title = appInfo.name,
@@ -123,5 +132,38 @@ fun AppsScreen(viewModel: AppsViewModel = hiltViewModel(), settingsViewModel: Se
                 dismissText = stringResource(R.string.close_title)
             )
         }
+    }
+
+    if (showWarning) {
+        var dontShowAgain by remember { mutableStateOf(false) }
+        AlertDialog(
+            stringResource(R.string.warning_title),
+            stringResource(R.string.app_under_development),
+            onConfirm = {
+                if (dontShowAgain) viewModel.toggleShowWarningDialog(false)
+                showWarning = false
+            },
+            onDismiss = {},
+            setCancelable = false,
+            content = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { dontShowAgain = !dontShowAgain }
+                        .padding(horizontal = 24.dp, vertical = 8.dp)
+                ) {
+                    Checkbox(
+                        checked = dontShowAgain,
+                        onCheckedChange = null
+                    )
+                    Text(
+                        text = stringResource(R.string.dont_show_this_again),
+                        fontSize = 14.sp,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
+            }
+        )
     }
 }

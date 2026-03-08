@@ -18,6 +18,9 @@ class AppsViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
     val showIconPackState = repo.showAppIconPack
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+    val showWarningState = repo.showWarningDialog
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
 
     private val enableMonetStates = mutableMapOf<String, StateFlow<Boolean>>()
     fun enableMonetState(pkgName: String) = enableMonetStates.getOrPut(pkgName) {
@@ -39,6 +42,9 @@ class AppsViewModel @Inject constructor(
 
     fun toggleNotInstalled(isVisible: Boolean) {
         viewModelScope.launch { repo.toggleShowInstalledPref(isVisible) }
+    }
+    fun toggleShowWarningDialog(show: Boolean) {
+        viewModelScope.launch { repo.toggleShowWarningDialog(show) }
     }
     fun toggleShowIconPack(show: Boolean) {
         viewModelScope.launch { repo.toggleShowAppIconPack(show) }

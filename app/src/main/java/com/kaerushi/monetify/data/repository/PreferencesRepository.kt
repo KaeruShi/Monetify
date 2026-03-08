@@ -98,6 +98,7 @@ class PreferencesRepository @Inject constructor(
     val killBeforeLaunch = getPreferenceFlow(PrefKeys.KILL_BEFORE_LAUNCH, true)
     val showNotInstalledPref = getPreferenceFlow(PrefKeys.SHOW_NOT_INSTALLED_APPS, true)
     val showAppIconPack = getPreferenceFlow(PrefKeys.SHOW_APP_ICON_PACK, false)
+    val showWarningDialog = getPreferenceFlow(PrefKeys.SHOW_WARNING_DIALOG, true)
     val showWelcomeScreen = getPreferenceFlow(PrefKeys.SHOW_WELCOME_SCREEN, true)
 
     fun getAppMonetEnabled(packageName: String) = getPreferenceFlow(getAppMonetKey(packageName), false)
@@ -108,6 +109,7 @@ class PreferencesRepository @Inject constructor(
 
     // Preference Setters
     suspend fun toggleShowInstalledPref(show: Boolean) = savePreference(PrefKeys.SHOW_NOT_INSTALLED_APPS, show)
+    suspend fun toggleShowWarningDialog(show: Boolean) = savePreference(PrefKeys.SHOW_WARNING_DIALOG, show)
     suspend fun toggleShowWelcomeScreenPref(show: Boolean) = savePreference(PrefKeys.SHOW_WELCOME_SCREEN, show)
     suspend fun toggleShowAppIconPack(show: Boolean) = savePreference(PrefKeys.SHOW_APP_ICON_PACK, show)
     suspend fun setTheme(theme: AppTheme) = savePreference(PrefKeys.APP_THEME_KEY, theme.name)

@@ -14,9 +14,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import com.kaerushi.monetify.R
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -25,10 +28,15 @@ fun AlertDialog(
     desc: String = "",
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
-    confirmText: String = "Yes",
-    dismissText: String = "Cancel"
+    setCancelable: Boolean = true,
+    content: (@Composable () -> Unit)? = null,
+    confirmText: String = stringResource(R.string.yes),
+    dismissText: String? = null
 ) {
-    Dialog(onDismissRequest = onDismiss) {
+    Dialog(onDismissRequest = onDismiss, properties = DialogProperties(
+        dismissOnClickOutside = setCancelable,
+        dismissOnBackPress = setCancelable
+    )) {
         Surface(
             modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(24.dp), color =
                 MaterialTheme.colorScheme.surfaceContainer
@@ -47,6 +55,10 @@ fun AlertDialog(
                     modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 16.dp)
                 )
 
+                if (content != null) {
+                    content()
+                }
+
                 // Action Buttons
                 Row(
                     modifier = Modifier
@@ -54,11 +66,13 @@ fun AlertDialog(
                         .padding(end = 20.dp, bottom = 18.dp),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    Button(onClick = { onDismiss() }, shapes = ButtonDefaults.shapes(), colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-                        contentColor = MaterialTheme.colorScheme.onSurface
-                    )) {
-                        Text(dismissText)
+                    if (dismissText != null) {
+                        Button(onClick = { onDismiss() }, shapes = ButtonDefaults.shapes(), colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                            contentColor = MaterialTheme.colorScheme.onSurface
+                        )) {
+                            Text(dismissText)
+                        }
                     }
                     Button(onClick = {
                         onConfirm()
