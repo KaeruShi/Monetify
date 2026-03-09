@@ -5,7 +5,7 @@
 A Xposed module that brings Material You (Monet) dynamic theming to third-party apps by modifying icons and color resources at runtime, allowing apps to seamlessly match your system theme.
 
 [![Platform](https://img.shields.io/badge/Android-12%2B-green?style=for-the-badge&logo=android)](https://www.android.com/)
-[![Framework](https://img.shields.io/badge/Framework-LSPosed-red?style=for-the-badge)](https://github.com/JingMatrix/LSPosed)
+[![Framework](https://img.shields.io/badge/Module-Xposed-red?style=for-the-badge)](https://github.com/JingMatrix/LSPosed)
 [![Telegram](https://img.shields.io/badge/Telegram-Join-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/weeabooify)
 </div>
 
@@ -83,16 +83,12 @@ Before creating a new issue, please:
 - Include as much detail as possible
 - Provide logcat output if reporting a crash
 
-## 📜 License
-
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 - [YukiHookAPI](https://github.com/HighCapable/YukiHookAPI) - Powerful Xposed hooking framework
+- [DexKit](https://github.com/LuckyPray/DexKit) - Dex deobfuscation library
 - [LSPosed](https://github.com/LSPosed/LSPosed) - Modern Xposed framework implementation  
 - [Material You](https://m3.material.io/) - Google's Material Design 3
-- [DexKit](https://github.com/LuckyPray/DexKit) - Dex deobfuscation library.
 
 ## ⚠️ Disclaimer
 
@@ -103,7 +99,7 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 - 💬 [GitHub Discussions](https://github.com/KaeruShi/Monetify/discussions) - Ask questions and chat with the community
 - 🐛 [GitHub Issues](https://github.com/KaeruShi/Monetify/issues) - Report bugs and request features
-- ➤  [Telegram](https://weeabooify.t.me) - Support group
+- ➤  [Telegram](https://weeabooifychat.t.me) - Support group
 
 ## 🌟 Star History
 
