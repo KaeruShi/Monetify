@@ -61,10 +61,14 @@
     <string name="kill_before_launch_title">Kill Sebelum Memulai</string>
     <string name="kill_before_launch_subtitle">Terkadang Anda perlu kill aplikasi host untuk menerapkan perubahan</string>
     <string name="warning_title">PERINGATAN!</string>
-    <string name="app_under_development">Saat ini aplikasi sedang dalam pengembangan aktif. Beberapa fitur masih bersifat eksperimental dan mungkin tidak berfungsi sesuai kebutuhan. Kami menghargai pemahaman Anda dan menyambut baik umpan balik untuk membantu kami meningkatkan pengalaman.</string>
+    <string name="app_under_development">Aplikasi ini saat ini sedang dalam pengembangan aktif. Beberapa fitur masih bersifat eksperimental dan mungkin tidak berfungsi sesuai kebutuhan. Kami menghargai pemahaman Anda dan menyambut baik umpan balik untuk membantu kami meningkatkan pengalaman.</string>
     <string name="dont_show_this_again">Jangan tampilkan lagi</string>
     <string name="already_on_the_latest_version">Sudah di versi terbaru</string>
     <string name="developer">Pengembang</string>
     <string name="source_code">Kode sumber</string>
     <string name="contribution_desc">Kontribusi selalu disambut dan sangat dihargai! Baik Anda memperbaiki typo kecil, meningkatkan dokumentasi, melakukan refaktorisasi kode, atau menambahkan fitur baru — setiap kontribusi sangat berarti ❤️</string>
+    <string name="update_available">🎉 Pembaruan Tersedia!</string>
+    <string name="version">Versi %1$s</string>
+    <string name="changelog">Catatan Perubahan:\n%1$s</string>
+    <string name="update">Pembaruan</string>
 </resources>

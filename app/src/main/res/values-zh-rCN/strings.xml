@@ -67,4 +67,8 @@
     <string name="developer">开发者</string>
     <string name="source_code">源码</string>
     <string name="contribution_desc">我们始终欢迎并非常感谢您的贡献！无论是修复错别字、改进文档、重构代码还是添加新功能，每一次贡献都很重要 ❤️</string>
+    <string name="update_available">🎉 有可用更新</string>
+    <string name="version">版本 %1$s</string>
+    <string name="changelog">更新日志：\n%1$s</string>
+    <string name="update">更新</string>
 </resources>

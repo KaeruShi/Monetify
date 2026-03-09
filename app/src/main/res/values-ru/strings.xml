@@ -67,4 +67,8 @@
     <string name="developer">Разработчик</string>
     <string name="source_code">Исходный код</string>
     <string name="contribution_desc">Мы всегда рады вкладу в проект! Будь то исправление опечатки, улучшение документации, рефакторинг кода или добавление новых функций — каждый вклад важен ❤️</string>
+    <string name="update_available">🎉 Доступно обновление!</string>
+    <string name="version">Версия %1$s</string>
+    <string name="changelog">Список изменений:\n%1$s</string>
+    <string name="update">Обновить</string>
 </resources>

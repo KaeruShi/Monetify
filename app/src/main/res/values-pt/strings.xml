@@ -67,4 +67,8 @@
     <string name="developer">Desenvolvedor</string>
     <string name="source_code">Código fonte</string>
     <string name="contribution_desc">Contribuições são sempre bem-vindas e muito apreciadas! Seja corrigindo um pequeno erro de digitação, melhorando a documentação, refatorando o código ou adicionando um novo recurso — cada contribuição importa ❤️</string>
+    <string name="update_available">🎉 Atualização Disponível!</string>
+    <string name="version">Versão %1$s</string>
+    <string name="changelog">Registro de Alterações:\n%1$s</string>
+    <string name="update">Atualizar</string>
 </resources>
