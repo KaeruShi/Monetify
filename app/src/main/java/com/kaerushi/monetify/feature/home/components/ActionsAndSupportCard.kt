@@ -52,10 +52,10 @@ private fun ImportExportRow(onImport: () -> Unit, onExport: () -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        OutlinedButton(modifier = Modifier.weight(1f), onClick = onImport, shapes = ButtonDefaults.shapes()) {
+        OutlinedButton(shapes = ButtonDefaults.shapes(), modifier = Modifier.weight(1f), onClick = onImport) {
             Text(stringResource(R.string.import_title))
         }
-        Button(modifier = Modifier.weight(1f), onClick = onExport, shapes = ButtonDefaults.shapes()) {
+        Button(shapes = ButtonDefaults.shapes(), modifier = Modifier.weight(1f), onClick = onExport) {
             Text(stringResource(R.string.export_title))
         }
     }

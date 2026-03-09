@@ -18,7 +18,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.core.manager.allPermissionsGranted
 import com.kaerushi.monetify.core.navigation.AppNav
 import com.kaerushi.monetify.data.viewmodel.HomeViewModel
-import com.kaerushi.monetify.feature.welcome.WelcomeScreen
 
 @Composable
 fun MainScreen(viewModel: HomeViewModel = hiltViewModel()) {

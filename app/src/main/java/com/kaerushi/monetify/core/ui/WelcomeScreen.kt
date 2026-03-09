@@ -1,4 +1,4 @@
-package com.kaerushi.monetify.feature.welcome
+package com.kaerushi.monetify.core.ui
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -18,6 +18,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -27,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
@@ -40,6 +43,7 @@ import com.kaerushi.monetify.core.manager.requestNotification
 import com.kaerushi.monetify.core.manager.requestStorage
 import com.kaerushi.monetify.data.viewmodel.HomeViewModel
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun WelcomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val context = LocalContext.current
@@ -56,10 +60,16 @@ fun WelcomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     .fillMaxWidth(), verticalArrangement = Arrangement.Center
             ) {
                 Icon(
-                    imageVector = Icons.Default.Favorite,
+                    painter = painterResource(R.drawable.monetify_icon_pastel),
                     contentDescription = null,
+                    tint = null,
                     modifier = Modifier
-                        .size(128.dp)
+                        .size(108.dp)
+                        .background(
+                            color = colorResource(R.color.ic_launcher_background),
+                            shape = CircleShape
+                        )
+                        .padding(15.dp)
                         .align(Alignment.CenterHorizontally)
                 )
                 Text(
@@ -115,6 +125,7 @@ fun WelcomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
             Button(
                 onClick = { viewModel.toggleShowWelcomeScreen(false) },
                 enabled = rootGranted.value && storageGranted.value && notificationGranted.value,
+                shapes = ButtonDefaults.shapes(),
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(bottom = 32.dp)
@@ -134,7 +145,7 @@ fun PermissionItem(
     isGranted: Boolean = false,
 ) {
     val containerColor = if (isGranted) MaterialTheme.colorScheme.primaryContainer
-    else MaterialTheme.colorScheme.surfaceContainer
+    else MaterialTheme.colorScheme.surfaceContainerHigh
 
     val textColor = if (isGranted) MaterialTheme.colorScheme.onPrimaryContainer
     else MaterialTheme.colorScheme.onSurfaceVariant
@@ -153,7 +164,7 @@ fun PermissionItem(
                 imageVector = Icons.Default.Check,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(36.dp)
+                    .size(38.dp)
                     .background(
                         color = MaterialTheme.colorScheme.primary,
                         shape = CircleShape
@@ -166,9 +177,9 @@ fun PermissionItem(
                 painter = painterResource(icon),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(36.dp)
+                    .size(38.dp)
                     .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
+                        color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
                         shape = CircleShape
                     )
                     .padding(6.dp),
