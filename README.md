@@ -2,7 +2,7 @@
 
 # Monetify
 
-A Xposed module that brings Material You (Monet) dynamic theming to third-party apps by modifying icons and color resources at runtime, allowing apps to seamlessly match your system theme.
+A Xposed module that brings customization to third-party apps by modifying icons and color resources at runtime, allowing apps to seamlessly match your system theme.
 
 [![Platform](https://img.shields.io/badge/Android-12%2B-green?style=for-the-badge&logo=android)](https://www.android.com/)
 [![Framework](https://img.shields.io/badge/Module-Xposed-red?style=for-the-badge)](https://github.com/JingMatrix/LSPosed)
