@@ -143,7 +143,7 @@ fun AppsScreen(viewModel: AppsViewModel = hiltViewModel(), settingsViewModel: Se
                 if (dontShowAgain) viewModel.toggleShowWarningDialog(false)
                 showWarning = false
             },
-            onDismiss = {},
+            onDismiss = { showWarning = false },
             setCancelable = false,
             content = {
                 Row(
