@@ -10,6 +10,7 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -33,6 +34,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -81,7 +85,7 @@ fun AppNav() {
 
     LaunchedEffect(Unit) {
         cnViewModel.event.collect { event ->
-            when(event) {
+            when (event) {
                 UpdateEvent.UpdateAvailable -> showUpdateDialog = true
                 UpdateEvent.LatestVersion -> snackBarHostState.showSnackbar(latestMsg)
             }
@@ -171,17 +175,23 @@ fun AppNav() {
 
         if (showUpdateDialog) {
             AlertDialog(
-                title = "Update Available!",
-                desc = "Version ${release?.tagName}",
+                title = stringResource(R.string.update_available),
                 content = {
-                    Text("Changelog:\n${release?.body}")
+                    Column(modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)) {
+                        Text(stringResource(R.string.version, release?.tagName ?: "is null"),
+                            fontWeight = FontWeight.Bold)
+                        Text(
+                            stringResource(R.string.changelog, release?.body ?: "Failed to retrieve changelog"),
+                            fontSize = 14.sp
+                        )
+                    }
                 },
                 onDismiss = { showUpdateDialog = false },
                 onConfirm = {
                     showUpdateDialog = false
                     uriHandler.openUri(release!!.htmlUrl)
                 },
-                confirmText = "Update"
+                confirmText = stringResource(R.string.update)
             )
         }
     }
@@ -190,7 +200,8 @@ fun AppNav() {
 @Composable
 private fun topAppBarScrollBehavior(): TopAppBarScrollBehavior {
     return TopAppBarDefaults.pinnedScrollBehavior(rememberSaveable(saver = TopAppBarState.Saver) {
-        TopAppBarState(-Float.MAX_VALUE, 0f, 0f) })
+        TopAppBarState(-Float.MAX_VALUE, 0f, 0f)
+    })
 }
 
 // Helper function to determine navigation direction

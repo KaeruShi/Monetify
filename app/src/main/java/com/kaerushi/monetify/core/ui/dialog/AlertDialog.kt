@@ -25,7 +25,7 @@ import com.kaerushi.monetify.R
 @Composable
 fun AlertDialog(
     title: String,
-    desc: String = "",
+    desc: String? = null,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
     setCancelable: Boolean = true,
@@ -50,10 +50,12 @@ fun AlertDialog(
                 )
 
                 // Description
-                Text(
-                    text = desc, fontSize = 14.sp,
-                    modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 16.dp)
-                )
+                if (desc != null) {
+                    Text(
+                        text = desc, fontSize = 14.sp,
+                        modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 16.dp)
+                    )
+                }
 
                 if (content != null) {
                     content()
