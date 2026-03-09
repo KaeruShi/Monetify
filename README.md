@@ -4,9 +4,9 @@
 
 A Xposed module that brings Material You (Monet) dynamic theming to third-party apps by modifying icons and color resources at runtime, allowing apps to seamlessly match your system theme.
 
-[![License](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](LICENSE)
-[![Android](https://img.shields.io/badge/Android-12%2B-green.svg)](https://developer.android.com)
-[![Xposed](https://img.shields.io/badge/Xposed-Required-orange.svg)](https://github.com/LSPosed/LSPosed)
+[![Platform](https://img.shields.io/badge/Android-12%2B-green?style=for-the-badge&logo=android)](https://www.android.com/)
+[![Framework](https://img.shields.io/badge/Framework-LSPosed-red?style=for-the-badge)](https://github.com/JingMatrix/LSPosed)
+[![Telegram](https://img.shields.io/badge/Telegram-Join-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/weeabooify)
 </div>
 
 ## ✨ Features
@@ -15,11 +15,12 @@ A Xposed module that brings Material You (Monet) dynamic theming to third-party 
 - 💉 **Dagger Hilt** for dependency injection across application, ViewModel, and system components  
 - 🎨 **Jetpack Compose** for building declarative, state-driven UI components  
 - 🌈 **Material Expressive** with dynamic color support and adaptive theming  
-- 🎭 **Xposed-based icon replacement** to modify third-party app drawable resources at runtime  
-- 🎨 **Runtime color hooking** to override third-party app color resources using the system Monet palette  
+- 🎭 **Xposed runtime resource hooking** for modifying third-party app icons and colors dynamically  
+- 📦 **Import / Export configuration** for easy backup and sharing of your setup  
 
 ## 📱 Currently Supported Apps
 
+- DocumentsUI
 - Pinterest  
 - Reddit
 - X
@@ -64,7 +65,6 @@ cd Monetify
 Contributions are always welcome and greatly appreciated!
 Whether you’re fixing a small typo, improving documentation, refactoring code, or adding a brand-new feature — every contribution matters ❤️
 
-
 ## 🗺️ Roadmap
 
 ### Planned Features
@@ -96,7 +96,8 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 ## ⚠️ Disclaimer
 
-Monetify is an Xposed module that modifies the behavior of other applications and should be used at your own risk. Always back up your data before using Xposed modules, as the developer is not responsible for any damage or data loss caused by this module, and some applications may have anti-modification or detection mechanisms.
+- Monetify is an Xposed module that modifies the behavior of other applications.Use it at your own risk and always back up your data. The developer is not responsible for any damage or data loss.
+- This project is still under active development. Some features may be incomplete, experimental, or may not work as expected.
 
 ## 📞 Support
 
@@ -109,15 +110,3 @@ Monetify is an Xposed module that modifies the behavior of other applications an
 If you find this project useful, please consider giving it a star! ⭐
 
 It helps the project grow and lets others discover it too.
-
----
-
-<p align="center">
-  <b>Made with ❤️ for the Android community</b>
-</p>
-
-<p align="center">
-  <a href="https://github.com/KaeruShi/Monetify/stargazers">⭐ Star this repo</a> •
-  <a href="https://github.com/KaeruShi/Monetify/issues">🐛 Report a bug</a> •
-  <a href="https://github.com/KaeruShi/Monetify/discussions">💬 Join discussion</a>
-</p>
