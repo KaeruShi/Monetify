@@ -40,8 +40,7 @@ import com.kaerushi.monetify.core.util.Utils.launchApp
 import com.kaerushi.monetify.data.viewmodel.AppIconPack
 import com.kaerushi.monetify.data.viewmodel.AppsViewModel
 import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
-import com.kaerushi.monetify.feature.apps.utils.Utils.getInstalledApps
-import com.topjohnwu.superuser.Shell
+import com.kaerushi.monetify.feature.apps.utils.getInstalledApps
 
 @Composable
 fun AppsScreen(viewModel: AppsViewModel = hiltViewModel(), settingsViewModel: SettingsViewModel = hiltViewModel()) {

@@ -6,9 +6,8 @@ import com.highcapable.yukihookapi.hook.log.YLog
 import com.kaerushi.monetify.data.YOUTUBE_PACKAGE_NAME
 import com.kaerushi.monetify.xposed.hooks.BaseAppHook
 import com.kaerushi.monetify.xposed.hooks.youtube.ApplyMonet.applyMonet
-import com.kaerushi.monetify.xposed.utils.ColorUtils.colorSurface
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
-import com.kaerushi.monetify.xposed.utils.Utils
+import com.kaerushi.monetify.xposed.utils.colorSurface
 
 object YoutubeHooks : BaseAppHook() {
     override val pkgName = YOUTUBE_PACKAGE_NAME

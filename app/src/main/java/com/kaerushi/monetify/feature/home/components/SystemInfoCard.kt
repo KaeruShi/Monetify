@@ -43,7 +43,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.data.model.SystemInfo
 import com.kaerushi.monetify.data.viewmodel.HomeViewModel
-import com.kaerushi.monetify.feature.apps.utils.Utils.getInstalledApps
+import com.kaerushi.monetify.feature.apps.utils.getInstalledApps
 
 @Composable
 fun SystemInfoCard(systemInfo: List<SystemInfo>) {

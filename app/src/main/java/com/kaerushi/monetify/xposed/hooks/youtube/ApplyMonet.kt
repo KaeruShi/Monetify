@@ -3,10 +3,7 @@ package com.kaerushi.monetify.xposed.hooks.youtube
 import android.app.Activity
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.kaerushi.monetify.xposed.hooks.pinterest.PinterestHooks.injectColor
-import com.kaerushi.monetify.xposed.utils.ColorUtils.colorPrimary
-import com.kaerushi.monetify.xposed.utils.ColorUtils.colorSurface
-import com.kaerushi.monetify.xposed.utils.ColorUtils.colorSurfaceDark
-import com.kaerushi.monetify.xposed.utils.ColorUtils.colorSurfaceLight
+import com.kaerushi.monetify.xposed.utils.*
 
 object ApplyMonet {
     @OptIn(LegacyResourcesHook::class)

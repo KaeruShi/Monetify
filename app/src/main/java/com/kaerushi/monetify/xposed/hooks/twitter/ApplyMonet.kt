@@ -2,8 +2,7 @@ package com.kaerushi.monetify.xposed.hooks.twitter
 
 import android.app.Activity
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
-import com.kaerushi.monetify.xposed.utils.ColorUtils
-import com.kaerushi.monetify.xposed.utils.Utils
+import com.kaerushi.monetify.xposed.utils.*
 
 object ApplyMonet {
     @OptIn(LegacyResourcesHook::class)
@@ -16,19 +15,19 @@ object ApplyMonet {
             "twitter_blue",
             "text_black"
         ) {
-            ColorUtils.colorPrimary(activity)
+            colorPrimary(activity)
         }
         injectColor("appBackground", "ps__black") {
-            ColorUtils.colorSurface(activity)
+            colorSurface(activity)
         }
         injectColor("black") {
-            if (Utils.isNightMode(activity)) ColorUtils.colorSurfaceContainerDark(activity) else ColorUtils.colorSurfaceContainerLight(
+            if (isNightMode(activity)) colorSurfaceContainerDark(activity) else colorSurfaceContainerLight(
                 activity
             )
         }
-        if (!Utils.isNightMode(activity))
+        if (isNightMode(activity))
             injectColor("white") {
-                ColorUtils.colorSurfaceContainer(activity)
+                colorSurfaceContainer(activity)
             }
     }
 }
