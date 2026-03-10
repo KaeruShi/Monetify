@@ -43,7 +43,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun setKillBeforeLaunch(kill: Boolean) {
-        viewModelScope.launch { repo.toggleKillBeforeLaunch(kill) }
+        viewModelScope.launch { repo.setKillBeforeLaunch(kill) }
     }
 
     fun resetToDefaults() {

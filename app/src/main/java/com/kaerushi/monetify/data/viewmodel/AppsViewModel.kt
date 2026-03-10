@@ -42,13 +42,13 @@ class AppsViewModel @Inject constructor(
     }
 
     fun toggleNotInstalled(isVisible: Boolean) {
-        viewModelScope.launch { repo.toggleShowInstalledPref(isVisible) }
+        viewModelScope.launch { repo.setShowInstalledPref(isVisible) }
     }
     fun toggleShowWarningDialog(show: Boolean) {
-        viewModelScope.launch { repo.toggleShowWarningDialog(show) }
+        viewModelScope.launch { repo.setShowWarningDialog(show) }
     }
     fun toggleShowIconPack(show: Boolean) {
-        viewModelScope.launch { repo.toggleShowAppIconPack(show) }
+        viewModelScope.launch { repo.setShowAppIconPack(show) }
     }
     fun setMonetEnabled(pkgName: String, enabled: Boolean) {
         viewModelScope.launch { repo.setAppMonetEnabled(pkgName, enabled) }

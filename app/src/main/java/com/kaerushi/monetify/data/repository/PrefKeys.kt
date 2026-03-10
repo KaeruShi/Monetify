@@ -13,9 +13,9 @@ object PrefKeys {
     val APP_LANGUAGE_KEY = stringPreferencesKey("app_language")
     val KILL_BEFORE_LAUNCH = booleanPreferencesKey("kill_before_launch")
 
-    // Xposed
-    fun hookedAppKey(packageName: String) = booleanPreferencesKey("app_${packageName}_hooked")
-    fun getAppMonetKey(packageName: String) = booleanPreferencesKey("app_${packageName}_monet_enabled")
-    fun getAppAdsKey(packageName: String) = booleanPreferencesKey("app_${packageName}_ads_disabled")
-    fun getAppIconPackKey(packageName: String) = stringPreferencesKey("app_${packageName}_icon_pack")
+    object Xposed {
+        fun appMonetKey(packageName: String) = booleanPreferencesKey("app_${packageName}_monet_enabled")
+        fun appAdsKey(packageName: String) = booleanPreferencesKey("app_${packageName}_ads_disabled")
+        fun appIconPackKey(packageName: String) = stringPreferencesKey("app_${packageName}_icon_pack")
+    }
 }

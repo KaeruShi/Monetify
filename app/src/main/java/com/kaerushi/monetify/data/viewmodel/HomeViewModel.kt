@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
 
     fun toggleShowWelcomeScreen(show: Boolean) {
         viewModelScope.launch {
-            repo.toggleShowWelcomeScreenPref(show)
+            repo.setShowWelcomeScreen(show)
         }
     }
 
