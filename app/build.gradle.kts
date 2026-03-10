@@ -67,6 +67,7 @@ kotlin {
 }
 
 dependencies {
+    // Xposed
     compileOnly(libs.xposed.api)
     implementation(libs.yukihookapi.api)
     implementation(libs.kavaref.core)
@@ -74,6 +75,7 @@ dependencies {
     ksp(libs.yukihookapi.ksp.xposed)
     implementation(libs.dexkit)
 
+    // Libsu
     implementation(libs.libsu.core)
     implementation(libs.libsu.service)
     implementation(libs.libsu.nio)
@@ -88,8 +90,10 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons)
     implementation(libs.androidx.compose.navigation)
-    implementation(libs.androidx.hilt.navigation)
     implementation(libs.material)
+
+    // Markdown
+    implementation(libs.compose.markdown)
 
     // Coil
     implementation(libs.coil.compose)
@@ -101,6 +105,7 @@ dependencies {
 
     // Gson and hilt
     implementation(libs.gson)
+    implementation(libs.androidx.hilt.navigation)
     implementation(libs.hilt)
     ksp(libs.hilt.ksp)
     ksp(libs.androidx.hilt.compiler)

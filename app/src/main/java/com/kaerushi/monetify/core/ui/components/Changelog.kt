@@ -2,8 +2,11 @@ package com.kaerushi.monetify.core.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularWavyProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -23,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.data.viewmodel.ChangelogViewModel
+import dev.jeziellago.compose.markdowntext.MarkdownText
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -37,8 +41,17 @@ fun ChangelogBottomSheet(onDismiss: () -> Unit, sheetState: SheetState) {
             Text(stringResource(R.string.changelog_title), fontSize = 24.sp, fontWeight = FontWeight.Medium)
             HorizontalDivider(modifier = Modifier.height(0.5.dp))
             if (release != null) {
-                Text(release!!.tagName, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                Text(release!!.body)
+                LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                    item {
+                        Text(
+                            stringResource(R.string.version, release!!.tagName),
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(bottom = 12.dp)
+                        )
+                        MarkdownText(release!!.body)
+                    }
+                }
             } else {
                 CircularWavyProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             }
