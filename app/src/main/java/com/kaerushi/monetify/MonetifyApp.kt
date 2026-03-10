@@ -1,7 +1,7 @@
 package com.kaerushi.monetify
 
-import android.app.Application
+import com.highcapable.yukihookapi.hook.xposed.application.ModuleApplication
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MonetifyApp : Application()
+class MonetifyApp : ModuleApplication()

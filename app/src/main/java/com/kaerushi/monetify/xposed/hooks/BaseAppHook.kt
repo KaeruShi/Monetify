@@ -1,16 +1,12 @@
 package com.kaerushi.monetify.xposed.hooks
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
-import com.highcapable.yukihookapi.hook.log.YLog
 import com.kaerushi.monetify.data.viewmodel.AppIconPack
-import com.kaerushi.monetify.xposed.MainHook
 import com.kaerushi.monetify.xposed.MainHook.bridge
-import com.kaerushi.monetify.xposed.utils.HookStatusUtil
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
 import org.luckypray.dexkit.DexKitBridge
 
@@ -22,6 +18,11 @@ abstract class BaseAppHook : YukiBaseHooker() {
     override fun onHook() {
         loadApp(pkgName) {
             bridge = DexKitBridge.create(appInfo.sourceDir)
+            onAppLifecycle {
+                onCreate {
+                    dataChannel.put(key = "hook_status_${pkgName}", value = true)
+                }
+            }
             getIconPackDrawables()?.let { drawables ->
                 resources().hook {
                     drawables.forEach { (resName, replacementDrawable) ->
@@ -43,9 +44,6 @@ abstract class BaseAppHook : YukiBaseHooker() {
         Activity::class.java.resolve().firstMethod { name = "onCreate"; parameters(Bundle::class.java) }.hook {
             after {
                 val instance = instance<Activity>()
-                if (HookStatusUtil.shouldSend(pkgName)) {
-                    HookStatusUtil.sendHooked(instance, pkgName, true)
-                }
                 hookOnCreate(instance)
             }
         }

@@ -26,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -74,7 +75,7 @@ private fun SystemInfoList(systemInfo: List<SystemInfo>) {
 @Composable
 private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
     val context = LocalContext.current
-    val hooked by viewModel.hookedAppsState.collectAsState()
+    val hookedApps by viewModel.hookedAppsState.collectAsState()
     var showHookedApps by remember { mutableStateOf(false) }
     val apps = remember { getInstalledApps(context, false) }
     val rotateIcon by animateFloatAsState(
@@ -82,6 +83,11 @@ private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
         animationSpec = tween(300),
         label = "rotation"
     )
+
+    val packageNames = remember(apps) { apps.map { it.packageName } }
+    LaunchedEffect(packageNames) {
+        viewModel.registerHookStatus(packageNames)
+    }
 
     Card(
         shape = RoundedCornerShape(0.dp),
@@ -117,8 +123,7 @@ private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
             ) {
                 Column(modifier = Modifier.padding(start = 16.dp, bottom = 16.dp, end = 16.dp)) {
                     apps.forEachIndexed { _, info ->
-                        val hookedApp = hooked[info.packageName] == true
-                        PackageStatus(info.packageName, hookedApp)
+                        PackageStatus(info.packageName, info.packageName in hookedApps)
                     }
                 }
             }

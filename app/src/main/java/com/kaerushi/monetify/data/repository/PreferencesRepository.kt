@@ -68,21 +68,6 @@ class PreferencesRepository @Inject constructor(
         }
     }
 
-    // Hooked apps preference flows
-    val hookedApps: Flow<Map<String, Boolean>> =
-        dataStore.data.map { prefs ->
-            prefs.asMap()
-                .filterKeys { it.name.startsWith("app_") && it.name.endsWith("_hooked") }
-                .mapNotNull { (key, value) ->
-                    val pkg = key.name
-                        .removePrefix("app_")
-                        .removeSuffix("_hooked")
-
-                    (value as? Boolean)?.let { pkg to it }
-                }
-                .toMap()
-        }
-
     suspend fun setAppHooked(packageName: String, hooked: Boolean) =
         savePreference(PrefKeys.hookedAppKey(packageName), hooked)
 

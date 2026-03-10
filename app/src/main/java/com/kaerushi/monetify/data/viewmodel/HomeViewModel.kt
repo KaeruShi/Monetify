@@ -1,17 +1,21 @@
 package com.kaerushi.monetify.data.viewmodel
 
+import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.highcapable.yukihookapi.hook.factory.dataChannel
 import com.kaerushi.monetify.core.manager.BackupManager
 import com.kaerushi.monetify.data.model.ConfigData
 import com.kaerushi.monetify.data.repository.PreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,12 +29,15 @@ sealed class BackupState {
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repo: PreferencesRepository,
-    private val backupManager: BackupManager
+    private val backupManager: BackupManager,
+    @param:ApplicationContext private val context: Context
 ) : ViewModel() {
+
     val welcomeScreenState = repo.showWelcomeScreen
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
-    val hookedAppsState = repo.hookedApps
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
+    private val _hookedAppsState = MutableStateFlow<Set<String>>(emptySet())
+    val hookedAppsState: StateFlow<Set<String>> = _hookedAppsState.asStateFlow()
 
     private val _backupState = MutableStateFlow<BackupState>(BackupState.Idle)
     val backupState: StateFlow<BackupState> = _backupState.asStateFlow()
@@ -38,6 +45,19 @@ class HomeViewModel @Inject constructor(
     fun toggleShowWelcomeScreen(show: Boolean) {
         viewModelScope.launch {
             repo.toggleShowWelcomeScreenPref(show)
+        }
+    }
+
+    fun registerHookStatus(packageNames: List<String>) {
+        packageNames.forEach { pkg ->
+            context.dataChannel(packageName = pkg)
+                .wait<Boolean>(key = "hook_status_${pkg}") { isHooked ->
+                    if (isHooked) {
+                        _hookedAppsState.update { it + pkg }
+                    } else {
+                        _hookedAppsState.update { it - pkg }
+                    }
+                }
         }
     }
 
