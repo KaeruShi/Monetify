@@ -20,8 +20,8 @@ import com.kaerushi.monetify.core.ui.theme.color.GreenDarkColorScheme
 import com.kaerushi.monetify.core.ui.theme.color.GreenLightColorScheme
 import com.kaerushi.monetify.core.ui.theme.color.RedDarkColorScheme
 import com.kaerushi.monetify.core.ui.theme.color.RedLightColorScheme
-import com.kaerushi.monetify.data.viewmodel.AppTheme
-import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
+import com.kaerushi.monetify.data.model.preferences.AppTheme
+import com.kaerushi.monetify.data.model.preferences.ColorSchemeMode
 import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
 
 @Composable

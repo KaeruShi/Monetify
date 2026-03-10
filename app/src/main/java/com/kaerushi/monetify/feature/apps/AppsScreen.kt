@@ -33,11 +33,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.ui.components.PreferenceApp
-import com.kaerushi.monetify.core.ui.components.PreferenceType
+import com.kaerushi.monetify.data.model.preferences.PreferenceType
 import com.kaerushi.monetify.core.ui.dialog.AlertDialog
 import com.kaerushi.monetify.core.ui.dialog.RadioSelectionDialog
 import com.kaerushi.monetify.core.util.Utils.launchApp
-import com.kaerushi.monetify.data.viewmodel.AppIconPack
+import com.kaerushi.monetify.data.model.preferences.AppIconPack
 import com.kaerushi.monetify.data.viewmodel.AppsViewModel
 import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
 import com.kaerushi.monetify.feature.apps.utils.getInstalledApps

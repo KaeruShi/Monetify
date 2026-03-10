@@ -9,7 +9,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.ui.components.PreferenceItem
 import com.kaerushi.monetify.core.ui.components.PreferenceSwitch
-import com.kaerushi.monetify.core.ui.components.PreferenceType
+import com.kaerushi.monetify.data.model.preferences.PreferenceType
 import com.kaerushi.monetify.data.viewmodel.AppsViewModel
 
 @Composable

@@ -2,6 +2,7 @@ package com.kaerushi.monetify.data.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kaerushi.monetify.data.model.preferences.AppIconPack
 import com.kaerushi.monetify.data.repository.PreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -60,9 +61,3 @@ class AppsViewModel @Inject constructor(
     }
 }
 
-enum class AppIconPack {
-    DEFAULT,
-    DUOTONE,
-//    FILLED,
-//    OUTLINED
-}

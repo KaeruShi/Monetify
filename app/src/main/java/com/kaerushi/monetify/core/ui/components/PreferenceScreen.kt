@@ -12,7 +12,6 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,7 +51,8 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.data.REDDIT_PACKAGE_NAME
 import com.kaerushi.monetify.data.model.AppInfo
-import com.kaerushi.monetify.data.viewmodel.AppTheme
+import com.kaerushi.monetify.data.model.preferences.AppTheme
+import com.kaerushi.monetify.data.model.preferences.PreferenceType
 import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
 import com.kaerushi.monetify.feature.apps.AppDetails
 
@@ -313,8 +313,3 @@ fun PreferenceApp(
         }
     }
 }
-
-enum class PreferenceType {
-    MID, TOP, BOTTOM, ROUND
-}
-

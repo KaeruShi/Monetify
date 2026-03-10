@@ -1,11 +1,12 @@
 package com.kaerushi.monetify.data.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kaerushi.monetify.core.util.Utils
+import com.kaerushi.monetify.core.manager.LocaleManager
+import com.kaerushi.monetify.data.model.preferences.AppTheme
+import com.kaerushi.monetify.data.model.preferences.ColorSchemeMode
 import com.kaerushi.monetify.data.repository.PreferencesRepository
-import com.kaerushi.monetify.feature.settings.AppLanguage
+import com.kaerushi.monetify.data.model.preferences.AppLanguage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -13,7 +14,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor(private val repo: PreferencesRepository) : ViewModel() {
+class SettingsViewModel @Inject constructor(
+    private val repo: PreferencesRepository,
+    private val localeManager: LocaleManager
+) : ViewModel() {
     val themeState = repo.theme
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AppTheme.SYSTEM)
     val colorSchemeState = repo.colorSchemeMode
@@ -26,27 +30,26 @@ class SettingsViewModel @Inject constructor(private val repo: PreferencesReposit
     fun setAppTheme(theme: AppTheme) {
         viewModelScope.launch { repo.setTheme(theme) }
     }
+
     fun setAppColorScheme(mode: ColorSchemeMode) {
         viewModelScope.launch { repo.setColorSchemeMode(mode) }
     }
-    fun setAppLanguage(context: Context, language: AppLanguage) {
+
+    fun setAppLanguage(language: AppLanguage) {
         viewModelScope.launch {
             repo.setLanguage(language)
-            Utils.applyLocale(context, language)
+            localeManager.applyLocale(language)
         }
     }
+
     fun setKillBeforeLaunch(kill: Boolean) {
         viewModelScope.launch { repo.toggleKillBeforeLaunch(kill) }
     }
+
     fun resetToDefaults() {
         viewModelScope.launch {
             repo.resetXposedPrefs()
         }
     }
 }
-enum class AppTheme {
-    SYSTEM, LIGHT, DARK
-}
-enum class ColorSchemeMode {
-    DYNAMIC, RED, GREEN, BLUE
-}
+

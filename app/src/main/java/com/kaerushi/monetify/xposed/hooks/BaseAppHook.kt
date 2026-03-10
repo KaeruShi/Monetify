@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
-import com.kaerushi.monetify.data.viewmodel.AppIconPack
+import com.kaerushi.monetify.data.model.preferences.AppIconPack
 import com.kaerushi.monetify.xposed.MainHook.bridge
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
 import org.luckypray.dexkit.DexKitBridge

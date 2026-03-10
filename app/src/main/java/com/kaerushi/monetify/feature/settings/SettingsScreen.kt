@@ -22,11 +22,12 @@ import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.ui.components.PreferenceCategory
 import com.kaerushi.monetify.core.ui.components.PreferenceItem
 import com.kaerushi.monetify.core.ui.components.PreferenceSwitch
-import com.kaerushi.monetify.core.ui.components.PreferenceType
+import com.kaerushi.monetify.data.model.preferences.PreferenceType
 import com.kaerushi.monetify.core.ui.dialog.AlertDialog
 import com.kaerushi.monetify.core.ui.dialog.RadioSelectionDialog
-import com.kaerushi.monetify.data.viewmodel.AppTheme
-import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
+import com.kaerushi.monetify.data.model.preferences.AppLanguage
+import com.kaerushi.monetify.data.model.preferences.AppTheme
+import com.kaerushi.monetify.data.model.preferences.ColorSchemeMode
 import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
 
 @Composable
@@ -147,7 +148,7 @@ fun SettingsScreen(
             selected = selectedLanguage,
             optionText = { language -> language.name.lowercase().replaceFirstChar { it.uppercase() } },
             onSelect = {
-                viewModel.setAppLanguage(context, it)
+                viewModel.setAppLanguage(it)
             },
             onDismiss = { showLanguagePreference = false },
             dismissText = stringResource(R.string.close_title)
@@ -166,8 +167,4 @@ fun SettingsScreen(
             dismissText = stringResource(R.string.cancel)
         )
     }
-}
-
-enum class AppLanguage(val code: String) {
-    ENGLISH("en"), INDONESIA("in"), CHINESE("zh-CN"), PORTUGUESE("pt"), RUSSIAN("ru")
 }

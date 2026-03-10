@@ -10,10 +10,10 @@ import androidx.datastore.preferences.core.emptyPreferences
 import com.kaerushi.monetify.data.repository.PrefKeys.getAppAdsKey
 import com.kaerushi.monetify.data.repository.PrefKeys.getAppIconPackKey
 import com.kaerushi.monetify.data.repository.PrefKeys.getAppMonetKey
-import com.kaerushi.monetify.data.viewmodel.AppIconPack
-import com.kaerushi.monetify.data.viewmodel.AppTheme
-import com.kaerushi.monetify.data.viewmodel.ColorSchemeMode
-import com.kaerushi.monetify.feature.settings.AppLanguage
+import com.kaerushi.monetify.data.model.preferences.AppIconPack
+import com.kaerushi.monetify.data.model.preferences.AppTheme
+import com.kaerushi.monetify.data.model.preferences.ColorSchemeMode
+import com.kaerushi.monetify.data.model.preferences.AppLanguage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
