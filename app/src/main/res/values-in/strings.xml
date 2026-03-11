@@ -71,4 +71,9 @@
     <string name="version">Versi %1$s</string>
     <string name="changelog">Catatan Perubahan:\n%1$s</string>
     <string name="update">Pembaruan</string>
+    <string name="config_export_success">Konfigurasi berhasil diekspor</string>
+    <string name="config_export_failed">Ekspor gagal: %1$s</string>
+    <string name="config_import_success">Konfigurasi \'%1$s\' berhasil diimpor</string>
+    <string name="config_import_failed">Impor gagal: %1$s</string>
+    <string name="invalid_config">Konfigurasi tidak valid: %1$s</string>
 </resources>

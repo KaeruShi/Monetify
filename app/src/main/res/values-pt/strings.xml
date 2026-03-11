@@ -71,4 +71,9 @@
     <string name="version">Versão %1$s</string>
     <string name="changelog">Registro de Alterações:\n%1$s</string>
     <string name="update">Atualizar</string>
+    <string name="config_export_success">Configuração exportada com sucesso</string>
+    <string name="config_export_failed">Falha na exportação: %1$s</string>
+    <string name="config_import_success">Configuração \'%1$s\' importada com sucesso</string>
+    <string name="config_import_failed">Falha na importação: %1$s</string>
+    <string name="invalid_config">Configuração inválida: %1$s</string>
 </resources>
