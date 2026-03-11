@@ -5,25 +5,31 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.highcapable.yukihookapi.hook.factory.dataChannel
+import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.manager.BackupManager
 import com.kaerushi.monetify.data.model.ConfigData
 import com.kaerushi.monetify.data.repository.PreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed class BackupState {
-    data object Idle : BackupState()
-    data object Loading : BackupState()
-    data class Success(val message: String) : BackupState()
-    data class Error(val message: String) : BackupState()
+sealed class BackupStatus {
+    data object Idle : BackupStatus()
+    data object Loading : BackupStatus()
+}
+
+sealed class BackupEvent {
+    data class Success(val message: String) : BackupEvent()
+    data class Error(val message: String) : BackupEvent()
 }
 
 @HiltViewModel
@@ -36,79 +42,78 @@ class HomeViewModel @Inject constructor(
     val welcomeScreenState = repo.showWelcomeScreen
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
 
-    private val _hookedAppsState = MutableStateFlow<Set<String>>(emptySet())
-    val hookedAppsState: StateFlow<Set<String>> = _hookedAppsState.asStateFlow()
-
-    private val _backupState = MutableStateFlow<BackupState>(BackupState.Idle)
-    val backupState: StateFlow<BackupState> = _backupState.asStateFlow()
-
     fun toggleShowWelcomeScreen(show: Boolean) {
         viewModelScope.launch {
             repo.setShowWelcomeScreen(show)
         }
     }
 
+    private val _hookedAppsState = MutableStateFlow<Set<String>>(emptySet())
+    val hookedAppsState: StateFlow<Set<String>> = _hookedAppsState.asStateFlow()
+
+    private val registeredApps = mutableSetOf<String>()
+
     fun registerHookStatus(packageNames: List<String>) {
-        packageNames.forEach { pkg ->
-            context.dataChannel(packageName = pkg)
-                .wait<Boolean>(key = "hook_status_${pkg}") { isHooked ->
-                    if (isHooked) {
-                        _hookedAppsState.update { it + pkg }
-                    } else {
-                        _hookedAppsState.update { it - pkg }
+        packageNames
+            .filterNot { it in registeredApps }
+            .forEach { pkg ->
+                registeredApps += pkg
+                context.dataChannel(packageName = pkg)
+                    .wait<Boolean>(key = "hook_status_${pkg}") { isHooked ->
+                        _hookedAppsState.update {
+                            if (isHooked) it + pkg else it - pkg
+                        }
                     }
+            }
+    }
+
+    private val _backupStatus = MutableStateFlow<BackupStatus>(BackupStatus.Idle)
+    val backupStatus: StateFlow<BackupStatus> = _backupStatus.asStateFlow()
+
+    private val _backupEvents = Channel<BackupEvent>(Channel.BUFFERED)
+    val backupEvents = _backupEvents.receiveAsFlow()
+
+    fun exportConfig(uri: Uri, configName: String) {
+        viewModelScope.launch {
+            _backupStatus.value = BackupStatus.Loading
+            val result = backupManager.exportConfig(uri, configName)
+            _backupStatus.value = BackupStatus.Idle
+            _backupEvents.send(
+                result.fold(
+                    onSuccess = { BackupEvent.Success(context.getString(R.string.config_export_success)) },
+                    onFailure = { BackupEvent.Error(context.getString(R.string.config_export_failed, it.message)) }
+                )
+            )
+        }
+    }
+
+    fun importConfig(uri: Uri) {
+        viewModelScope.launch {
+            _backupStatus.value = BackupStatus.Loading
+            val result = backupManager.importConfig(uri)
+            _backupStatus.value = BackupStatus.Idle
+            _backupEvents.send(
+                result.fold(
+                    onSuccess = { config ->
+                        BackupEvent.Success(context.getString(R.string.config_import_success, config.name))
+                    },
+                    onFailure = { BackupEvent.Error(context.getString(R.string.config_import_failed, it.message)) }
+                )
+            )
+        }
+    }
+
+    fun validateConfig(uri: Uri, onValidated: (ConfigData) -> Unit) {
+        viewModelScope.launch {
+            backupManager.validateConfig(uri)
+                .onSuccess { onValidated(it) }
+                .onFailure {
+                    _backupEvents.send(BackupEvent.Error(context.getString(R.string.invalid_config, it.message)))
                 }
         }
     }
 
-    /**
-     * Export configuration to the specified URI
-     */
-    fun exportConfig(uri: Uri, configName: String) {
-        viewModelScope.launch {
-            _backupState.value = BackupState.Loading
-            val result = backupManager.exportConfig(uri, configName)
-            _backupState.value = result.fold(
-                onSuccess = { BackupState.Success("Configuration exported successfully") },
-                onFailure = { BackupState.Error("Export failed: ${it.message}") }
-            )
-        }
-    }
-
-    /**
-     * Import configuration from the specified URI
-     */
-    fun importConfig(uri: Uri) {
-        viewModelScope.launch {
-            _backupState.value = BackupState.Loading
-            val result = backupManager.importConfig(uri)
-            _backupState.value = result.fold(
-                onSuccess = { config ->
-                    BackupState.Success("Configuration '${config.name}' imported successfully")
-                },
-                onFailure = { BackupState.Error("Import failed: ${it.message}") }
-            )
-        }
-    }
-
-    /**
-     * Validate configuration file before importing
-     */
-    fun validateConfig(uri: Uri, onValidated: (ConfigData) -> Unit) {
-        viewModelScope.launch {
-            val result = backupManager.validateConfig(uri)
-            result.onSuccess { config ->
-                onValidated(config)
-            }.onFailure {
-                _backupState.value = BackupState.Error("Invalid configuration: ${it.message}")
-            }
-        }
-    }
-
-    /**
-     * Reset backup state to idle
-     */
     fun resetBackupState() {
-        _backupState.value = BackupState.Idle
+        _backupStatus.value = BackupStatus.Idle
     }
 }

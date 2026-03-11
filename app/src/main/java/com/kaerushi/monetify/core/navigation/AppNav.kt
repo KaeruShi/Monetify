@@ -157,7 +157,7 @@ fun AppNav() {
                 )
             }
         ) {
-            composable(route = Screen.Home.route) { HomeScreen() }
+            composable(route = Screen.Home.route) { HomeScreen(snackBarHostState = snackBarHostState) }
             composable(route = Screen.Apps.route) { AppsScreen() }
             composable(route = Screen.Settings.route) {
                 SettingsScreen(

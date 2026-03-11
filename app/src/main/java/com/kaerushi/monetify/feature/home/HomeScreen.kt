@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -26,12 +27,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kaerushi.monetify.BuildConfig
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.ui.dialog.TextInputDialog
 import com.kaerushi.monetify.core.util.Utils.isModuleActive
 import com.kaerushi.monetify.data.model.SystemInfo
-import com.kaerushi.monetify.data.viewmodel.BackupState
+import com.kaerushi.monetify.data.viewmodel.BackupEvent
+import com.kaerushi.monetify.data.viewmodel.BackupStatus
 import com.kaerushi.monetify.data.viewmodel.HomeViewModel
 import com.kaerushi.monetify.feature.home.components.ActionsAndSupportCard
 import com.kaerushi.monetify.feature.home.components.ModuleStatusCard
@@ -39,7 +42,8 @@ import com.kaerushi.monetify.feature.home.components.SystemInfoCard
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    snackBarHostState: SnackbarHostState
 ) {
     val context = LocalContext.current
     val moduleTitle = if (isModuleActive) stringResource(R.string.module_active_title) else stringResource(R.string.module_inactive_title)
@@ -50,7 +54,7 @@ fun HomeScreen(
     var importConfigName by rememberSaveable { mutableStateOf("") }
     var pendingImportUri by rememberSaveable { mutableStateOf<String?>(null) }
 
-    val backupState by viewModel.backupState.collectAsState()
+    val backupStatus by viewModel.backupStatus.collectAsStateWithLifecycle()
 
     val deviceInfo = listOf(
         SystemInfo(stringResource(R.string.android_version_title), Build.VERSION.SDK_INT.toString()),
@@ -82,17 +86,19 @@ fun HomeScreen(
     }
 
     // Handle backup state changes
-    LaunchedEffect(backupState) {
-        when (val state = backupState) {
-            is BackupState.Success -> {
-                Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
-                viewModel.resetBackupState()
+    LaunchedEffect(Unit) {
+        viewModel.backupEvents.collect { event ->
+            when (event) {
+                is BackupEvent.Success -> {
+                    snackBarHostState.showSnackbar(event.message)
+                    viewModel.resetBackupState()
+                }
+
+                is BackupEvent.Error -> {
+                    snackBarHostState.showSnackbar(event.message)
+                    viewModel.resetBackupState()
+                }
             }
-            is BackupState.Error -> {
-                Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
-                viewModel.resetBackupState()
-            }
-            else -> {}
         }
     }
 
@@ -175,7 +181,7 @@ fun HomeScreen(
     }
 
     // Loading dialog
-    if (backupState is BackupState.Loading) {
+    if (backupStatus is BackupStatus.Loading) {
         AlertDialog(
             onDismissRequest = { },
             title = { Text(stringResource(R.string.please_wait)) },
