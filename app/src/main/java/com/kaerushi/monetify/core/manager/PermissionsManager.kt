@@ -22,45 +22,40 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.kaerushi.monetify.BuildConfig
 import com.topjohnwu.superuser.Shell
 
-fun isRootGranted(): Boolean {
-    return Shell.getShell().isRoot
-}
+data class PermissionState(
+    val rootGranted: State<Boolean>,
+    val storageGranted: State<Boolean>,
+    val notificationGranted: State<Boolean>
+)
 
-fun isStorageGranted(): Boolean {
-    return Environment.isExternalStorageManager()
-}
-fun requestStorage(context: Context) {
-    val intent = Intent()
-    intent.action = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
-    intent.data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
-    (context as Activity).startActivityForResult(intent, 0)
-    ActivityCompat.requestPermissions(
-        context, arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.MANAGE_EXTERNAL_STORAGE
-        ), 0
-    )
-}
-
+fun isRootGranted(): Boolean = Shell.getShell().isRoot
+fun isStorageGranted(): Boolean = Environment.isExternalStorageManager()
 fun isNotificationGranted(context: Context): Boolean {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(
+            context, Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
     } else {
         true
     }
 }
+
+fun requestStorage(context: Context) {
+    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+        data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+    }
+    context.startActivity(intent)
+}
+
 fun requestNotification(context: Context) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            // Permission already granted
-        } else {
-            ActivityCompat.requestPermissions(
-                context as Activity,
-                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                0
-            )
-        }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+        !isNotificationGranted(context)
+    ) {
+        ActivityCompat.requestPermissions(
+            context as Activity,
+            arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+            1001
+        )
     }
 }
 
@@ -69,11 +64,11 @@ fun allPermissionsGranted(context: Context): Boolean {
 }
 
 @Composable
-fun rememberPermissionState(context: Context): Triple<State<Boolean>, State<Boolean>, State<Boolean>> {
+fun rememberPermissionState(context: Context): PermissionState {
     val lifecycleOwner = LocalLifecycleOwner.current
-    val rootGranted = remember { mutableStateOf(false) }
-    val storageGranted = remember { mutableStateOf(false) }
-    val notificationGranted = remember { mutableStateOf(false) }
+    val rootGranted = remember { mutableStateOf(isRootGranted()) }
+    val storageGranted = remember { mutableStateOf(isStorageGranted()) }
+    val notificationGranted = remember { mutableStateOf(isNotificationGranted(context)) }
 
     fun refresh() {
         rootGranted.value = isRootGranted()
@@ -90,5 +85,5 @@ fun rememberPermissionState(context: Context): Triple<State<Boolean>, State<Bool
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
-    return Triple(rootGranted, storageGranted, notificationGranted)
+    return PermissionState(rootGranted, storageGranted, notificationGranted)
 }

@@ -10,19 +10,19 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kaerushi.monetify.core.manager.allPermissionsGranted
 import com.kaerushi.monetify.core.navigation.AppNav
 import com.kaerushi.monetify.data.viewmodel.HomeViewModel
 
 @Composable
 fun MainScreen(viewModel: HomeViewModel = hiltViewModel()) {
-    val welcomeScreenState by viewModel.welcomeScreenState.collectAsState()
-    val shouldShowWelcome = welcomeScreenState && !allPermissionsGranted(LocalContext.current)
+    val showWelcomeScreen by viewModel.welcomeScreenState.collectAsStateWithLifecycle()
+    val shouldShowWelcome = showWelcomeScreen && !allPermissionsGranted(LocalContext.current)
 
     Surface(modifier = Modifier.fillMaxSize()) {
         AnimatedContent(
@@ -44,5 +44,4 @@ fun MainScreen(viewModel: HomeViewModel = hiltViewModel()) {
             if (isWelcome) WelcomeScreen() else AppNav()
         }
     }
-
 }
