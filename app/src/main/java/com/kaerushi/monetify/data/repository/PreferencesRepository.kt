@@ -35,34 +35,29 @@ class PreferencesRepository @Inject constructor(
         }.map { it[key] ?: defaultValue }
     }
 
-    private suspend inline fun <reified T> savePreference(
+    private suspend fun <T> savePreference(
         key: Preferences.Key<T>,
         value: T,
-        sharedPrefsKey: String? = null
+        xposedKey: String? = null
     ) {
         try {
-            dataStore.edit { preferences ->
-                preferences[key] = value
-            }
+            dataStore.edit { it[key] = value }
 
             // Save to SharedPreferences for Xposed
-            if (sharedPrefsKey != null) {
+            if (xposedKey != null) {
                 xposedPrefs.edit {
                     when (value) {
-                        is Boolean -> putBoolean(sharedPrefsKey, value)
-                        is String -> putString(sharedPrefsKey, value)
-                        is Float -> putFloat(sharedPrefsKey, value)
-                        is Int -> putInt(sharedPrefsKey, value)
-                        is Long -> putLong(sharedPrefsKey, value)
-                        is Double -> {
-                            val bits = java.lang.Double.doubleToRawLongBits(value)
-                            putLong(sharedPrefsKey, bits)
-                        }
+                        is Boolean -> putBoolean(xposedKey, value)
+                        is String -> putString(xposedKey, value)
+                        is Float -> putFloat(xposedKey, value)
+                        is Int -> putInt(xposedKey, value)
+                        is Long -> putLong(xposedKey, value)
+                        else -> Log.w(TAG, "Unsupported type for xposed mirror: ${value!!::class.simpleName}")
                     }
                 }
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Error saving preference $sharedPrefsKey: ${e.message}")
+            Log.e(TAG, "Error saving preference $xposedKey: ${e.message}")
         }
     }
 
@@ -75,6 +70,7 @@ class PreferencesRepository @Inject constructor(
     }
     val colorSchemeMode = getPreferenceFlow(PrefKeys.APP_COLOR_SCHEME_KEY, ColorSchemeMode.DYNAMIC.name)
         .map { ColorSchemeMode.valueOf(it) }
+
     val killBeforeLaunch = getPreferenceFlow(PrefKeys.KILL_BEFORE_LAUNCH, true)
     val showNotInstalledPref = getPreferenceFlow(PrefKeys.SHOW_NOT_INSTALLED_APPS, true)
     val showAppIconPack = getPreferenceFlow(PrefKeys.SHOW_APP_ICON_PACK, false)
@@ -87,30 +83,49 @@ class PreferencesRepository @Inject constructor(
         getPreferenceFlow(appIconPackKey(packageName), AppIconPack.DEFAULT.name)
             .map { AppIconPack.valueOf(it) }
 
-    // Preference Setters
+    // UI Preference Setters
     suspend fun setShowInstalledPref(show: Boolean) = savePreference(PrefKeys.SHOW_NOT_INSTALLED_APPS, show)
     suspend fun setShowWarningDialog(show: Boolean) = savePreference(PrefKeys.SHOW_WARNING_DIALOG, show)
     suspend fun setShowWelcomeScreen(show: Boolean) = savePreference(PrefKeys.SHOW_WELCOME_SCREEN, show)
     suspend fun setShowAppIconPack(show: Boolean) = savePreference(PrefKeys.SHOW_APP_ICON_PACK, show)
     suspend fun setTheme(theme: AppTheme) = savePreference(PrefKeys.APP_THEME_KEY, theme.name)
-    suspend fun setLanguage(language: AppLanguage) = savePreference(PrefKeys.APP_LANGUAGE_KEY, language.code, "app_language")
+    suspend fun setLanguage(language: AppLanguage) = savePreference(PrefKeys.APP_LANGUAGE_KEY, language.code)
     suspend fun setColorSchemeMode(mode: ColorSchemeMode) = savePreference(PrefKeys.APP_COLOR_SCHEME_KEY, mode.name)
     suspend fun setKillBeforeLaunch(kill: Boolean) = savePreference(PrefKeys.KILL_BEFORE_LAUNCH, kill)
 
-    // Xposed
+    // Xposed Setters
     suspend fun setAppMonetEnabled(packageName: String, enabled: Boolean) =
-        savePreference(appMonetKey(packageName), enabled, "app_${packageName}_monet_enabled")
+        savePreference(
+            appMonetKey(packageName),
+            enabled,
+            PrefKeys.Xposed.monetXposedKey(packageName)
+        )
 
     suspend fun setAppAdsDisabled(packageName: String, disabled: Boolean) =
-        savePreference(appAdsKey(packageName), disabled, "app_${packageName}_ads_disabled")
+        savePreference(
+            appAdsKey(packageName),
+            disabled,
+            PrefKeys.Xposed.adsXposedKey(packageName)
+        )
 
     suspend fun setAppIconPack(packageName: String, iconPack: AppIconPack) = savePreference(
         appIconPackKey(packageName),
-        iconPack.name, "app_${packageName}_icon_pack"
+        iconPack.name,
+        PrefKeys.Xposed.iconPackXposedKey(packageName)
     )
 
     suspend fun resetXposedPrefs() {
-        val excludedKeys = setOf(
+        dataStore.edit { preferences ->
+            preferences.asMap().keys
+                .filter { it !in excludedKeys }
+                .forEach { preferences.remove(it) }
+        }
+        xposedPrefs.edit { clear() }
+    }
+
+    companion object {
+        private const val TAG = "PreferencesRepository"
+        private val excludedKeys = setOf(
             PrefKeys.APP_THEME_KEY,
             PrefKeys.APP_LANGUAGE_KEY,
             PrefKeys.APP_COLOR_SCHEME_KEY,
@@ -120,17 +135,5 @@ class PreferencesRepository @Inject constructor(
             PrefKeys.SHOW_WARNING_DIALOG,
             PrefKeys.KILL_BEFORE_LAUNCH
         )
-        dataStore.edit { preferences ->
-            preferences.asMap().keys.filter {
-                it !in excludedKeys
-            }.forEach {
-                preferences.remove(it)
-            }
-        }
-        xposedPrefs.edit { clear() }
-    }
-
-    companion object {
-        private const val TAG = "PreferencesRepository"
     }
 }
