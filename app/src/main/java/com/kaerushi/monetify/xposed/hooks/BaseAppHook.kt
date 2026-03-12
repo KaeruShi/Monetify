@@ -2,11 +2,13 @@ package com.kaerushi.monetify.xposed.hooks
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.ViewGroup
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.kaerushi.monetify.data.model.preferences.AppIconPack
 import com.kaerushi.monetify.xposed.MainHook.bridge
+import com.kaerushi.monetify.xposed.helper.InjectLayoutHelper
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
 import org.luckypray.dexkit.DexKitBridge
 
@@ -72,6 +74,27 @@ abstract class BaseAppHook : YukiBaseHooker() {
                         color()
                     }
                     replaceTo { provider() }
+                }
+            }
+        }
+    }
+
+    @LegacyResourcesHook
+    inline fun hookLayout(
+        name: String,
+        crossinline block: InjectLayoutHelper.() -> Unit
+    ) {
+        resources().hook {
+            injectResource {
+                conditions {
+                    this.name = name
+                    layout()
+                }
+                injectAsLayout {
+                    InjectLayoutHelper(
+                        currentView as ViewGroup,
+                        appContext!!
+                    ).block()
                 }
             }
         }
