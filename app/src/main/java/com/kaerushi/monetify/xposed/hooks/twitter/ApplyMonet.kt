@@ -6,7 +6,7 @@ import com.kaerushi.monetify.xposed.utils.*
 
 object ApplyMonet {
     @OptIn(LegacyResourcesHook::class)
-    fun TwitterHooks.applyMonetTwitter(activity: Activity) {
+    fun TwitterHooks.applyMonet(activity: Activity) {
         injectColor(
             "twitter_blue_opacity_30",
             "twitter_blue_opacity_50",

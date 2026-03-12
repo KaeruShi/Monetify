@@ -6,7 +6,7 @@ import com.kaerushi.monetify.xposed.utils.*
 
 object ApplyMonet {
     @OptIn(LegacyResourcesHook::class)
-    fun SubstratumLiteHooks.applyMonetSubstratumLite(activity: Activity) {
+    fun SubstratumLiteHooks.applyMonet(activity: Activity) {
         injectColor("primary", "primary_variant", "secondary", "secondary_variant") {
             colorPrimary(activity)
         }

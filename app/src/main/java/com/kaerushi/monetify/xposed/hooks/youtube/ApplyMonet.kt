@@ -7,7 +7,7 @@ import com.kaerushi.monetify.xposed.utils.*
 
 object ApplyMonet {
     @OptIn(LegacyResourcesHook::class)
-    fun applyMonet(activity: Activity) {
+    fun YoutubeHooks.applyMonet(activity: Activity) {
         injectColor(
             "yt_white1_opacity25", "yt_white1_opacity60",
             "yt_ref_color_constants_baseline_white_white1",
