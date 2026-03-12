@@ -1,38 +1,74 @@
 package com.kaerushi.monetify.xposed.hooks.reddit
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
-import com.kaerushi.monetify.xposed.utils.*
+import com.kaerushi.monetify.xposed.MainHook.bridge
+import com.kaerushi.monetify.xposed.utils.colorPrimary
+import com.kaerushi.monetify.xposed.utils.colorPrimaryLight
+import com.kaerushi.monetify.xposed.utils.colorSurfaceContainerDark
+import com.kaerushi.monetify.xposed.utils.colorSurfaceContainerLight
+import com.kaerushi.monetify.xposed.utils.colorSurfaceDark
+import com.kaerushi.monetify.xposed.utils.colorSurfaceLight
 
 @OptIn(LegacyResourcesHook::class)
-fun RedditHooks.applyMonet(activity: Activity) {
+fun RedditHooks.applyMonetRes(activity: Activity) {
     injectColor(
-        "alienblue_secondary", "alienblue_tone1", "alienblue_primary", "night_canvas",
-        "alienblue_admin", "alienblue_live", "alienblue_upvote", "anonymousbrowsing_admin",
-        "anonymousbrowsing_live", "anonymousbrowsing_upvote", "ds_primitive_orangered_500", "mint_admin",
-        "mint_live", "mint_upvote", "palette_red", "pony_admin", "pony_live", "pony_upvote", "rdt_orangered",
-        "rdt_orangered_new", "trees_admin", "trees_live", "trees_upvote", "rw_rdt_orangered"
+        "alienblue_primary", "night_primary"
     ) {
-        colorPrimaryLight(activity)
+        colorPrimary(activity)
     }
     injectColor(
-        "white", "alienblue_canvas", "alienblue_tone6", "alienblue_tone8",
-        "mint_canvas", "mint_tone6", "ds_primitive_narwhal_100"
+        "white", "alienblue_tone6", "alienblue_tone8", "ds_primitive_narwhal_100"
     ) {
         colorSurfaceLight(activity)
     }
+    injectColor("alienblue_canvas") {
+        colorSurfaceContainerLight(activity)
+    }
 
     // Dark
-    injectColor(
-        "night_primary", "night_secondary", "night_tone1", "night_tone2", "midnight_admin",
-        "midnight_live", "midnight_upvote", "night_admin", "night_live", "night_upvote"
-    ) {
-        colorPrimaryDark(activity)
+    injectColor("night_canvas", "alienblue_tone1", "night_tone8") {
+        colorSurfaceDark(activity)
     }
-    injectColor("night_canvas") {
+    injectColor("night_tone6") {
         colorSurfaceContainerDark(activity)
     }
-    injectColor("midnight_tone6", "midnight_tone7", "midnight_tone8", "midnight_canvas") {
-        colorSurfaceDark(activity)
+}
+
+@SuppressLint("DiscouragedPrivateApi", "NonUniqueDexKitData")
+fun RedditHooks.applyMonetClazz() {
+    val method = bridge.findMethod {
+        matcher {
+            usingNumbers(0xff121212L)
+        }
+    }
+
+    val caller = method.first().invokes.first().getMethodInstance(appClassLoader!!)
+    caller.hook {
+        before {
+            val color = args[0] as Long
+            when (color) {
+                // Accent color
+                0xff648efcL -> args[0] = colorPrimary(appContext!!)
+                0xff0a449bL -> args[0] = colorPrimary(appContext!!)
+                0xff115bcaL -> args[0] = colorPrimaryLight(appContext!!)
+                // Background Primary
+                0xffffffffL -> args[0] = colorSurfaceLight(appContext!!)
+                0xff000000L -> args[0] = colorSurfaceDark(appContext!!)
+                0xff121212L -> args[0] = colorSurfaceDark(appContext!!)
+                0xff0e1113L -> args[0] = colorSurfaceDark(appContext!!)
+                0xff0a0a0aL -> args[0] = colorSurfaceDark(appContext!!)
+                // Background Secondary
+                0xffe5ebeeL -> args[0] = colorSurfaceContainerLight(appContext!!)
+                0xfff6f8f9L -> args[0] = colorSurfaceContainerLight(appContext!!)
+                0xffeef1f3L -> args[0] = colorSurfaceContainerLight(appContext!!)
+                0xfff1f3f5L -> args[0] = colorSurfaceContainerLight(appContext!!)
+                0xffc9d7deL -> args[0] = colorSurfaceContainerLight(appContext!!)
+                0xff181c1fL -> args[0] = colorSurfaceContainerDark(appContext!!)
+                0xff3d494eL -> args[0] = colorSurfaceContainerDark(appContext!!)
+                0xff2a3236L -> args[0] = colorSurfaceContainerDark(appContext!!)
+            }
+        }
     }
 }

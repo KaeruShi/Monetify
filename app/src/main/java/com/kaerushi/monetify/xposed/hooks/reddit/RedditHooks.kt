@@ -11,9 +11,11 @@ object RedditHooks : BaseAppHook() {
     override val pkgName: String = REDDIT_PACKAGE_NAME
     override val duotoneDrawables: Map<String, Int> = IconPack.duotoneDrawables
     override fun hookClass() {
+        super.hookClass()
         if (PreferenceUtil.getAppDisableAds(pkgName)) disableAds()
+        if (PreferenceUtil.getAppMonetEnabled(pkgName)) applyMonetClazz()
     }
     override fun hookOnCreate(instance: Activity) {
-        if (PreferenceUtil.getAppMonetEnabled(pkgName)) applyMonet(instance)
+        if (PreferenceUtil.getAppMonetEnabled(pkgName)) applyMonetRes(instance)
     }
 }
