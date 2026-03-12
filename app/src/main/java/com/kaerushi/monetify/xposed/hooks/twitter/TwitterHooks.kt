@@ -3,7 +3,6 @@ package com.kaerushi.monetify.xposed.hooks.twitter
 import android.app.Activity
 import com.kaerushi.monetify.data.X_PACKAGE_NAME
 import com.kaerushi.monetify.xposed.hooks.BaseAppHook
-import com.kaerushi.monetify.xposed.hooks.twitter.ApplyMonet.applyMonet
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
 
 object TwitterHooks : BaseAppHook() {

@@ -3,7 +3,6 @@ package com.kaerushi.monetify.xposed.hooks.subslite
 import android.app.Activity
 import com.kaerushi.monetify.data.SUBSTRATUM_LITE_PACKAGE_NAME
 import com.kaerushi.monetify.xposed.hooks.BaseAppHook
-import com.kaerushi.monetify.xposed.hooks.subslite.ApplyMonet.applyMonet
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
 
 object SubstratumLiteHooks : BaseAppHook() {

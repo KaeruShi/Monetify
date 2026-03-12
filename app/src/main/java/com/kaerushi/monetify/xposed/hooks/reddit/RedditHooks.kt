@@ -4,8 +4,6 @@ import android.app.Activity
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.kaerushi.monetify.data.REDDIT_PACKAGE_NAME
 import com.kaerushi.monetify.xposed.hooks.BaseAppHook
-import com.kaerushi.monetify.xposed.hooks.reddit.AdsHook.disableAds
-import com.kaerushi.monetify.xposed.hooks.reddit.ApplyMonet.applyMonetReddit
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
 
 @OptIn(LegacyResourcesHook::class)
@@ -16,6 +14,6 @@ object RedditHooks : BaseAppHook() {
         if (PreferenceUtil.getAppDisableAds(pkgName)) disableAds()
     }
     override fun hookOnCreate(instance: Activity) {
-        if (PreferenceUtil.getAppMonetEnabled(pkgName)) applyMonetReddit(instance)
+        if (PreferenceUtil.getAppMonetEnabled(pkgName)) applyMonet(instance)
     }
 }

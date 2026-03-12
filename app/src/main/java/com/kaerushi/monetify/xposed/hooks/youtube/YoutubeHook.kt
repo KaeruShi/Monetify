@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import com.highcapable.yukihookapi.hook.log.YLog
 import com.kaerushi.monetify.data.YOUTUBE_PACKAGE_NAME
 import com.kaerushi.monetify.xposed.hooks.BaseAppHook
-import com.kaerushi.monetify.xposed.hooks.youtube.ApplyMonet.applyMonet
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
 import com.kaerushi.monetify.xposed.utils.colorSurface
 
