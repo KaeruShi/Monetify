@@ -125,6 +125,8 @@ fun colorOnSurface(context: Context): Int =
         context.getColor(android.R.color.system_neutral1_900)
     else
         context.getColor(android.R.color.system_neutral1_100)
+fun colorOnSurfaceLight(context: Context): Int = context.getColor(android.R.color.system_neutral1_900)
+fun colorOnSurfaceDark(context: Context): Int = context.getColor(android.R.color.system_neutral1_100)
 
 fun colorBackground(context: Context): Int =
     if (!isNightMode(context))
