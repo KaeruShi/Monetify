@@ -41,7 +41,7 @@ object IconPack {
         "ic_vector_frown_circle" to R.drawable.duotone_emoji_frown,
         "ic_vector_no" to R.drawable.duotone_block,
         "ic_vector_follow" to R.drawable.duotone_user_add,
-        "ic_vector_people_group_stroke" to R.drawable.duotone_user_group,
+        "ic_vector_people_group_stroke" to R.drawable.duotone_user_groups,
         "ic_vector_follow_close_stroke" to R.drawable.duotone_user_cross,
         "ic_vector_following_stroke" to R.drawable.duotone_user_follow,
         "ic_vector_compose_lists" to R.drawable.duotone_list_add,
