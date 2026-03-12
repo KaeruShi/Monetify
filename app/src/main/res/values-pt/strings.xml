@@ -76,4 +76,5 @@
     <string name="config_import_success">Configuração \'%1$s\' importada com sucesso</string>
     <string name="config_import_failed">Falha na importação: %1$s</string>
     <string name="invalid_config">Configuração inválida: %1$s</string>
+    <string name="not_installed">Não Instalado!</string>
 </resources>

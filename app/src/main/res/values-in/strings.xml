@@ -76,4 +76,5 @@
     <string name="config_import_success">Konfigurasi \'%1$s\' berhasil diimpor</string>
     <string name="config_import_failed">Impor gagal: %1$s</string>
     <string name="invalid_config">Konfigurasi tidak valid: %1$s</string>
+    <string name="not_installed">Tidak Terpasang!</string>
 </resources>

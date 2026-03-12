@@ -76,4 +76,5 @@
     <string name="config_import_success">配置 \'%1$s\' 导入成功</string>
     <string name="config_import_failed">导入失败：%1$s</string>
     <string name="invalid_config">无效配置：%1$s</string>
+    <string name="not_installed">未安装！</string>
 </resources>

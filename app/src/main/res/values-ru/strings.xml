@@ -76,4 +76,5 @@
     <string name="config_import_success">Конфигурация \'%1$s\' успешно импортирована</string>
     <string name="config_import_failed">Ошибка импорта: %1$s</string>
     <string name="invalid_config">Неверная конфигурация: %1$s</string>
+    <string name="not_installed">Не установлено!</string>
 </resources>
