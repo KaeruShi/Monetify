@@ -2,7 +2,7 @@
 
 # Monetify
 
-A Xposed module that brings customization to third-party apps by modifying icons and color resources at runtime, allowing apps to seamlessly match your system theme.
+An Xposed module that brings customization to user apps by modifying icons and color resources at runtime, allowing apps to seamlessly match your system theme.
 
 [![Platform](https://img.shields.io/badge/Android-12%2B-green?style=for-the-badge&logo=android)](https://www.android.com/)
 [![Framework](https://img.shields.io/badge/Module-Xposed-red?style=for-the-badge)](https://github.com/JingMatrix/LSPosed)
@@ -68,6 +68,7 @@ Whether you’re fixing a small typo, improving documentation, refactoring code,
 ## 🗺️ Roadmap
 
 ### Planned Features
+- [ ] Shizuku support
 - [ ] More apps support
 - [ ] More icon packs
 - [ ] More customization options
@@ -91,18 +92,18 @@ Before creating a new issue, please:
 - [Material You](https://m3.material.io/) - Google's Material Design 3
 
 ## ⚠️ Disclaimer
-
-- Monetify is an Xposed module that modifies the behavior of other applications.Use it at your own risk and always back up your data. The developer is not responsible for any damage or data loss.
-- This project is still under active development. Some features may be incomplete, experimental, or may not work as expected.
-
-## 📞 Support
-
-- 💬 [GitHub Discussions](https://github.com/KaeruShi/Monetify/discussions) - Ask questions and chat with the community
-- 🐛 [GitHub Issues](https://github.com/KaeruShi/Monetify/issues) - Report bugs and request features
-- ➤  [Telegram](https://weeabooifychat.t.me) - Support group
+> [!WARNING]
+> - Monetify is an Xposed module that modifies the behavior of other applications.Use it at your own risk and always back up your data. The developer is not responsible for any damage or data loss.
+> - This project is still under active development. Some features may be incomplete, experimental, or may not work as expected.
 
 ## 🌟 Star History
 
 If you find this project useful, please consider giving it a star! ⭐
+<a href="https://gitdata.xuanhun520.com/?repos=kaerushi/monetify&type=Date">
+<picture >
+  <source media="(prefers-color-scheme: dark) and (max-width: 800px)" srcset="https://gitdata.xuanhun520.com/api/starimg?repos=kaerushi/monetify&type=Date&theme=dark" />
+  <source  media="(prefers-color-scheme: light) and (max-width: 800px)" srcset="https://gitdata.xuanhun520.com/api/starimg?repos=kaerushi/monetify&type=Date&theme=light" />
+  <img style="width: 800px; height: 533px;" alt="Star History Chart" src="https://gitdata.xuanhun520.com/api/starimg?repos=kaerushi/monetify&type=Date&theme=dark" />
+</picture>
+</a>
 
-It helps the project grow and lets others discover it too.
