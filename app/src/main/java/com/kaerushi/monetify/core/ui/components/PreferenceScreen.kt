@@ -1,17 +1,12 @@
 package com.kaerushi.monetify.core.ui.components
 
 import android.graphics.drawable.Drawable
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -188,7 +183,9 @@ fun PreferenceSwitch(
                 )
             }
             Column(
-                modifier = Modifier.padding(start = if (icon != null) 16.dp else 0.dp, end = 16.dp).weight(1f)
+                modifier = Modifier
+                    .padding(start = if (icon != null) 16.dp else 0.dp, end = 16.dp)
+                    .weight(1f)
             ) {
                 Text(text = title, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                 Text(text = summary, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface)
@@ -270,39 +267,56 @@ fun PreferenceApp(
                     Text(text = title, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                     Text(text = summary, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface)
                 }
-                AnimatedVisibility(
-                    visible = expanded,
-                    enter = scaleIn(
-                        initialScale = 0.6f,
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                            stiffness = Spring.StiffnessMedium
-                        )
-                    ) + fadeIn(),
-                    exit = scaleOut(
-                        targetScale = 0.6f,
-                        animationSpec = tween(250)
-                    ) + fadeOut(tween(200))
-                ) {
-                    IconButton(onClick = { onClickLaunch() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .background(
-                                    color = MaterialTheme.colorScheme.primaryContainer,
-                                    shape = CircleShape
-                                )
-                                .size(40.dp)
-                                .padding(8.dp),
-                            tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                        )
+
+                AnimatedContent(
+                    targetState = expanded,
+                    label = ""
+                ) { isExpanded ->
+
+                    if (isExpanded) {
+                        IconButton(
+                            modifier = Modifier.padding(start = 16.dp),
+                            onClick = { onClickLaunch() }
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .background(
+                                        color = MaterialTheme.colorScheme.primaryContainer,
+                                        shape = CircleShape
+                                    )
+                                    .size(40.dp)
+                                    .padding(8.dp),
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                            )
+                        }
+                    } else {
+                        Row(
+                            modifier = Modifier.padding(start = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            val pink = Color(0xFFFF0058)
+                            val green = Color(0xFF00B176)
+                            val orange = Color(0xFFFFA500)
+                            if (appInfo.enableMonet) {
+                                AppChip("Monet", orange)
+                            }
+                            if (appInfo.disableAds) {
+                                AppChip("Disable Ads", pink)
+                            }
+                            if (appInfo.iconPack != "DEFAULT") {
+                                AppChip(appInfo.iconPack.lowercase().replaceFirstChar {
+                                    it.uppercase()
+                                }, green)
+                            }
+                        }
                     }
                 }
             }
             AnimatedVisibility(visible = expanded) {
                 Column {
-                    val showDisableAds = when(appInfo.packageName) {
+                    val showDisableAds = when (appInfo.packageName) {
                         REDDIT_PACKAGE_NAME -> true
                         else -> false
                     }

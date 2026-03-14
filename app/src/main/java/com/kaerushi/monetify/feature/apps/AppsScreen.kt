@@ -79,6 +79,14 @@ fun AppsScreen(viewModel: AppsViewModel = hiltViewModel(), settingsViewModel: Se
                 items = apps,
                 key = { _, app -> app.packageName }
             ) { index, appInfo ->
+                val enableMonet by viewModel.enableMonetState(appInfo.packageName).collectAsState()
+                val disableAds by viewModel.disableAdsState(appInfo.packageName).collectAsState()
+                val iconPack by viewModel.iconPackState(appInfo.packageName).collectAsState()
+                val updatedAppInfo = appInfo.copy(
+                    enableMonet = enableMonet,
+                    disableAds = disableAds,
+                    iconPack = iconPack.name
+                )
                 val isExpanded = expandedKey == appInfo.packageName
                 val extraPadding = when {
                     index == apps.size - 1 -> 16.dp
@@ -94,7 +102,7 @@ fun AppsScreen(viewModel: AppsViewModel = hiltViewModel(), settingsViewModel: Se
                     title = appInfo.name,
                     summary = appInfo.summary,
                     enabled = appInfo.enabled,
-                    appInfo = appInfo,
+                    appInfo = updatedAppInfo,
                     type = when {
                         apps.size == 1 -> PreferenceType.ROUND
                         index == 0 -> PreferenceType.TOP

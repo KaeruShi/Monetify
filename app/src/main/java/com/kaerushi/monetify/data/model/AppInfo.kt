@@ -8,5 +8,8 @@ data class AppInfo(
     val summary: String,
     val icon: Drawable?,
     val altIcon: Int,
+    val enableMonet: Boolean = false,
+    val disableAds: Boolean = false,
+    val iconPack: String = "",
     val enabled: Boolean = true
 )

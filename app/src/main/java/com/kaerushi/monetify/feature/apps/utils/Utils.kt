@@ -1,6 +1,5 @@
 package com.kaerushi.monetify.feature.apps.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import com.kaerushi.monetify.R
@@ -14,7 +13,6 @@ import com.kaerushi.monetify.data.X_PACKAGE_NAME
 import com.kaerushi.monetify.data.YOUTUBE_PACKAGE_NAME
 import com.kaerushi.monetify.data.model.AppInfo
 
-@SuppressLint("QueryPermissionsNeeded")
 fun getInstalledApps(context: Context, showUninstalled: Boolean = true): List<AppInfo> {
     val packageManager = context.packageManager
     val apps = mutableListOf<AppInfo>()
@@ -39,7 +37,7 @@ fun getInstalledApps(context: Context, showUninstalled: Boolean = true): List<Ap
         } catch (_: PackageManager.NameNotFoundException) {
             if (showUninstalled)
                 apps.add(AppInfo(displayName, packageName,
-                    context.getString(R.string.not_installed), null, altIcon, false))
+                    context.getString(R.string.not_installed), null, altIcon, enabled = false))
         }
     }
 
