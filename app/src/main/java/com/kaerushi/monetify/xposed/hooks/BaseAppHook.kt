@@ -12,9 +12,10 @@ import com.kaerushi.monetify.xposed.helper.InjectLayoutHelper
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
 import com.kaerushi.monetify.xposed.utils.showAlertDialog
 import org.luckypray.dexkit.DexKitBridge
+import java.lang.ref.WeakReference
 
 abstract class BaseAppHook : YukiBaseHooker() {
-    private var currentActivity: Activity? = null
+    private var currentActivity: WeakReference<Activity>? = null
     private var errorShown = false
     private val errorNames = mutableListOf<String>()
     protected abstract val pkgName: String
@@ -50,13 +51,17 @@ abstract class BaseAppHook : YukiBaseHooker() {
         Activity::class.java.resolve().firstMethod { name = "onCreate"; parameters(Bundle::class.java) }.hook {
             after {
                 val instance = instance<Activity>()
-                currentActivity = instance
+                currentActivity = WeakReference(instance)
                 hookOnCreate(instance)
             }
         }
     }
 
     protected open fun hookOnCreate(instance: Activity) {}
+
+    protected fun getActivity(): Activity? {
+        return currentActivity?.get()
+    }
 
     private fun getIconPackDrawables(): Map<String, Int>? {
         return when (PreferenceUtil.getAppIconPack(packageName)) {
@@ -81,7 +86,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
                     replaceTo { provider() }
                 }.onHookingFailure {
                     errorNames.add(name)
-                    currentActivity?.window?.decorView?.postDelayed({
+                    getActivity()?.window?.decorView?.postDelayed({
                         if (!errorShown) {
                             errorShown = true
                             val msg = buildString {
@@ -90,7 +95,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
                                     append("• $it\n")
                                 }
                             }
-                            showAlertDialog(currentActivity!!, msg, "Report")
+                            showAlertDialog(getActivity()!!, msg, "Report")
                         }
                     }, 300)
                 }
