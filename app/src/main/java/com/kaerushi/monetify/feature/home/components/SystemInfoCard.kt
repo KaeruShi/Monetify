@@ -7,6 +7,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,11 +17,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -53,8 +55,10 @@ fun SystemInfoCard(systemInfo: List<SystemInfo>) {
     ) {
         Column {
             SystemInfoList(systemInfo)
-            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp),
-                thickness = 0.5.dp)
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                thickness = 0.5.dp
+            )
             HookedAppList()
         }
     }
@@ -106,7 +110,10 @@ private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
             ) {
                 Column {
                     Text(stringResource(R.string.apps_hooked_title))
-                    Text(if (!showHookedApps) stringResource(R.string.tap_to_show) else stringResource(R.string.tap_to_hide), fontSize = 14.sp)
+                    Text(
+                        if (!showHookedApps) stringResource(R.string.tap_to_show) else stringResource(R.string.tap_to_hide),
+                        fontSize = 14.sp
+                    )
                 }
                 Icon(
                     modifier = Modifier
@@ -133,15 +140,26 @@ private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
 
 @Composable
 private fun PackageStatus(pkgName: String, hooked: Boolean) {
-    val itemColor = if (!hooked) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.tertiary
-    val itemIcon = if (!hooked) Icons.Default.Clear else Icons.Default.Check
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-        Icon(imageVector = itemIcon,contentDescription = null, modifier = Modifier.size(14.dp),
-            tint = itemColor
+    val warnColor = Color(0xFFE05D44)
+    val successColor = if (!isSystemInDarkTheme()) Color(0xFF046C3B) else Color(0xFFB1F1C1)
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        if (!hooked) CircularProgressIndicator(
+            modifier = Modifier.padding(horizontal = 2.dp).size(10.dp),
+            strokeWidth = 1.dp,
+            color = warnColor
         )
-        Text(pkgName, fontSize = 14.sp, color = itemColor)
+        else Icon(
+            imageVector = Icons.Default.CheckCircle, contentDescription = null, modifier = Modifier.size(14.dp),
+            tint = successColor
+        )
+        Text(
+            pkgName,
+            fontSize = 14.sp,
+            color = if (!hooked) warnColor else successColor,
+        )
     }
 }
+
 @Composable
 private fun TextInfo(deviceInfo: SystemInfo) {
     Box {
