@@ -1,7 +1,6 @@
 package com.kaerushi.monetify.core.navigation
 
 import androidx.annotation.StringRes
-import androidx.compose.ui.res.stringResource
 import com.kaerushi.monetify.R
 
 sealed class Screen(val route: String, @param:StringRes val titleResId: Int) {

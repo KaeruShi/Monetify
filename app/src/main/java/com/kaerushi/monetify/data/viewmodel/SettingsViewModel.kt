@@ -3,10 +3,10 @@ package com.kaerushi.monetify.data.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kaerushi.monetify.core.manager.LocaleManager
+import com.kaerushi.monetify.data.model.preferences.AppLanguage
 import com.kaerushi.monetify.data.model.preferences.AppTheme
 import com.kaerushi.monetify.data.model.preferences.ColorSchemeMode
 import com.kaerushi.monetify.data.repository.PreferencesRepository
-import com.kaerushi.monetify.data.model.preferences.AppLanguage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn

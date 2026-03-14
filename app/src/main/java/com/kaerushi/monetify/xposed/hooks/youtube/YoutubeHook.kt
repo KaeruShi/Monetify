@@ -1,6 +1,5 @@
 package com.kaerushi.monetify.xposed.hooks.youtube
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import com.kaerushi.monetify.data.YOUTUBE_PACKAGE_NAME
 import com.kaerushi.monetify.xposed.hooks.BaseAppHook

@@ -9,9 +9,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import com.kaerushi.monetify.data.model.preferences.AppIconPack
+import com.kaerushi.monetify.data.model.preferences.AppLanguage
 import com.kaerushi.monetify.data.model.preferences.AppTheme
 import com.kaerushi.monetify.data.model.preferences.ColorSchemeMode
-import com.kaerushi.monetify.data.model.preferences.AppLanguage
 import com.kaerushi.monetify.data.repository.PrefKeys.Xposed.appAdsKey
 import com.kaerushi.monetify.data.repository.PrefKeys.Xposed.appIconPackKey
 import com.kaerushi.monetify.data.repository.PrefKeys.Xposed.appMonetKey

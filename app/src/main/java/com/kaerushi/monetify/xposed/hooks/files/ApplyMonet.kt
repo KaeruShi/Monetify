@@ -2,7 +2,10 @@ package com.kaerushi.monetify.xposed.hooks.files
 
 import android.app.Activity
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
-import com.kaerushi.monetify.xposed.utils.*
+import com.kaerushi.monetify.xposed.utils.colorOutline
+import com.kaerushi.monetify.xposed.utils.colorPrimary
+import com.kaerushi.monetify.xposed.utils.colorPrimaryContainer
+import com.kaerushi.monetify.xposed.utils.colorSurface
 
 object ApplyMonet {
     @OptIn(LegacyResourcesHook::class)
