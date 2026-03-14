@@ -4,10 +4,13 @@ import com.kaerushi.monetify.xposed.MainHook.bridge
 import org.luckypray.dexkit.query.enums.StringMatchType
 
 fun RedditHooks.disableAds() {
-    val commentAds = bridge.findMethod {
+    val commentAds = bridge.findClass {
+        matcher {
+            className("LoadAdsCombinedCall", StringMatchType.Contains)
+        }
+    }.findMethod {
         matcher {
             name("invokeSuspend")
-            declaredClass("LoadAdsCombinedCall", StringMatchType.Contains)
         }
     }
     commentAds.single().getMethodInstance(appClassLoader!!).hook {
