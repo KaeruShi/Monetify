@@ -10,6 +10,7 @@ import com.kaerushi.monetify.xposed.hooks.pinterest.PinterestHooks
 import com.kaerushi.monetify.xposed.hooks.reddit.RedditHooks
 import com.kaerushi.monetify.xposed.hooks.subslite.SubstratumLiteHooks
 import com.kaerushi.monetify.xposed.hooks.twitter.TwitterHooks
+import com.kaerushi.monetify.xposed.hooks.youtube.YoutubeHooks
 import org.luckypray.dexkit.DexKitBridge
 
 @InjectYukiHookWithXposed(isUsingResourcesHook = true)
@@ -18,19 +19,6 @@ object MainHook : IYukiHookXposedInit {
         private set
 
     lateinit var bridge: DexKitBridge
-
-//    private lateinit var modRes: XModuleResources
-
-//    override fun onXposedEvent() {
-//        YukiXposedEvent.events {
-//            onInitZygote {
-//                modRes = XModuleResources.createInstance(it.modulePath, null)
-//            }
-//            onHandleInitPackageResources {
-//
-//            }
-//        }
-//    }
 
     override fun onHook() = encase {
         dexKitLoaded = runCatching {
@@ -51,6 +39,7 @@ private object HookRegistry {
         SubstratumLiteHooks,
         TwitterHooks,
         FilesHooks,
-        GitHubHooks
+        GitHubHooks,
+        YoutubeHooks
     )
 }
