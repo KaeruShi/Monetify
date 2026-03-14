@@ -16,7 +16,7 @@ class InjectLayoutHelper(
         )
     }
 
-    fun findView(name: String): View? {
+    fun findView(name: String): View {
         return root.findViewById(findId(name))
     }
 }

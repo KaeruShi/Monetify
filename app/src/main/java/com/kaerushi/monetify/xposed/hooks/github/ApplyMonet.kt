@@ -44,7 +44,7 @@ fun GitHubHooks.applyMonetRes(context: Activity) {
 fun GitHubHooks.applyMonetLayout() {
     hookLayout("list_item_reaction_list") {
         val container = findView("reaction_list_container")
-        container?.apply {
+        container.apply {
             setPadding(16, 16, 16, 16)
             setBackgroundColor(colorSurface(appContext!!))
         }
