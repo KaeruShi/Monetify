@@ -10,9 +10,13 @@ import com.kaerushi.monetify.data.model.preferences.AppIconPack
 import com.kaerushi.monetify.xposed.MainHook.bridge
 import com.kaerushi.monetify.xposed.helper.InjectLayoutHelper
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
+import com.kaerushi.monetify.xposed.utils.showAlertDialog
 import org.luckypray.dexkit.DexKitBridge
 
 abstract class BaseAppHook : YukiBaseHooker() {
+    private var currentActivity: Activity? = null
+    private var errorShown = false
+    private val errorNames = mutableListOf<String>()
     protected abstract val pkgName: String
     protected abstract val duotoneDrawables: Map<String, Int>
 
@@ -46,6 +50,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
         Activity::class.java.resolve().firstMethod { name = "onCreate"; parameters(Bundle::class.java) }.hook {
             after {
                 val instance = instance<Activity>()
+                currentActivity = instance
                 hookOnCreate(instance)
             }
         }
@@ -74,6 +79,20 @@ abstract class BaseAppHook : YukiBaseHooker() {
                         color()
                     }
                     replaceTo { provider() }
+                }.onHookingFailure {
+                    errorNames.add(name)
+                    currentActivity?.window?.decorView?.postDelayed({
+                        if (!errorShown) {
+                            errorShown = true
+                            val msg = buildString {
+                                append("No color resources found for:\n\n")
+                                errorNames.forEach {
+                                    append("• $it\n")
+                                }
+                            }
+                            showAlertDialog(currentActivity!!, msg, "Report")
+                        }
+                    }, 300)
                 }
             }
         }
