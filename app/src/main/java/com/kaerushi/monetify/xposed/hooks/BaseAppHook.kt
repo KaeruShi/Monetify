@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
+import com.highcapable.yukihookapi.hook.log.YLog
 import com.kaerushi.monetify.data.model.preferences.AppIconPack
 import com.kaerushi.monetify.xposed.MainHook.bridge
 import com.kaerushi.monetify.xposed.helper.InjectLayoutHelper
@@ -27,7 +28,10 @@ abstract class BaseAppHook : YukiBaseHooker() {
             bridge = DexKitBridge.create(appInfo.sourceDir)
             onAppLifecycle {
                 onCreate {
-                    dataChannel.put(key = "hook_status_${pkgName}", value = true)
+                    if (PreferenceUtil.getAppHookStatus(pkgName) == false) {
+                        YLog.debug("Data channel: $pkgName")
+                        dataChannel.put(key = "hook_status_${pkgName}", value = true)
+                    }
                 }
             }
             getIconPackDrawables()?.let { drawables ->

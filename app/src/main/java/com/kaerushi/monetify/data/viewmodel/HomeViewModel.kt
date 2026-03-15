@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -48,8 +47,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private val _hookedAppsState = MutableStateFlow<Set<String>>(emptySet())
-    val hookedAppsState: StateFlow<Set<String>> = _hookedAppsState.asStateFlow()
+    fun hookedAppsState(packageName: List<String>) = repo.hookStatuses(packageName)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+    fun setHookStatus(packageName: String, status: Boolean) = viewModelScope.launch { repo.setHookStatus(packageName, status) }
 
     private val registeredApps = mutableSetOf<String>()
 
@@ -60,9 +60,7 @@ class HomeViewModel @Inject constructor(
                 registeredApps += pkg
                 context.dataChannel(packageName = pkg)
                     .wait<Boolean>(key = "hook_status_${pkg}") { isHooked ->
-                        _hookedAppsState.update {
-                            if (isHooked) it + pkg else it - pkg
-                        }
+                        setHookStatus(pkg, isHooked)
                     }
             }
     }

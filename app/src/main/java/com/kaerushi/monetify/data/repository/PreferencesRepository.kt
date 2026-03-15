@@ -13,8 +13,10 @@ import com.kaerushi.monetify.data.model.preferences.AppLanguage
 import com.kaerushi.monetify.data.model.preferences.AppTheme
 import com.kaerushi.monetify.data.model.preferences.ColorSchemeMode
 import com.kaerushi.monetify.data.repository.PrefKeys.Xposed.appAdsKey
+import com.kaerushi.monetify.data.repository.PrefKeys.Xposed.appHookStatusKey
 import com.kaerushi.monetify.data.repository.PrefKeys.Xposed.appIconPackKey
 import com.kaerushi.monetify.data.repository.PrefKeys.Xposed.appMonetKey
+import com.kaerushi.monetify.data.repository.PrefKeys.Xposed.hookStatusKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -76,6 +78,19 @@ class PreferencesRepository @Inject constructor(
     val showAppIconPack = getPreferenceFlow(PrefKeys.SHOW_APP_ICON_PACK, false)
     val showWarningDialog = getPreferenceFlow(PrefKeys.SHOW_WARNING_DIALOG, true)
     val showWelcomeScreen = getPreferenceFlow(PrefKeys.SHOW_WELCOME_SCREEN, true)
+    
+    fun hookStatuses(packageNames: List<String>): Flow<Map<String, Boolean>> {
+        return dataStore.data.catch { exception ->
+            if (exception is IOException) {
+                Log.e(TAG, "Error reading preferences: ${exception.message}")
+                emit(emptyPreferences())
+            } else throw exception
+        }.map { prefs ->
+            packageNames.associateWith { pkg ->
+                prefs[appHookStatusKey(pkg)] ?: false
+            }
+        }
+    }
 
     fun getAppMonetEnabled(packageName: String) = getPreferenceFlow(appMonetKey(packageName), false)
     fun getAppAdsDisabled(packageName: String) = getPreferenceFlow(appAdsKey(packageName), false)
@@ -92,6 +107,9 @@ class PreferencesRepository @Inject constructor(
     suspend fun setLanguage(language: AppLanguage) = savePreference(PrefKeys.APP_LANGUAGE_KEY, language.code)
     suspend fun setColorSchemeMode(mode: ColorSchemeMode) = savePreference(PrefKeys.APP_COLOR_SCHEME_KEY, mode.name)
     suspend fun setKillBeforeLaunch(kill: Boolean) = savePreference(PrefKeys.KILL_BEFORE_LAUNCH, kill)
+    
+    suspend fun setHookStatus(packageName: String, status: Boolean) = 
+        savePreference(appHookStatusKey(packageName), status, hookStatusKey(packageName))
 
     // Xposed Setters
     suspend fun setAppMonetEnabled(packageName: String, enabled: Boolean) =

@@ -79,7 +79,6 @@ private fun SystemInfoList(systemInfo: List<SystemInfo>) {
 @Composable
 private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
     val context = LocalContext.current
-    val hookedApps by viewModel.hookedAppsState.collectAsState()
     var showHookedApps by remember { mutableStateOf(false) }
     val apps = remember { getInstalledApps(context, false) }
     val rotateIcon by animateFloatAsState(
@@ -88,10 +87,12 @@ private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
         label = "rotation"
     )
 
+    val hookedApps by viewModel.hookedAppsState(apps.map { it.packageName }).collectAsState()
     val packageNames = remember(apps) { apps.map { it.packageName } }
     LaunchedEffect(packageNames) {
         viewModel.registerHookStatus(packageNames)
     }
+
 
     Card(
         shape = RoundedCornerShape(0.dp),
@@ -130,7 +131,7 @@ private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
             ) {
                 Column(modifier = Modifier.padding(start = 16.dp, bottom = 16.dp, end = 16.dp)) {
                     apps.forEachIndexed { _, info ->
-                        PackageStatus(info.packageName, info.packageName in hookedApps)
+                        PackageStatus(info.packageName, hookedApps[info.packageName] ?: false)
                     }
                 }
             }

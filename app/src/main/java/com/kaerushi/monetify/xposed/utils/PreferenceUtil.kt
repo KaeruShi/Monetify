@@ -27,6 +27,10 @@ object PreferenceUtil {
         val key = "app_${packageName}_icon_pack"
         return getPreference<String>(key)
     }
+    fun getAppHookStatus(packageName: String): Boolean? {
+        val key = "app_${packageName}_hook_status"
+        return getPreference<Boolean>(key)
+    }
 
     private inline fun <reified T> getPreference(key: String): T? {
         preferences.reload()
