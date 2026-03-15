@@ -72,6 +72,7 @@ Whether you’re fixing a small typo, improving documentation, refactoring code,
 - [ ] More apps support
 - [ ] More icon packs
 - [ ] More customization options
+- [ ] Custom icons
 
 See all the progress [here](https://github.com/KaeruShi/Monetify/commits/master)
 
