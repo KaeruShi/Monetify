@@ -45,7 +45,6 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     snackBarHostState: SnackbarHostState
 ) {
-    val context = LocalContext.current
     val moduleTitle = if (isModuleActive) stringResource(R.string.module_active_title) else stringResource(R.string.module_inactive_title)
     val moduleSubtitle = if (isModuleActive) BuildConfig.VERSION_NAME else stringResource(R.string.module_inactive_subtitle)
     var showExportDialog by rememberSaveable { mutableStateOf(false) }
