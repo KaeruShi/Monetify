@@ -44,7 +44,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.data.model.SystemInfo
+import com.kaerushi.monetify.data.model.preferences.AppTheme
 import com.kaerushi.monetify.data.viewmodel.HomeViewModel
+import com.kaerushi.monetify.data.viewmodel.SettingsViewModel
 import com.kaerushi.monetify.feature.apps.utils.getInstalledApps
 
 @Composable
@@ -140,9 +142,14 @@ private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
 }
 
 @Composable
-private fun PackageStatus(pkgName: String, hooked: Boolean) {
+private fun PackageStatus(pkgName: String, hooked: Boolean, viewModel: SettingsViewModel = hiltViewModel()) {
+    val appTheme by viewModel.themeState.collectAsState()
     val warnColor = Color(0xFFE05D44)
-    val successColor = if (!isSystemInDarkTheme()) Color(0xFF046C3B) else Color(0xFFB1F1C1)
+    val successColor = when(appTheme){
+        AppTheme.LIGHT -> Color(0xFF046C3B)
+        AppTheme.DARK -> Color(0xFFB1F1C1)
+        AppTheme.SYSTEM -> if (isSystemInDarkTheme()) Color(0xFFB1F1C1) else Color(0xFF046C3B)
+    }
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
         if (!hooked) CircularProgressIndicator(
             modifier = Modifier.padding(horizontal = 2.dp).size(10.dp),

@@ -10,9 +10,12 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -178,10 +181,13 @@ fun AppNav() {
                 content = {
                     Column(modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)) {
                         Text(stringResource(R.string.version, release?.tagName ?: "is null"),
-                            fontWeight = FontWeight.Bold)
+                            fontWeight = FontWeight.Bold, fontSize = 14.sp, modifier = Modifier.background(
+                                color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                                shape = RoundedCornerShape(8.dp)
+                            ).padding(horizontal = 8.dp, vertical = 2.dp))
                         Text(
                             stringResource(R.string.changelog, release?.body ?: "Failed to retrieve changelog"),
-                            fontSize = 14.sp
+                            fontSize = 14.sp, modifier = Modifier.padding(top = 8.dp)
                         )
                     }
                 },

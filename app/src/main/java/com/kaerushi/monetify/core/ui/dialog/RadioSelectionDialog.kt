@@ -11,20 +11,22 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun <T> RadioSelectionDialog(
     title: String,
@@ -33,7 +35,6 @@ fun <T> RadioSelectionDialog(
     optionText: (T) -> String,
     onSelect: (T) -> Unit,
     onDismiss: () -> Unit,
-    confirmText: String? = null,
     dismissText: String = "Cancel"
 ) {
     Dialog(onDismissRequest = onDismiss) {
@@ -43,7 +44,6 @@ fun <T> RadioSelectionDialog(
                 // Title
                 Text(
                     text = title,
-                    fontWeight = FontWeight.Medium,
                     fontSize = 24.sp,
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 12.dp)
                 )
@@ -64,17 +64,15 @@ fun <T> RadioSelectionDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(end = 12.dp, bottom = 10.dp),
+                        .padding(end = 20.dp, bottom = 18.dp),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    if (confirmText != null) {
-                        TextButton(onClick = {
-                            onDismiss()
-                        }) {
-                            Text(text = confirmText)
-                        }
+                    Button(onClick = { onDismiss() }, shapes = ButtonDefaults.shapes(), colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                        contentColor = MaterialTheme.colorScheme.onSurface
+                    )) {
+                        Text(dismissText)
                     }
-                    TextButton(onClick = { onDismiss() }) { Text(dismissText) }
                 }
             }
         }
