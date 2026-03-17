@@ -20,6 +20,12 @@ object MainHook : IYukiHookXposedInit {
         private set
 
     lateinit var bridge: DexKitBridge
+    private val bridgeCache = mutableMapOf<String, DexKitBridge>()
+    fun getOrCreateBridge(apkPath: String, pkgName: String): DexKitBridge {
+        return bridgeCache.getOrPut(pkgName) {
+            DexKitBridge.create(apkPath)
+        }
+    }
 
     override fun onHook() = encase {
         dexKitLoaded = runCatching {

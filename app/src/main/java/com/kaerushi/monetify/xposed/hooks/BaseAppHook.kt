@@ -8,11 +8,11 @@ import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
 import com.kaerushi.monetify.data.model.preferences.AppIconPack
+import com.kaerushi.monetify.xposed.MainHook
 import com.kaerushi.monetify.xposed.MainHook.bridge
 import com.kaerushi.monetify.xposed.helper.InjectLayoutHelper
 import com.kaerushi.monetify.xposed.utils.PreferenceUtil
 import com.kaerushi.monetify.xposed.utils.showAlertDialog
-import org.luckypray.dexkit.DexKitBridge
 import java.lang.ref.WeakReference
 
 abstract class BaseAppHook : YukiBaseHooker() {
@@ -25,7 +25,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
     @LegacyResourcesHook
     override fun onHook() {
         loadApp(pkgName) {
-            bridge = DexKitBridge.create(appInfo.sourceDir)
+            bridge = MainHook.getOrCreateBridge(appInfo.sourceDir, pkgName)
             onAppLifecycle {
                 onCreate {
                     if (PreferenceUtil.getAppHookStatus(pkgName) == false) {
