@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.data.FILES_PACKAGE_NAME
 import com.kaerushi.monetify.data.GITHUB_PACKAGE_NAME
+import com.kaerushi.monetify.data.INSTAGRAM_PACKAGE_NAME
 import com.kaerushi.monetify.data.PINTEREST_PACKAGE_NAME
 import com.kaerushi.monetify.data.REDDIT_PACKAGE_NAME
 import com.kaerushi.monetify.data.SPOTIFY_PACKAGE_NAME
@@ -23,7 +24,8 @@ fun getInstalledApps(context: Context, showUninstalled: Boolean = true): List<Ap
         Triple("Reddit", REDDIT_PACKAGE_NAME, R.drawable.app_reddit),
         Triple("Substratum Lite", SUBSTRATUM_LITE_PACKAGE_NAME, R.drawable.app_subslite),
         Triple("Files", FILES_PACKAGE_NAME, R.drawable.app_files),
-        Triple("YouTube", YOUTUBE_PACKAGE_NAME, R.drawable.app_youtube)
+        Triple("YouTube", YOUTUBE_PACKAGE_NAME, R.drawable.app_youtube),
+        Triple("Instagram", INSTAGRAM_PACKAGE_NAME, R.drawable.app_ig)
 //            Triple("Spotify", SPOTIFY_PACKAGE_NAME, R.drawable.app_spotify)
     )
     for ((displayName, packageName, altIcon) in targetApps) {

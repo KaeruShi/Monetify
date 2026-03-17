@@ -6,6 +6,7 @@ import com.highcapable.yukihookapi.hook.log.YLog
 import com.highcapable.yukihookapi.hook.xposed.proxy.IYukiHookXposedInit
 import com.kaerushi.monetify.xposed.hooks.files.FilesHooks
 import com.kaerushi.monetify.xposed.hooks.github.GitHubHooks
+import com.kaerushi.monetify.xposed.hooks.instagram.InstagramHooks
 import com.kaerushi.monetify.xposed.hooks.pinterest.PinterestHooks
 import com.kaerushi.monetify.xposed.hooks.reddit.RedditHooks
 import com.kaerushi.monetify.xposed.hooks.subslite.SubstratumLiteHooks
@@ -40,6 +41,7 @@ private object HookRegistry {
         TwitterHooks,
         FilesHooks,
         GitHubHooks,
-        YoutubeHooks
+        YoutubeHooks,
+        InstagramHooks
     )
 }
