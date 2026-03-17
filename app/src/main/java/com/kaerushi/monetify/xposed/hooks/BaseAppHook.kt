@@ -20,7 +20,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
     private var errorShown = false
     private val errorNames = mutableListOf<String>()
     protected abstract val pkgName: String
-    protected abstract val duotoneDrawables: Map<String, Int>
+    protected open val duotoneDrawables: Map<String, Int> = emptyMap()
 
     @LegacyResourcesHook
     override fun onHook() {
