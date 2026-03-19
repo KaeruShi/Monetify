@@ -2,250 +2,207 @@ package com.kaerushi.monetify.xposed.utils
 
 import android.content.Context
 import android.content.res.ColorStateList
+import com.kaerushi.monetify.xposed.extensions.isNightMode
 
 // Primary colors
 fun colorPrimary(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_accent1_600)
+        getSystemColor(context, android.R.color.system_accent1_600)
     else
-        context.getColor(android.R.color.system_accent1_100)
+        getSystemColor(context, android.R.color.system_accent1_200)
 
-fun colorPrimaryLight(context: Context): Int = context.getColor(android.R.color.system_accent1_600)
-fun colorPrimaryDark(context: Context): Int = context.getColor(android.R.color.system_accent1_100)
+fun colorPrimaryLight(context: Context): Int = getSystemColor(context, android.R.color.system_accent1_600)
+fun colorPrimaryDark(context: Context): Int = getSystemColor(context, android.R.color.system_accent1_200)
 
 fun colorOnPrimary(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_accent1_0)
+        getSystemColor(context, android.R.color.system_accent1_0)
     else
-        context.getColor(android.R.color.system_accent1_1000)
+        getSystemColor(context, android.R.color.system_accent1_1000)
 
 fun colorPrimaryContainer(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_accent1_100)
+        getSystemColor(context, android.R.color.system_accent1_100)
     else
-        context.getColor(android.R.color.system_accent1_800)
+        getSystemColor(context, android.R.color.system_accent1_800)
 
 fun colorOnPrimaryContainer(context: Context): Int =
-    context.getColor(android.R.color.system_accent1_900)
+    getSystemColor(context, android.R.color.system_accent1_900)
 
 
 // Secondary colors
 fun colorSecondary(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_accent2_600)
+        getSystemColor(context, android.R.color.system_accent2_600)
     else
-        context.getColor(android.R.color.system_accent2_200)
+        getSystemColor(context, android.R.color.system_accent2_200)
 
 fun colorOnSecondary(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_accent2_0)
+        getSystemColor(context, android.R.color.system_accent2_0)
     else
-        context.getColor(android.R.color.system_accent2_1000)
+        getSystemColor(context, android.R.color.system_accent2_1000)
 
 fun colorSecondaryContainer(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_accent2_100)
+        getSystemColor(context, android.R.color.system_accent2_100)
     else
-        context.getColor(android.R.color.system_accent2_700)
+        getSystemColor(context, android.R.color.system_accent2_700)
 
 fun colorOnSecondaryContainer(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_accent2_900)
+        getSystemColor(context, android.R.color.system_accent2_900)
     else
-        context.getColor(android.R.color.system_accent2_100)
+        getSystemColor(context, android.R.color.system_accent2_100)
 
 
 // Tertiary colors
 fun colorTertiary(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_accent3_600)
+        getSystemColor(context, android.R.color.system_accent3_600)
     else
-        context.getColor(android.R.color.system_accent3_200)
+        getSystemColor(context, android.R.color.system_accent3_200)
 
 fun colorOnTertiary(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_accent3_0)
+        getSystemColor(context, android.R.color.system_accent3_0)
     else
-        context.getColor(android.R.color.system_accent3_1000)
+        getSystemColor(context, android.R.color.system_accent3_1000)
 
 fun colorTertiaryContainer(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_accent3_100)
+        getSystemColor(context, android.R.color.system_accent3_100)
     else
-        context.getColor(android.R.color.system_accent3_700)
+        getSystemColor(context, android.R.color.system_accent3_700)
 
 fun colorOnTertiaryContainer(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_accent3_900)
+        getSystemColor(context, android.R.color.system_accent3_900)
     else
-        context.getColor(android.R.color.system_accent3_100)
-
-
-// Error colors
-fun colorError(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_error_600,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_error_200, context.theme)
-}
-
-fun colorOnError(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_error_0,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_error_800, context.theme)
-}
-
-fun colorErrorContainer(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_error_100,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_error_700, context.theme)
-}
-
-fun colorOnErrorContainer(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_error_700,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_error_100, context.theme)
-}
-
-// Background colors
-fun colorSurfaceContainer(context: Context): Int =
-    if (!isNightMode(context))
-        context.getColor(android.R.color.system_neutral1_100)
-    else
-        context.getColor(android.R.color.system_neutral1_800)
-
-fun colorSurfaceContainerLight(context: Context): Int = context.getColor(android.R.color.system_neutral1_100)
-fun colorSurfaceContainerDark(context: Context): Int = context.getColor(android.R.color.system_neutral1_800)
+        getSystemColor(context, android.R.color.system_accent3_100)
 
 fun colorOnSurface(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_neutral1_900)
+        getSystemColor(context, android.R.color.system_neutral1_900)
     else
-        context.getColor(android.R.color.system_neutral1_100)
-fun colorOnSurfaceLight(context: Context): Int = context.getColor(android.R.color.system_neutral1_900)
-fun colorOnSurfaceDark(context: Context): Int = context.getColor(android.R.color.system_neutral1_100)
+        getSystemColor(context, android.R.color.system_neutral1_100)
+
+fun colorOnSurfaceLight(context: Context): Int = getSystemColor(context, android.R.color.system_neutral1_900)
+fun colorOnSurfaceDark(context: Context): Int = getSystemColor(context, android.R.color.system_neutral1_100)
 
 fun colorBackground(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_neutral1_100)
+        getSystemColor(context, android.R.color.system_neutral1_0)
     else
-        context.getColor(android.R.color.system_neutral1_800)
+        getSystemColor(context, android.R.color.system_neutral1_1000)
 
 fun colorOnBackground(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_neutral1_900)
+        getSystemColor(context, android.R.color.system_neutral1_900)
     else
-        context.getColor(android.R.color.system_neutral1_100)
+        getSystemColor(context, android.R.color.system_neutral1_100)
 
 
 // Surface colors
+fun colorSurface(context: Context): Int =
+    if (!isNightMode(context))
+        getSystemColor(context, android.R.color.system_neutral1_50)
+    else
+        getSystemColor(context, android.R.color.system_neutral1_900)
+fun colorSurfaceDim(context: Context): Int =
+    if (!isNightMode(context))
+        getSystemColor(context, android.R.color.system_neutral1_100)
+    else
+        getSystemColor(context, android.R.color.system_neutral1_900)
+
+fun colorSurfaceBright(context: Context): Int =
+    if (!isNightMode(context))
+        getSystemColor(context, android.R.color.system_neutral1_10)
+    else
+        getSystemColor(context, android.R.color.system_neutral1_800)
+
 fun colorSurfaceVariant(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_neutral2_200)
+        getSystemColor(context, android.R.color.system_neutral2_200)
     else
-        context.getColor(android.R.color.system_neutral2_700)
+        getSystemColor(context, android.R.color.system_neutral2_700)
 
 fun colorOnSurfaceVariant(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_neutral2_900)
+        getSystemColor(context, android.R.color.system_neutral2_900)
     else
-        context.getColor(android.R.color.system_neutral2_100)
+        getSystemColor(context, android.R.color.system_neutral2_100)
 
 fun colorOutline(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_neutral2_500)
+        getSystemColor(context, android.R.color.system_neutral2_500)
     else
-        context.getColor(android.R.color.system_neutral2_700)
+        getSystemColor(context, android.R.color.system_neutral2_700)
 
-fun colorSurface(context: Context): Int =
+fun colorSurfaceLight(context: Context) = getSystemColor(context, android.R.color.system_neutral1_50)
+fun colorSurfaceDark(context: Context) = getSystemColor(context, android.R.color.system_neutral1_900)
+
+fun colorOutlineVariant(context: Context): Int =
     if (!isNightMode(context))
-        context.getColor(android.R.color.system_neutral1_50)
+        getSystemColor(context, android.R.color.system_neutral2_300)
     else
-        context.getColor(android.R.color.system_neutral1_900)
-
-fun colorSurfaceLight(context: Context) = context.getColor(android.R.color.system_neutral1_50)
-fun colorSurfaceDark(context: Context) = context.getColor(android.R.color.system_neutral1_900)
-
-
-fun colorOutlineVariant(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_neutral2_300,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_neutral2_700, context.theme)
-}
+        getSystemColor(context, android.R.color.system_neutral2_600)
 
 // Scrim
-fun colorScrim(context: Context): Int {
-    return context.resources.getColor(android.R.color.system_neutral1_1000, context.theme)
-}
+fun colorScrim(context: Context): Int = getSystemColor(context, android.R.color.system_neutral1_1000)
 
 // Inverse colors
-fun colorInverseSurface(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_neutral1_800,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_neutral1_100, context.theme)
-}
+fun colorInverseSurface(context: Context): Int =
+    if (!isNightMode(context))
+        getSystemColor(context, android.R.color.system_neutral1_800)
+    else
+        getSystemColor(context, android.R.color.system_neutral1_200)
 
-fun colorInverseOnSurface(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_neutral1_50,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_neutral1_800, context.theme)
-}
+fun colorInverseOnSurface(context: Context): Int =
+    if (!isNightMode(context))
+        getSystemColor(context, android.R.color.system_neutral1_50)
+    else
+        getSystemColor(context, android.R.color.system_neutral1_900)
 
-fun colorInversePrimary(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_accent1_200,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_accent1_600, context.theme)
-}
+fun colorInversePrimary(context: Context): Int =
+    if (!isNightMode(context))
+        getSystemColor(context, android.R.color.system_accent1_200)
+    else
+        getSystemColor(context, android.R.color.system_accent1_600)
 
 // Surface container colors
-fun colorSurfaceDim(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_neutral1_100,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_neutral1_900, context.theme)
-}
+fun colorSurfaceContainer(context: Context): Int =
+    if (!isNightMode(context))
+        getSystemColor(context, android.R.color.system_neutral1_100)
+    else
+        getSystemColor(context, android.R.color.system_neutral1_800)
 
-fun colorSurfaceBright(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_neutral1_10,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_neutral1_800, context.theme)
-}
+fun colorSurfaceContainerLight(context: Context): Int = getSystemColor(context, android.R.color.system_neutral1_100)
+fun colorSurfaceContainerDark(context: Context): Int = getSystemColor(context, android.R.color.system_neutral1_800)
 
-fun colorSurfaceContainerLowest(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_neutral1_0,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_neutral1_1000, context.theme)
-}
+fun colorSurfaceContainerLowest(context: Context): Int =
+    if (!isNightMode(context))
+        getSystemColor(context, android.R.color.system_neutral1_0)
+    else
+        getSystemColor(context, android.R.color.system_neutral1_1000)
 
-fun colorSurfaceContainerLow(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_neutral1_50,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_neutral1_900, context.theme)
-}
+fun colorSurfaceContainerLow(context: Context): Int =
+    if (!isNightMode(context))
+        getSystemColor(context, android.R.color.system_neutral1_50)
+    else
+        getSystemColor(context, android.R.color.system_neutral1_900)
 
-fun colorSurfaceContainerHigh(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_neutral1_100,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_neutral1_800, context.theme)
-}
+fun colorSurfaceContainerHigh(context: Context): Int =
+    if (!isNightMode(context))
+        getSystemColor(context, android.R.color.system_neutral1_200)
+    else
+        getSystemColor(context, android.R.color.system_neutral1_800)
 
-fun colorSurfaceContainerHighest(context: Context): Int {
-    return if (!isNightMode(context)) context.resources.getColor(
-        android.R.color.system_neutral1_100,
-        context.theme
-    ) else context.resources.getColor(android.R.color.system_neutral1_800, context.theme)
-}
+fun colorSurfaceContainerHighest(context: Context): Int =
+    if (!isNightMode(context))
+        getSystemColor(context, android.R.color.system_neutral1_300)
+    else
+        getSystemColor(context, android.R.color.system_neutral1_600)
 
 // Tint colors
 fun getTintColor(context: Context): ColorStateList {
@@ -259,3 +216,5 @@ fun getTintColor(context: Context): ColorStateList {
     )
     return ColorStateList(states, colors)
 }
+
+fun getSystemColor(context: Context, color: Int) = context.resources.getColor(color, context.theme)

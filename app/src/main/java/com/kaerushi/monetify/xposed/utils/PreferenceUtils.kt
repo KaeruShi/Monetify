@@ -6,7 +6,7 @@ import com.kaerushi.monetify.data.PACKAGE_NAME
 import com.kaerushi.monetify.data.SHARED_PREFS_NAME
 import de.robv.android.xposed.XSharedPreferences
 
-object PreferenceUtil {
+object PreferenceUtils {
     private const val TAG = "PreferenceUtil"
 
     private val preferences: XSharedPreferences =

@@ -1,7 +1,9 @@
-package com.kaerushi.monetify.xposed.utils
+package com.kaerushi.monetify.xposed.extensions
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import com.highcapable.yukihookapi.hook.log.YLog
 import androidx.core.net.toUri
@@ -13,12 +15,12 @@ fun isNightMode(context: Context): Boolean {
 fun showAlertDialog(act: Activity, msg: String, positiveText: String = "OK") {
     act.runOnUiThread {
         try {
-            android.app.AlertDialog.Builder(act)
+            AlertDialog.Builder(act)
                 .setTitle("Monetify")
                 .setMessage(msg)
                 .setPositiveButton(positiveText) { _, _ ->
-                    val intent = android.content.Intent(
-                        android.content.Intent.ACTION_VIEW,
+                    val intent = Intent(
+                        Intent.ACTION_VIEW,
                         "https://weeabooifychat.t.me".toUri()
                     )
                     act.startActivity(intent)

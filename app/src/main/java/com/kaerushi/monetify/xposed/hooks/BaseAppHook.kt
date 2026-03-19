@@ -11,8 +11,8 @@ import com.kaerushi.monetify.data.model.preferences.AppIconPack
 import com.kaerushi.monetify.xposed.MainHook
 import com.kaerushi.monetify.xposed.MainHook.bridge
 import com.kaerushi.monetify.xposed.helper.InjectLayoutHelper
-import com.kaerushi.monetify.xposed.utils.PreferenceUtil
-import com.kaerushi.monetify.xposed.utils.showAlertDialog
+import com.kaerushi.monetify.xposed.utils.PreferenceUtils
+import com.kaerushi.monetify.xposed.extensions.showAlertDialog
 import java.lang.ref.WeakReference
 
 abstract class BaseAppHook : YukiBaseHooker() {
@@ -28,7 +28,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
             bridge = MainHook.getOrCreateBridge(appInfo.sourceDir, pkgName)
             onAppLifecycle {
                 onCreate {
-                    if (PreferenceUtil.getAppHookStatus(pkgName) == false) {
+                    if (PreferenceUtils.getAppHookStatus(pkgName) == false) {
                         YLog.debug("Data channel: $pkgName")
                         dataChannel.put(key = "hook_status_${pkgName}", value = true)
                     }
@@ -68,7 +68,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
     }
 
     private fun getIconPackDrawables(): Map<String, Int>? {
-        return when (PreferenceUtil.getAppIconPack(packageName)) {
+        return when (PreferenceUtils.getAppIconPack(packageName)) {
             AppIconPack.DEFAULT.name -> null
             AppIconPack.DUOTONE.name -> duotoneDrawables
             else -> null

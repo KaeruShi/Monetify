@@ -28,7 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kaerushi.monetify.BuildConfig
 import com.kaerushi.monetify.R
 import com.kaerushi.monetify.core.ui.dialog.TextInputDialog
-import com.kaerushi.monetify.core.util.Utils.isModuleActive
+import com.kaerushi.monetify.core.utils.Utils.isModuleActive
 import com.kaerushi.monetify.data.model.SystemInfo
 import com.kaerushi.monetify.data.viewmodel.BackupEvent
 import com.kaerushi.monetify.data.viewmodel.BackupStatus

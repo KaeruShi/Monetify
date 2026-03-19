@@ -9,7 +9,7 @@ import com.kaerushi.monetify.xposed.utils.colorPrimaryLight
 import com.kaerushi.monetify.xposed.utils.colorSurface
 import com.kaerushi.monetify.xposed.utils.colorSurfaceDark
 import com.kaerushi.monetify.xposed.utils.colorSurfaceLight
-import com.kaerushi.monetify.xposed.utils.isNightMode
+import com.kaerushi.monetify.xposed.extensions.isNightMode
 
 fun YoutubeHooks.applyMonetRes(activity: Activity) {
     injectColor(

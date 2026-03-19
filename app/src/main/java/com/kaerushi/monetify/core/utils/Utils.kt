@@ -1,4 +1,4 @@
-package com.kaerushi.monetify.core.util
+package com.kaerushi.monetify.core.utils
 
 import android.content.Context
 import android.content.Intent

@@ -36,7 +36,7 @@ import com.kaerushi.monetify.core.ui.components.PreferenceApp
 import com.kaerushi.monetify.data.model.preferences.PreferenceType
 import com.kaerushi.monetify.core.ui.dialog.AlertDialog
 import com.kaerushi.monetify.core.ui.dialog.RadioSelectionDialog
-import com.kaerushi.monetify.core.util.Utils.launchApp
+import com.kaerushi.monetify.core.utils.Utils.launchApp
 import com.kaerushi.monetify.data.model.preferences.AppIconPack
 import com.kaerushi.monetify.data.viewmodel.AppsViewModel
 import com.kaerushi.monetify.data.viewmodel.SettingsViewModel

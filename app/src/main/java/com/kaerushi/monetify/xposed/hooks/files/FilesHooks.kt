@@ -3,7 +3,7 @@ package com.kaerushi.monetify.xposed.hooks.files
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.kaerushi.monetify.data.FILES_PACKAGE_NAME
 import com.kaerushi.monetify.xposed.hooks.BaseAppHook
-import com.kaerushi.monetify.xposed.utils.PreferenceUtil.getAppMonetEnabled
+import com.kaerushi.monetify.xposed.utils.PreferenceUtils.getAppMonetEnabled
 
 object FilesHooks : BaseAppHook() {
     override val pkgName = FILES_PACKAGE_NAME

@@ -2,6 +2,7 @@ package com.kaerushi.monetify.xposed.hooks.twitter
 
 import android.app.Activity
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
+import com.kaerushi.monetify.xposed.extensions.isNightMode
 import com.kaerushi.monetify.xposed.utils.*
 
 @OptIn(LegacyResourcesHook::class)
