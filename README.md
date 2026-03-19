@@ -18,7 +18,7 @@ An Xposed module that brings customization to user apps by modifying icons and c
 - 💉 **Dagger Hilt** for dependency injection across application, ViewModel, and system components  
 - 🎨 **Jetpack Compose** for building declarative, state-driven UI components  
 - 🌈 **Material Expressive** with dynamic color support and adaptive theming  
-- 🎭 **Xposed runtime resource hooking** for modifying third-party app icons and colors dynamically  
+- 🎭 **Xposed runtime hooking** for modifying third-party app icons and colors dynamically  
 - 📦 **Import / Export configuration** for easy backup and sharing of your setup  
 
 ## 📱 Currently Supported Apps
