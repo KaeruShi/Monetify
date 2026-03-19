@@ -26,7 +26,7 @@ An Xposed module that brings customization to user apps by modifying icons and c
 - DocumentsUI
 - GitHub
 - Instagram (Soon)
-- Pinteres
+- Pinterest
 - Pixiv (Soon)
 - Reddit
 - Substratum Lite
