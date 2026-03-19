@@ -25,10 +25,13 @@ An Xposed module that brings customization to user apps by modifying icons and c
 
 - DocumentsUI
 - GitHub
-- Pinterest  
+- Instagram (Soon)
+- Pinteres
+- Pixiv (Soon)
 - Reddit
 - Substratum Lite
-- X (Twitter)
+- WhatsApp (Soon)
+- X / Twitter
 - Youtube
 
 ## 📋 Requirements
@@ -103,8 +106,8 @@ Before creating a new issue, please:
 > - This project is still under active development. Some features may be incomplete, experimental, or may not work as expected.
 
 ## 🌟 Star History
-
 If you find this project useful, please consider giving it a star! ⭐
+
 <a href="https://gitdata.xuanhun520.com/?repos=kaerushi/monetify&type=Date">
 <picture >
   <source media="(prefers-color-scheme: dark) and (max-width: 800px)" srcset="https://gitdata.xuanhun520.com/api/starimg?repos=kaerushi/monetify&type=Date&theme=dark" />
@@ -112,4 +115,5 @@ If you find this project useful, please consider giving it a star! ⭐
   <img style="width: 800px; height: 533px;" alt="Star History Chart" src="https://gitdata.xuanhun520.com/api/starimg?repos=kaerushi/monetify&type=Date&theme=dark" />
 </picture>
 </a>
+
 
