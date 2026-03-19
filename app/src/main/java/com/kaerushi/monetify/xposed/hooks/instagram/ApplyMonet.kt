@@ -10,10 +10,12 @@ import android.graphics.RectF
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.log.YLog
-import com.kaerushi.monetify.data.INSTAGRAM_PACKAGE_NAME
 import com.kaerushi.monetify.xposed.MainHook.bridge
 import com.kaerushi.monetify.xposed.utils.colorPrimary
 import com.kaerushi.monetify.xposed.utils.colorSurface
@@ -41,7 +43,7 @@ fun InstagramHooks.applyMonetClazz() {
     }.single()
 
     View::class.java.resolve().method { name = "onAttachedToWindow" }.hookAll {
-        after {
+        before {
             fun shouldSkip(v: View, vararg names: String): Boolean {
                 val id = v.id
                 if (id == View.NO_ID) return false
@@ -78,7 +80,9 @@ fun InstagramHooks.applyMonetClazz() {
                             "suggested_entity_card_social_context_container",
                             "direct_text_message_text_parent",
                             "message_composer_reply_bar_container",
-                        "row_inbox_container"
+                            "feed_preview_cta_container",
+                            "feed_preview_bottom_cta_container",
+                            "grid_view_pog_text_view_container"
                         )
                     ) {
                         setViewBackgroundColor(
@@ -109,11 +113,30 @@ fun InstagramHooks.applyMonetClazz() {
                 }
 
                 "com.instagram.common.ui.base.IgFrameLayout" -> {
-                    if (shouldSkip(view, "bottom_sheet_drag_handle_frame")) {
+                    if (shouldSkip(view, "bottom_sheet_drag_handle_frame", "newsfeed_you")) {
                         setViewBackgroundColor(
                             view,
                             colorSurface(appContext!!)
                         )
+                    }
+                    if (shouldSkip(view, "direct_private_share_action_bar_container_view")) {
+                        if (view is ViewGroup) {
+                            val child = view.getChildAt(0) as View
+                            child.setBackgroundColor(Color.RED)
+                        }
+                    }
+                    if (shouldSkip(view, "direct_private_share_recipients_container")) {
+                        if (view is ViewGroup) {
+                            for (i in 0 until view.childCount) {
+                                val child = view.getChildAt(i)
+
+                                YLog.debug(
+                                    "child[$i] = ${child.javaClass.name}"
+                                )
+                                child.setBackgroundColor(Color.BLUE)
+                            }
+
+                        }
                     }
                 }
 
@@ -145,19 +168,40 @@ fun InstagramHooks.applyMonetClazz() {
                     )
                 }
 
+                "com.instagram.ui.widget.loadmore.LoadMoreButton" -> {
+                    if (shouldSkip(view, "row_load_more_button")) {
+                        setViewBackgroundColor(
+                            view,
+                            colorSurface(appContext!!)
+                        )
+                    }
+                }
+
                 ConstraintLayout::class.java.name -> {
                     if (shouldSkip(
                             view,
-                            "nav_buttons_and_title_container", "similar_accounts_carousel_header"
+                            "nav_buttons_and_title_container", "similar_accounts_carousel_header",
+                            "direct_private_share_container_view"
                         )
                     ) setViewBackgroundColor(
                         view,
                         colorSurface(appContext!!)
                     )
+                    if (shouldSkip(view, "direct_share_sheet_grid_view_pog")) {
+                        val parent = view.getParent(1) as View
+                        setViewBackgroundColor(parent, Color.BLUE)
+                    }
                 }
 
                 "com.instagram.ui.widget.nestablescrollingview.NestableRecyclerView" -> {
                     setViewBackgroundColor(
+                        view,
+                        colorSurface(appContext!!)
+                    )
+                }
+
+                RecyclerView::class.java.name -> {
+                    if (shouldSkip(view, "direct_external_reshare_row")) setViewBackgroundColor(
                         view,
                         colorSurface(appContext!!)
                     )
@@ -185,6 +229,26 @@ fun InstagramHooks.applyMonetClazz() {
                             Color.TRANSPARENT,
                         )
                     }
+                    if (shouldSkip(view, "comment_composer_text_view")) {
+                        val firstParent = view.parent as View
+                        val secondParent = firstParent.parent as View
+                        setViewBackgroundColor(
+                            firstParent,
+                            colorSurfaceContainer(appContext!!),
+                            radius = floatToDp(appContext!!, 60f)
+                        )
+                        setViewBackgroundColor(
+                            secondParent,
+                            colorSurface(appContext!!)
+                        )
+                    }
+                    if (shouldSkip(view, "text1")) {
+                        val parent = view.parent as View
+                        setViewBackgroundColor(
+                            parent,
+                            Color.TRANSPARENT,
+                        )
+                    }
                 }
 
                 // Spacer
@@ -202,8 +266,6 @@ fun InstagramHooks.applyMonetClazz() {
                         colorSurface(appContext!!)
                     )
                 }
-
-                // Reels comment
 
                 // Action bar
                 "com.instagram.igds.components.actionbar.IgdsActionBar" -> {
@@ -234,13 +296,13 @@ fun InstagramHooks.applyMonetClazz() {
                     )
                 }
 
-                // Profile Tab
-//                profileTabClass.name -> {
-//                    setViewBackgroundColor(
-//                        view,
-//                        colorSurface(appContext!!)
-//                    )
-//                }
+                // Tab
+                TabLayout::class.java.name -> {
+                    if (!shouldSkip(view, "action_bar_tab_layout")) setViewBackgroundColor(
+                        view,
+                        colorSurface(appContext!!)
+                    )
+                }
 
                 // Card
                 "com.instagram.ui.widget.roundedcornerlayout.RoundedCornerFrameLayout" -> {
@@ -248,6 +310,35 @@ fun InstagramHooks.applyMonetClazz() {
                         view,
                         colorSurfaceContainer(appContext!!),
                         radius = floatToDp(appContext!!, 12f)
+                    )
+                }
+
+                // Follow button
+                "com.instagram.user.follow.FollowButton" -> {
+                    val reelsParent = view.getParent(3)
+                    if (reelsParent?.javaClass?.name != "com.facebook.litho.ComponentHost")
+                        setViewBackgroundColor(
+                            view,
+                            colorSurfaceContainer(appContext!!),
+                            radius = floatToDp(appContext!!, 8f)
+                        )
+                }
+
+                // Context menu
+                "com.instagram.ui.widget.roundedcornerlayout.RoundedCornerLinearLayout" -> {
+                    setViewBackgroundColor(
+                        view,
+                        colorSurfaceContainer(appContext!!),
+                        radius = floatToDp(appContext!!, 16f)
+                    )
+                }
+
+                // Bottom sheet
+                "com.instagram.common.ui.widget.prioritizedverticallayout.IgPrioritizedVerticalLayout" -> {
+                    setViewBackgroundColor(
+                        view,
+                        colorSurface(appContext!!),
+                        radius = floatToDp(appContext!!, 24f)
                     )
                 }
 
@@ -315,56 +406,33 @@ fun InstagramHooks.applyMonetClazz() {
 
 }
 
-fun setViewBackgroundColor(view: View, color: Int, excludeChildId: String? = null, radius: Float = 0f) {
-    if (radius > 0f) {
-        applyToViewWithRadius(view, color, radius)
-    } else {
-        applyToView(view, color)
-//        applyToParents(view, color, excludeChildId)
+fun setViewBackgroundColor(view: View, color: Int, radius: Float = 0f) {
+    fun apply() {
+        if (radius > 0f) applyToViewWithRadius(view, color, radius)
+        else applyToView(view, color)
     }
-    view.viewTreeObserver.addOnGlobalLayoutListener {
-        if (radius > 0f) {
-            applyToViewWithRadius(view, color, radius)
-        } else {
-            applyToView(view, color)
-//            applyToParents(view, color, excludeChildId)
+
+    apply()
+
+    // Use a self-removing listener instead of accumulating them
+    val listener = ViewTreeObserver.OnGlobalLayoutListener {
+        apply()
+    }
+
+    view.viewTreeObserver.addOnGlobalLayoutListener(listener)
+
+    // Remove listener when view detaches to avoid leaks + stale reapplications
+    view.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+        override fun onViewAttachedToWindow(v: View) {}
+        override fun onViewDetachedFromWindow(v: View) {
+            v.viewTreeObserver.removeOnGlobalLayoutListener(listener)
+            v.removeOnAttachStateChangeListener(this)
         }
-    }
+    })
 }
 
 private fun applyToView(view: View, color: Int) {
     view.setBackgroundColor(color)
-}
-
-private fun applyToParents(
-    view: View,
-    color: Int,
-    excludeChildId: String? = null
-) {
-    if (!hasChildWithId(view, excludeChildId)) (view.parent as? View)?.setBackgroundColor(color)
-}
-
-private fun hasChildWithId(view: View, targetId: String?): Boolean {
-    if (view !is ViewGroup) return false
-
-    for (i in 0 until view.childCount) {
-        val child = view.getChildAt(i)
-
-        val id = child.id
-        if (id != View.NO_ID) {
-            try {
-                val name = child.resources.getResourceEntryName(id)
-                if (name == targetId) return true
-            } catch (_: Exception) {
-            }
-        }
-
-        if (child is ViewGroup) {
-            if (hasChildWithId(child, targetId)) return true
-        }
-    }
-
-    return false
 }
 
 private fun applyToViewWithRadius(view: View, color: Int, radius: Float = 0f) {
@@ -372,6 +440,14 @@ private fun applyToViewWithRadius(view: View, color: Int, radius: Float = 0f) {
         setColor(color)
         cornerRadius = radius
     }
+}
+
+fun View.getParent(level: Int): View? {
+    var p: View? = this
+    repeat(level) {
+        p = p?.parent as? View
+    }
+    return p
 }
 
 fun floatToDp(context: Context, value: Float): Float = value * context.resources.displayMetrics.density
