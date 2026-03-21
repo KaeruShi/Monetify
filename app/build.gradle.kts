@@ -17,8 +17,8 @@ android {
         applicationId = "com.kaerushi.monetify"
         minSdk = 31
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0-beta1"
+        versionCode = 2
+        versionName = "0.1.0-beta2"
         ndk {
             abiFilters.add("armeabi-v7a")
             abiFilters.add("arm64-v8a")

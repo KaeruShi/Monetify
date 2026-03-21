@@ -22,7 +22,7 @@ import com.kaerushi.monetify.data.viewmodel.HomeViewModel
 @Composable
 fun MainScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val showWelcomeScreen by viewModel.welcomeScreenState.collectAsStateWithLifecycle()
-    val shouldShowWelcome = showWelcomeScreen && !allPermissionsGranted(LocalContext.current)
+    val shouldShowWelcome = showWelcomeScreen ?: false || !allPermissionsGranted(LocalContext.current)
 
     Surface(modifier = Modifier.fillMaxSize()) {
         AnimatedContent(

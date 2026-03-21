@@ -39,7 +39,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     val welcomeScreenState = repo.showWelcomeScreen
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun toggleShowWelcomeScreen(show: Boolean) {
         viewModelScope.launch {
