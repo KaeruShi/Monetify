@@ -48,7 +48,7 @@ fun ChangelogBottomSheet(onDismiss: () -> Unit, sheetState: SheetState) {
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(bottom = 12.dp)
                         )
-                        MarkdownText(release!!.body)
+                        MarkdownText(release?.body ?: "Failed to retrieve changelog")
                     }
                 }
             } else {

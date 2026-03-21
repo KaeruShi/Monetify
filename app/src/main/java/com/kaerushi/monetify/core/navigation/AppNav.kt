@@ -12,8 +12,11 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -50,11 +53,13 @@ import com.kaerushi.monetify.core.ui.components.BottomNavBar
 import com.kaerushi.monetify.core.ui.components.ChangelogBottomSheet
 import com.kaerushi.monetify.core.ui.components.NavBar
 import com.kaerushi.monetify.core.ui.dialog.AlertDialog
+import com.kaerushi.monetify.core.utils.Utils.fadingEdges
 import com.kaerushi.monetify.data.viewmodel.ChangelogViewModel
 import com.kaerushi.monetify.data.viewmodel.UpdateEvent
 import com.kaerushi.monetify.feature.apps.AppsScreen
 import com.kaerushi.monetify.feature.home.HomeScreen
 import com.kaerushi.monetify.feature.settings.SettingsScreen
+import dev.jeziellago.compose.markdowntext.MarkdownText
 
 @Composable
 fun AppNav() {
@@ -176,19 +181,27 @@ fun AppNav() {
         }
 
         if (showUpdateDialog) {
+            val scrollState = rememberScrollState()
             AlertDialog(
                 title = stringResource(R.string.update_available),
                 content = {
-                    Column(modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)) {
-                        Text(stringResource(R.string.version, release?.tagName ?: "is null"),
-                            fontWeight = FontWeight.Bold, fontSize = 14.sp, modifier = Modifier.background(
-                                color = MaterialTheme.colorScheme.surfaceContainerHighest,
-                                shape = RoundedCornerShape(8.dp)
-                            ).padding(horizontal = 8.dp, vertical = 2.dp))
+                    Column(
+                        modifier = Modifier
+                            .padding(horizontal = 24.dp, vertical = 16.dp)
+                            .heightIn(max = 400.dp)
+                            .verticalScroll(scrollState)
+                            .fadingEdges(scrollState)
+                    ) {
                         Text(
-                            stringResource(R.string.changelog, release?.body ?: "Failed to retrieve changelog"),
-                            fontSize = 14.sp, modifier = Modifier.padding(top = 8.dp)
+                            stringResource(R.string.version, release?.tagName ?: "is null"),
+                            fontWeight = FontWeight.Bold, fontSize = 14.sp, modifier = Modifier
+                                .background(
+                                    color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                                    shape = RoundedCornerShape(8.dp)
+                                )
+                                .padding(horizontal = 8.dp, vertical = 2.dp)
                         )
+                        MarkdownText(release?.body ?: "Failed to retrieve changelog", modifier = Modifier.padding(top = 12.dp))
                     }
                 },
                 onDismiss = { showUpdateDialog = false },
