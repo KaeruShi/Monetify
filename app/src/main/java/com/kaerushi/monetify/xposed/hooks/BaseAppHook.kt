@@ -9,7 +9,6 @@ import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
-import com.kaerushi.monetify.data.FILES_PACKAGE_NAME
 import com.kaerushi.monetify.data.model.preferences.AppIconPack
 import com.kaerushi.monetify.xposed.MainHook
 import com.kaerushi.monetify.xposed.MainHook.bridge
@@ -73,21 +72,19 @@ abstract class BaseAppHook : YukiBaseHooker() {
                                     name = resName
                                     drawable()
                                 }
-                                when (pkgName) {
-                                    FILES_PACKAGE_NAME -> {
-                                        replaceTo {
-                                            val d = ResourcesCompat.getDrawable(
-                                                moduleAppResources,
-                                                replacement.resId,
-                                                null
-                                            )?.mutate()
-                                            val color = replacement.colorProvider?.invoke(instance)
-                                            d?.setTint(color ?: 0)
-                                            d
-                                        }
+                                if (replacement.colorProvider != null) {
+                                    replaceTo {
+                                        val d = ResourcesCompat.getDrawable(
+                                            moduleAppResources,
+                                            replacement.resId,
+                                            null
+                                        )?.mutate()
+                                        val color = replacement.colorProvider.invoke(instance)
+                                        d?.setTint(color)
+                                        d
                                     }
-                                    else -> replaceToModuleResource(replacement.resId)
-                                }
+
+                                } else replaceToModuleResource(replacement.resId)
 
                             }
                         }
@@ -165,6 +162,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
         }
     }
 }
+
 data class DrawableReplacement(
     val resId: Int,
     val colorProvider: ((Context) -> Int)? = null
