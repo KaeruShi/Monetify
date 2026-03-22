@@ -18,6 +18,7 @@ fun getInstalledApps(context: Context, showUninstalled: Boolean = true): List<Ap
     val packageManager = context.packageManager
     val apps = mutableListOf<AppInfo>()
     val targetApps = listOf(
+        Triple("System Framework", "android", R.drawable.duotone_android),
         Triple("X", X_PACKAGE_NAME, R.drawable.app_x),
         Triple("GitHub", GITHUB_PACKAGE_NAME, R.drawable.github),
         Triple("Pinterest", PINTEREST_PACKAGE_NAME, R.drawable.app_pinterest),

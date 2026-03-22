@@ -327,8 +327,12 @@ fun PreferenceApp(
                         REDDIT_PACKAGE_NAME -> true
                         else -> false
                     }
+                    val showEnableMonet = when (appInfo.packageName) {
+                        "android" -> false
+                        else -> true
+                    }
                     HorizontalDivider(modifier = Modifier.height(0.8.dp))
-                    AppDetails(appInfo.packageName, showDisableAds)
+                    AppDetails(appInfo.packageName, showEnableMonet, showDisableAds)
                 }
             }
         }

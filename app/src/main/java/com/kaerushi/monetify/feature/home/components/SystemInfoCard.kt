@@ -95,7 +95,6 @@ private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
         viewModel.registerHookStatus(packageNames)
     }
 
-
     Card(
         shape = RoundedCornerShape(0.dp),
         onClick = { showHookedApps = !showHookedApps },
@@ -143,6 +142,7 @@ private fun HookedAppList(viewModel: HomeViewModel = hiltViewModel()) {
 
 @Composable
 private fun PackageStatus(pkgName: String, hooked: Boolean, viewModel: SettingsViewModel = hiltViewModel()) {
+    val androidEnabled = if (pkgName == "android") true else hooked
     val appTheme by viewModel.themeState.collectAsState()
     val warnColor = Color(0xFFE05D44)
     val successColor = when(appTheme){
@@ -151,7 +151,7 @@ private fun PackageStatus(pkgName: String, hooked: Boolean, viewModel: SettingsV
         AppTheme.SYSTEM -> if (isSystemInDarkTheme()) Color(0xFFB1F1C1) else Color(0xFF046C3B)
     }
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-        if (!hooked) CircularProgressIndicator(
+        if (!androidEnabled) CircularProgressIndicator(
             modifier = Modifier.padding(horizontal = 2.dp).size(10.dp),
             strokeWidth = 1.dp,
             color = warnColor
@@ -163,7 +163,7 @@ private fun PackageStatus(pkgName: String, hooked: Boolean, viewModel: SettingsV
         Text(
             pkgName,
             fontSize = 14.sp,
-            color = if (!hooked) warnColor else successColor,
+            color = if (!androidEnabled) warnColor else successColor,
         )
     }
 }

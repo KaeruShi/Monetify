@@ -53,6 +53,18 @@ object IconPack {
         "ic_m3_chip_close" to DrawableReplacement(R.drawable.duotone_cross),
         "ic_menu_search" to DrawableReplacement(R.drawable.duotone_search),
         "ic_menu_search_m3" to DrawableReplacement(R.drawable.duotone_search),
-        "abc_ic_menu_overflow_material" to DrawableReplacement(R.drawable.duotone_more_vert)
+        "abc_ic_menu_overflow_material" to DrawableReplacement(R.drawable.duotone_more_vert),
+        "ic_chip_large_files" to DrawableReplacement(R.drawable.duotone_tag_price) {
+            colorPrimary(it)
+        },
+        "ic_chip_large_files_m3" to DrawableReplacement(R.drawable.duotone_tag_price) {
+            colorPrimary(it)
+        },
+        "ic_chip_from_this_week" to DrawableReplacement(R.drawable.duotone_time) {
+            colorPrimary(it)
+        },
+        "ic_chip_from_this_week_m3" to DrawableReplacement(R.drawable.duotone_time) {
+            colorPrimary(it)
+        }
     )
 }

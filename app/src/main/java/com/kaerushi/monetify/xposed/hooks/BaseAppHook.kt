@@ -15,6 +15,7 @@ import com.kaerushi.monetify.xposed.MainHook
 import com.kaerushi.monetify.xposed.MainHook.bridge
 import com.kaerushi.monetify.xposed.extensions.showAlertDialog
 import com.kaerushi.monetify.xposed.helper.InjectLayoutHelper
+import com.kaerushi.monetify.xposed.hooks.android.IconPack
 import com.kaerushi.monetify.xposed.utils.PreferenceUtils
 import java.lang.ref.WeakReference
 
@@ -27,18 +28,34 @@ abstract class BaseAppHook : YukiBaseHooker() {
 
     @LegacyResourcesHook
     override fun onHook() {
+        loadZygote {
+            val getIconPack = when (PreferenceUtils.getAppIconPack("android")) {
+                AppIconPack.DUOTONE.name -> IconPack.duotoneDrawables
+                else -> return@loadZygote
+            }
+            getIconPack.forEach { (name, replacement) ->
+                resources().hook {
+                    injectResource {
+                        conditions {
+                            this.name = name
+                            drawable()
+                        }
+                        replaceToModuleResource(replacement.resId)
+                    }
+                }
+            }
+        }
         loadApp(pkgName) {
             bridge = MainHook.getOrCreateBridge(appInfo.sourceDir, pkgName)
             onAppLifecycle {
                 onCreate {
                     if (PreferenceUtils.getAppHookStatus(pkgName) == false) {
-                        YLog.debug("Data channel: $pkgName")
                         dataChannel.put(key = "hook_status_${pkgName}", value = true)
+                        YLog.debug("Data channel: $pkgName, value: true")
                     }
                 }
             }
             hookClass()
-
         }
     }
 
