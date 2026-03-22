@@ -8,7 +8,7 @@ import com.kaerushi.monetify.xposed.utils.PreferenceUtils
 
 object GitHubHooks : BaseAppHook() {
     override val pkgName: String = GITHUB_PACKAGE_NAME
-    override val duotoneDrawables: Map<String, Int> = IconPack.duotoneDrawables
+    override val duotoneDrawables = IconPack.duotoneDrawables
 
     @LegacyResourcesHook
     override fun hookOnCreate(instance: Activity) {

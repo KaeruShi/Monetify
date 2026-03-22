@@ -10,6 +10,7 @@ object FilesHooks : BaseAppHook() {
     override val duotoneDrawables = IconPack.duotoneDrawables
     @OptIn(LegacyResourcesHook::class)
     override fun hookClass() {
+        super.hookClass()
         if (getAppMonetEnabled(pkgName)) {
             resources().hook {
                 injectResource {

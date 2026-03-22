@@ -9,7 +9,7 @@ import com.kaerushi.monetify.xposed.utils.PreferenceUtils
 @OptIn(LegacyResourcesHook::class)
 object RedditHooks : BaseAppHook() {
     override val pkgName: String = REDDIT_PACKAGE_NAME
-    override val duotoneDrawables: Map<String, Int> = IconPack.duotoneDrawables
+    override val duotoneDrawables = IconPack.duotoneDrawables
     override fun hookClass() {
         super.hookClass()
         if (PreferenceUtils.getAppDisableAds(pkgName)) disableAds()

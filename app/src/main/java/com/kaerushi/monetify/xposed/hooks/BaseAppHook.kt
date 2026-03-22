@@ -1,18 +1,21 @@
 package com.kaerushi.monetify.xposed.hooks
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.log.YLog
+import com.kaerushi.monetify.data.FILES_PACKAGE_NAME
 import com.kaerushi.monetify.data.model.preferences.AppIconPack
 import com.kaerushi.monetify.xposed.MainHook
 import com.kaerushi.monetify.xposed.MainHook.bridge
+import com.kaerushi.monetify.xposed.extensions.showAlertDialog
 import com.kaerushi.monetify.xposed.helper.InjectLayoutHelper
 import com.kaerushi.monetify.xposed.utils.PreferenceUtils
-import com.kaerushi.monetify.xposed.extensions.showAlertDialog
 import java.lang.ref.WeakReference
 
 abstract class BaseAppHook : YukiBaseHooker() {
@@ -20,7 +23,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
     private var errorShown = false
     private val errorNames = mutableListOf<String>()
     protected abstract val pkgName: String
-    protected open val duotoneDrawables: Map<String, Int> = emptyMap()
+    protected open val duotoneDrawables: Map<String, DrawableReplacement> = emptyMap()
 
     @LegacyResourcesHook
     override fun onHook() {
@@ -34,28 +37,45 @@ abstract class BaseAppHook : YukiBaseHooker() {
                     }
                 }
             }
-            getIconPackDrawables()?.let { drawables ->
-                resources().hook {
-                    drawables.forEach { (resName, replacementDrawable) ->
-                        injectResource {
-                            conditions {
-                                name = resName
-                                drawable()
-                            }
-                            replaceToModuleResource(replacementDrawable)
-                        }
-                    }
-                }
-            }
             hookClass()
+
         }
     }
 
+    @LegacyResourcesHook
     protected open fun hookClass() {
         Activity::class.java.resolve().firstMethod { name = "onCreate"; parameters(Bundle::class.java) }.hook {
             after {
                 val instance = instance<Activity>()
                 currentActivity = WeakReference(instance)
+                getIconPackDrawables(instance)?.let { drawables ->
+                    resources().hook {
+                        drawables.forEach { (resName, replacement) ->
+                            injectResource {
+                                conditions {
+                                    name = resName
+                                    drawable()
+                                }
+                                when (pkgName) {
+                                    FILES_PACKAGE_NAME -> {
+                                        replaceTo {
+                                            val d = ResourcesCompat.getDrawable(
+                                                moduleAppResources,
+                                                replacement.resId,
+                                                null
+                                            )?.mutate()
+                                            val color = replacement.colorProvider?.invoke(instance)
+                                            d?.setTint(color ?: 0)
+                                            d
+                                        }
+                                    }
+                                    else -> replaceToModuleResource(replacement.resId)
+                                }
+
+                            }
+                        }
+                    }
+                }
                 hookOnCreate(instance)
             }
         }
@@ -67,8 +87,8 @@ abstract class BaseAppHook : YukiBaseHooker() {
         return currentActivity?.get()
     }
 
-    private fun getIconPackDrawables(): Map<String, Int>? {
-        return when (PreferenceUtils.getAppIconPack(packageName)) {
+    private fun getIconPackDrawables(context: Context): Map<String, DrawableReplacement>? {
+        return when (PreferenceUtils.getAppIconPack(context.packageName)) {
             AppIconPack.DEFAULT.name -> null
             AppIconPack.DUOTONE.name -> duotoneDrawables
             else -> null
@@ -127,5 +147,8 @@ abstract class BaseAppHook : YukiBaseHooker() {
             }
         }
     }
-
 }
+data class DrawableReplacement(
+    val resId: Int,
+    val colorProvider: ((Context) -> Int)? = null
+)

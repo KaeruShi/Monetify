@@ -7,7 +7,7 @@ import com.kaerushi.monetify.xposed.utils.PreferenceUtils
 
 object TwitterHooks : BaseAppHook() {
     override val pkgName: String = X_PACKAGE_NAME
-    override val duotoneDrawables: Map<String, Int> = IconPack.duotoneDrawables
+    override val duotoneDrawables = IconPack.duotoneDrawables
     override fun hookOnCreate(instance: Activity) {
         if (PreferenceUtils.getAppMonetEnabled(pkgName)) applyMonet(instance)
     }

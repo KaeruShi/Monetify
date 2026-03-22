@@ -7,7 +7,7 @@ import com.kaerushi.monetify.xposed.utils.PreferenceUtils
 
 object SubstratumLiteHooks : BaseAppHook() {
     override val pkgName: String = SUBSTRATUM_LITE_PACKAGE_NAME
-    override val duotoneDrawables: Map<String, Int> = IconPack.duotoneDrawables
+    override val duotoneDrawables = IconPack.duotoneDrawables
     override fun hookOnCreate(instance: Activity) {
         if (PreferenceUtils.getAppMonetEnabled(pkgName)) applyMonet(instance)
     }
