@@ -120,5 +120,13 @@ object IconPack {
         "icon_custom_feed_fill" to DrawableReplacement(R.drawable.duotone_heart_rect_fill),
         "icon_rules" to DrawableReplacement(R.drawable.duotone_paper),
         "icon_rules_fill" to DrawableReplacement(R.drawable.duotone_paper_fill),
+        "icon_popular" to DrawableReplacement(R.drawable.duotone_popular),
+        "icon_popular_fill" to DrawableReplacement(R.drawable.duotone_popular_fill),
+        "icon_new" to DrawableReplacement(R.drawable.duotone_latest),
+        "icon_new_fill" to DrawableReplacement(R.drawable.duotone_latest_fill),
+        "icon_message" to DrawableReplacement(R.drawable.duotone_mail),
+        "icon_message_fill" to DrawableReplacement(R.drawable.duotone_mail_fill),
+        "icon_reply" to DrawableReplacement(R.drawable.duotone_reply_arrow),
+        "icon_reply_fill" to DrawableReplacement(R.drawable.duotone_reply_arrow),
     )
 }

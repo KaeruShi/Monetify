@@ -50,7 +50,6 @@ abstract class BaseAppHook : YukiBaseHooker() {
                 onCreate {
                     if (PreferenceUtils.getAppHookStatus(pkgName) == false) {
                         dataChannel.put(key = "hook_status_${pkgName}", value = true)
-                        YLog.debug("Data channel: $pkgName, value: true")
                     }
                 }
             }

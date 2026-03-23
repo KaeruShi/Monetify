@@ -82,6 +82,12 @@ object IconPack {
         "ic_vector_at_bold" to DrawableReplacement(R.drawable.duotone_at),
         "ic_vector_browser_globe" to DrawableReplacement(R.drawable.duotone_web),
         "ic_vector_calendar" to DrawableReplacement(R.drawable.duotone_calendar),
-        "ic_vector_star_rising" to DrawableReplacement(R.drawable.duotone_star_shooting)
+        "ic_vector_star_rising" to DrawableReplacement(R.drawable.duotone_star_shooting),
+        "ic_vector_person_stroke" to DrawableReplacement(R.drawable.duotone_user),
+        "ic_vector_people_stroke" to DrawableReplacement(R.drawable.duotone_user_group),
+        "ic_vector_people_group_stroke" to DrawableReplacement(R.drawable.duotone_user_groups),
+        "ic_vector_envolpe_unread" to DrawableReplacement(R.drawable.duotone_mail_unread),
+        "ic_vector_messages_arrow_leftstroke" to DrawableReplacement(R.drawable.duotone_mail_arrow),
+        "ic_vector_checkall" to DrawableReplacement(R.drawable.duotone_check_all),
     )
 }
