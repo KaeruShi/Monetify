@@ -10,34 +10,35 @@ An Xposed module that brings customization to user apps by modifying icons and c
 ![Kotlin](https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
 ![Material Expressive](https://img.shields.io/badge/Material%20Expressive-FF7BC4?style=for-the-badge&logo=materialdesign&logoColor=white)
+
 </div>
 
 ## ✨ Features
 
-- 🧩 **MVVM architecture** with clear separation between UI, ViewModel, and data layers  
-- 💉 **Dagger Hilt** for dependency injection across application, ViewModel, and system components  
-- 🎨 **Jetpack Compose** for building declarative, state-driven UI components  
-- 🌈 **Material Expressive** with dynamic color support and adaptive theming  
-- 🎭 **Xposed runtime hooking** for modifying third-party app icons and colors dynamically  
-- 📦 **Import / Export configuration** for easy backup and sharing of your setup  
+- 🧩 **MVVM architecture** with clear separation between UI, ViewModel, and data layers
+- 💉 **Dagger Hilt** for dependency injection across application, ViewModel, and system components
+- 🎨 **Jetpack Compose** for building declarative, state-driven UI components
+- 🌈 **Material Expressive** with dynamic color support and adaptive theming
+- 🎭 **Xposed runtime hooking** for modifying third-party app icons and colors dynamically
+- 📦 **Import / Export configuration** for easy backup and sharing of your setup
 
 ## 📱 Currently Supported Apps
 
 List of applications that currently support Monet theming and icon pack.  
 Some apps may have partial support or are still in development.
 
-| App            | Support        |
-|---------------|---------------|
-| DocumentsUI    | Monet, Icon Pack |
-| GitHub         | Monet, Icon Pack |
-| Instagram      | Monet |
-| Pinterest      | Icon Pack |
-| Pixiv          | _Soon_ |
-| Reddit         | Monet, Icon Pack |
-| Substratum Lite| Monet, Icon Pack |
-| WhatsApp       | _Soon_ |
-| X / Twitter    | Monet, Icon Pack |
-| Youtube        | Monet |
+| App             | Support          |
+| --------------- | ---------------- |
+| DocumentsUI     | Monet, Icon Pack |
+| GitHub          | Monet, Icon Pack |
+| Instagram       | Monet            |
+| Pinterest       | Icon Pack        |
+| Pixiv           | _Soon_           |
+| Reddit          | Monet, Icon Pack |
+| Substratum Lite | Monet, Icon Pack |
+| WhatsApp        | _Soon_           |
+| X / Twitter     | Monet, Icon Pack |
+| Youtube         | Monet            |
 
 ## 📋 Requirements
 
@@ -53,9 +54,19 @@ Some apps may have partial support or are still in development.
 4. Open Monetify and configure your apps
 5. Enjoy! 🎉
 
-## 🛠️ Building from Source
+## � Documentation
+
+The static documentation is built with VitePress and lives in the `docs/` folder.
+Run the local docs server with:
+
+```bash
+npm run docs:dev
+```
+
+## �🛠️ Building from Source
 
 **Prerequisites**
+
 - Android Studio Hedgehog (2023.1.1) or newer
 - JDK 18
 - Android SDK with API 36
@@ -81,6 +92,7 @@ Whether you’re fixing a small typo, improving documentation, refactoring code,
 ## 🗺️ Roadmap
 
 **Planned Features**
+
 - [ ] Shizuku support
 - [ ] More apps support
 - [ ] More icon packs
@@ -94,6 +106,7 @@ See all the progress [here](https://github.com/KaeruShi/Monetify/commits/master)
 Found a bug or have a feature request? Please use [GitHub Issues](https://github.com/KaeruShi/Monetify/issues).
 
 Before creating a new issue, please:
+
 - Check if the issue already exists
 - Include as much detail as possible
 - Provide logcat output if reporting a crash
@@ -102,15 +115,18 @@ Before creating a new issue, please:
 
 - [YukiHookAPI](https://github.com/HighCapable/YukiHookAPI) - Powerful Xposed hooking framework
 - [DexKit](https://github.com/LuckyPray/DexKit) - Dex deobfuscation library
-- [LSPosed](https://github.com/LSPosed/LSPosed) - Modern Xposed framework implementation  
+- [LSPosed](https://github.com/LSPosed/LSPosed) - Modern Xposed framework implementation
 - [Material You](https://m3.material.io/) - Google's Material Design 3
 
 ## ⚠️ Disclaimer
+
 > [!WARNING]
+>
 > - Monetify is an Xposed module that modifies the behavior of other applications.Use it at your own risk and always back up your data. The developer is not responsible for any damage or data loss.
 > - This project is still under active development. Some features may be incomplete, experimental, or may not work as expected.
 
 ## 🌟 Star History
+
 If you find this project useful, please consider giving it a star! ⭐
 
 <a href="https://gitdata.xuanhun520.com/?repos=kaerushi/monetify&type=Date">
@@ -120,5 +136,3 @@ If you find this project useful, please consider giving it a star! ⭐
   <img style="width: 800px; height: 533px;" alt="Star History Chart" src="https://gitdata.xuanhun520.com/api/starimg?repos=kaerushi/monetify&type=Date&theme=dark" />
 </picture>
 </a>
-
-

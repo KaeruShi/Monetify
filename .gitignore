@@ -21,3 +21,9 @@ captures/
 .DS_Store
 /monetify.jks
 /gradle/gradle-daemon-jvm.properties
+
+# Others
+node_modules/
+package-lock.json
+docs/.vitepress/dist
+docs/.vitepress/cache
