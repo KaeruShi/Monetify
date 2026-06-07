@@ -1,0 +1,1 @@
+import{_ as o,o as t,c as r,a4 as i}from"./chunks/framework.BlzYIOp8.js";const u=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"legal.md","filePath":"legal.md"}'),n={name:"legal.md"};function a(s,e,c,h,l,d){return t(),r("div",null,[...e[0]||(e[0]=[i("",106)])])}const f=o(n,[["render",a]]);export{u as __pageData,f as default};

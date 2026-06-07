@@ -1,0 +1,1 @@
+import{_ as i,o as a,c as s,a4 as r}from"./chunks/framework.BlzYIOp8.js";const u=JSON.parse('{"title":"Overview","description":"","frontmatter":{},"headers":[],"relativePath":"guide.md","filePath":"guide.md"}'),t={name:"guide.md"};function l(o,e,n,d,h,p){return a(),s("div",null,[...e[0]||(e[0]=[r("",13)])])}const g=i(t,[["render",l]]);export{u as __pageData,g as default};
