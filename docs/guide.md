@@ -37,11 +37,3 @@ cd Monetify
 ```
 
 The APK will be generated at `app/build/outputs/apk/release/`.
-
-## Local docs development
-
-Run the local VitePress server to preview the documentation:
-
-```bash
-npm run docs:dev
-```

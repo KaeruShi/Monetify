@@ -24,17 +24,17 @@ export default defineConfig({
       { text: "Home", link: "/" },
       { text: "Guide", link: "/guide" },
       { text: "Supported Apps", link: "/support" },
-      { text: "Contributing", link: "/contributing" },
+      { text: "Legal", link: "/legal" },
     ],
 
     sidebar: [
       {
         text: "Docs",
         items: [
-          { text: "Home", link: "/" },
           { text: "Guide", link: "/guide" },
           { text: "Supported Apps", link: "/support" },
           { text: "Contributing", link: "/contributing" },
+          { text: "Legal", link: "/legal" },
         ],
       },
     ],
