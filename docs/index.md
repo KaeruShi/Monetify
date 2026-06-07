@@ -7,7 +7,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /installation
+      link: /guide
     - theme: alt
       text: Supported Apps
       link: /support

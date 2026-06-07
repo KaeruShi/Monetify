@@ -5,7 +5,21 @@ export default defineConfig({
   base: "/Monetify/",
   title: "Monetify",
   description: "Static documentation for Monetify using VitePress",
+
+  head: [
+    [
+      "link",
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        href: "/Monetify/monetify-icon.svg",
+      },
+    ],
+  ],
+
+
   themeConfig: {
+    logo: { src: "/monetify-icon.svg", alt: "Monetify Logo" },
     nav: [
       { text: "Home", link: "/" },
       { text: "Guide", link: "/guide" },
@@ -30,10 +44,9 @@ export default defineConfig({
       { icon: "telegram", link: "https://t.me/weeabooify" },
     ],
     footer: {
-      message: "Released under the GNU GPL v3.",
-      copyright: "Copyright © 2026 Monetify",
+      message: "Released under the GNU GPL v3 License",
+      copyright: "Copyright © 2026 KaeruShi",
     },
     outline: [2, 3],
-    lastUpdated: true,
   },
 });
