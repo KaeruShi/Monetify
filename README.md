@@ -54,7 +54,7 @@ Some apps may have partial support or are still in development.
 4. Open Monetify and configure your apps
 5. Enjoy! 🎉
 
-## � Documentation
+## 📜 Documentation
 
 The static documentation is built with VitePress and lives in the `docs/` folder.
 Run the local docs server with:
@@ -63,7 +63,7 @@ Run the local docs server with:
 npm run docs:dev
 ```
 
-## �🛠️ Building from Source
+## 🛠️ Building from Source
 
 **Prerequisites**
 
