@@ -8,7 +8,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: "Home", link: "/" },
-      { text: "Install", link: "/installation" },
+      { text: "Guide", link: "/guide" },
       { text: "Supported Apps", link: "/support" },
       { text: "Contributing", link: "/contributing" },
     ],
@@ -18,7 +18,7 @@ export default defineConfig({
         text: "Docs",
         items: [
           { text: "Home", link: "/" },
-          { text: "Installation", link: "/installation" },
+          { text: "Guide", link: "/guide" },
           { text: "Supported Apps", link: "/support" },
           { text: "Contributing", link: "/contributing" },
         ],

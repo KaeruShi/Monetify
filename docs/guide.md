@@ -1,4 +1,13 @@
-# Installation
+# Overview
+
+Monetify is an Xposed module for Android 12+ that brings customization to installed apps by modifying icons and color resources at runtime. It is designed to match apps to your device style while keeping hooks and runtime logic separated from the core UI.
+
+## Features
+
+- **Dagger Hilt** for dependency injection across application, ViewModel, and system components.
+- **Jetpack Compose** for declarative, state-driven UI.
+- **Material Expressive** for adaptive theming and dynamic colors.
+- **Import / Export** configuration for easy backup and sharing.
 
 ## Requirements
 

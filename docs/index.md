@@ -16,27 +16,13 @@ hero:
       link: https://github.com/KaeruShi/Monetify/releases/latest
 
 features:
-  - title: MVVM + Compose
+  - icon: "🧩"
+    title: MVVM + Compose
     details: Clean architecture with Jetpack Compose and ViewModel-driven UI.
-  - title: Xposed runtime hooks
+  - icon: "🔌"
+    title: Xposed runtime hooks
     details: Customize app icons and colors at runtime using LSPosed-compatible hooks.
-  - title: Dynamic theming
+  - icon: "🎨"
+    title: Dynamic theming
     details: Support for Monet styling, icon packs, and app-specific resource customization.
 ---
-
-## Overview
-
-Monetify is an Xposed module for Android 12+ that brings customization to installed apps by modifying icons and color resources at runtime. It is designed to match apps to your device style while keeping hooks and runtime logic separated from the core UI.
-
-## Highlights
-
-- **Dagger Hilt** for dependency injection across application, ViewModel, and system components.
-- **Jetpack Compose** for declarative, state-driven UI.
-- **Material Expressive** for adaptive theming and dynamic colors.
-- **Import / Export** configuration for easy backup and sharing.
-
-## Quick links
-
-- [Installation](./installation)
-- [Supported Apps](./support)
-- [Contributing](./contributing)
