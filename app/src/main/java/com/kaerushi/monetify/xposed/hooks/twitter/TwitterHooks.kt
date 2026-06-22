@@ -5,7 +5,7 @@ import com.kaerushi.monetify.data.X_PACKAGE_NAME
 import com.kaerushi.monetify.xposed.hooks.BaseAppHook
 import com.kaerushi.monetify.xposed.utils.PreferenceUtils
 
-object TwitterHooks : BaseAppHook() {
+class TwitterHooks : BaseAppHook() {
     override val pkgName: String = X_PACKAGE_NAME
     override val duotoneDrawables = IconPack.duotoneDrawables
     override fun hookOnCreate(instance: Activity) {

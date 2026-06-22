@@ -3,7 +3,6 @@ package com.kaerushi.monetify.xposed.hooks.reddit
 import android.annotation.SuppressLint
 import android.app.Activity
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
-import com.kaerushi.monetify.xposed.MainHook.bridge
 import com.kaerushi.monetify.xposed.utils.colorPrimary
 import com.kaerushi.monetify.xposed.utils.colorPrimaryLight
 import com.kaerushi.monetify.xposed.utils.colorSurfaceContainerDark

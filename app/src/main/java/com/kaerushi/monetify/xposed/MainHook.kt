@@ -4,6 +4,7 @@ import com.highcapable.yukihookapi.annotation.xposed.InjectYukiHookWithXposed
 import com.highcapable.yukihookapi.hook.factory.encase
 import com.highcapable.yukihookapi.hook.log.YLog
 import com.highcapable.yukihookapi.hook.xposed.proxy.IYukiHookXposedInit
+import com.kaerushi.monetify.xposed.hooks.android.FrameworkHook
 import com.kaerushi.monetify.xposed.hooks.files.FilesHooks
 import com.kaerushi.monetify.xposed.hooks.github.GitHubHooks
 import com.kaerushi.monetify.xposed.hooks.instagram.InstagramHooks
@@ -19,12 +20,8 @@ object MainHook : IYukiHookXposedInit {
     @Volatile var dexKitLoaded: Boolean = false
         private set
 
-    lateinit var bridge: DexKitBridge
-    private val bridgeCache = mutableMapOf<String, DexKitBridge>()
-    fun getOrCreateBridge(apkPath: String, pkgName: String): DexKitBridge {
-        return bridgeCache.getOrPut(pkgName) {
-            DexKitBridge.create(apkPath)
-        }
+    fun createBridge(apkPath: String): DexKitBridge {
+        return DexKitBridge.create(apkPath)
     }
 
     override fun onHook() = encase {
@@ -41,13 +38,14 @@ object MainHook : IYukiHookXposedInit {
 
 private object HookRegistry {
     val hooks = listOf(
-        PinterestHooks,
-        RedditHooks,
-        SubstratumLiteHooks,
-        TwitterHooks,
-        FilesHooks,
-        GitHubHooks,
-        YoutubeHooks,
-        InstagramHooks
+        FrameworkHook(),
+        PinterestHooks(),
+        RedditHooks(),
+        SubstratumLiteHooks(),
+        TwitterHooks(),
+        FilesHooks(),
+        GitHubHooks(),
+        YoutubeHooks(),
+        InstagramHooks()
     )
 }

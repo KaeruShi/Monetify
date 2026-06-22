@@ -7,7 +7,7 @@ import com.kaerushi.monetify.xposed.hooks.BaseAppHook
 import com.kaerushi.monetify.xposed.utils.PreferenceUtils
 
 @OptIn(LegacyResourcesHook::class)
-object RedditHooks : BaseAppHook() {
+class RedditHooks : BaseAppHook() {
     override val pkgName: String = REDDIT_PACKAGE_NAME
     override val duotoneDrawables = IconPack.duotoneDrawables
     override fun hookClass() {

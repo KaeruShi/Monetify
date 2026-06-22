@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.kaerushi.monetify.data.INSTAGRAM_PACKAGE_NAME
 import com.kaerushi.monetify.data.REDDIT_PACKAGE_NAME
 import com.kaerushi.monetify.data.model.AppInfo
 import com.kaerushi.monetify.data.model.preferences.AppTheme
@@ -279,7 +280,6 @@ fun PreferenceApp(
                     },
                     label = ""
                 ) { isExpanded ->
-
                     if (isExpanded) {
                         IconButton(
                             modifier = Modifier.padding(start = 16.dp),
@@ -306,16 +306,17 @@ fun PreferenceApp(
                             val pink = Color(0xFFFF0058)
                             val green = Color(0xFF00B176)
                             val orange = Color(0xFFFFA500)
+                            val chipColor = MaterialTheme.colorScheme.primaryContainer
                             if (appInfo.enableMonet) {
-                                AppChip("Monet", orange)
+                                AppChip("Monet", chipColor)
                             }
                             if (appInfo.disableAds) {
-                                AppChip("Disable Ads", pink)
+                                AppChip("Disable Ads", chipColor)
                             }
                             if (appInfo.iconPack != "DEFAULT") {
                                 AppChip(appInfo.iconPack.lowercase().replaceFirstChar {
                                     it.uppercase()
-                                }, green)
+                                }, chipColor)
                             }
                         }
                     }
@@ -325,6 +326,7 @@ fun PreferenceApp(
                 Column {
                     val showDisableAds = when (appInfo.packageName) {
                         REDDIT_PACKAGE_NAME -> true
+                        INSTAGRAM_PACKAGE_NAME -> true
                         else -> false
                     }
                     val showEnableMonet = when (appInfo.packageName) {

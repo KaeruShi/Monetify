@@ -1,6 +1,5 @@
 package com.kaerushi.monetify.xposed.hooks.reddit
 
-import com.kaerushi.monetify.xposed.MainHook.bridge
 import org.luckypray.dexkit.query.enums.StringMatchType
 
 fun RedditHooks.disableAds() {

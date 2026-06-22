@@ -6,7 +6,7 @@ import com.kaerushi.monetify.data.GITHUB_PACKAGE_NAME
 import com.kaerushi.monetify.xposed.hooks.BaseAppHook
 import com.kaerushi.monetify.xposed.utils.PreferenceUtils
 
-object GitHubHooks : BaseAppHook() {
+class GitHubHooks : BaseAppHook() {
     override val pkgName: String = GITHUB_PACKAGE_NAME
     override val duotoneDrawables = IconPack.duotoneDrawables
 

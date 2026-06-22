@@ -6,7 +6,7 @@ import com.kaerushi.monetify.xposed.hooks.BaseAppHook
 import com.kaerushi.monetify.xposed.hooks.files.ApplyMonet.applyMonet
 import com.kaerushi.monetify.xposed.utils.PreferenceUtils.getAppMonetEnabled
 
-object FilesHooks : BaseAppHook() {
+class FilesHooks : BaseAppHook() {
     override val pkgName = FILES_PACKAGE_NAME
     override val duotoneDrawables = IconPack.duotoneDrawables
     @OptIn(LegacyResourcesHook::class)

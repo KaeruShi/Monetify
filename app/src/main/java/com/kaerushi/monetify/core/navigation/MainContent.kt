@@ -62,7 +62,7 @@ import com.kaerushi.monetify.feature.settings.SettingsScreen
 import dev.jeziellago.compose.markdowntext.MarkdownText
 
 @Composable
-fun AppNav() {
+fun MainContent() {
     val cnViewModel: ChangelogViewModel = viewModel()
     val release by cnViewModel.release.collectAsState()
     val navController = rememberNavController()

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
-import com.kaerushi.monetify.xposed.MainHook.bridge
 import com.kaerushi.monetify.xposed.utils.colorInversePrimary
 import com.kaerushi.monetify.xposed.utils.colorOnSurface
 import com.kaerushi.monetify.xposed.utils.colorPrimary

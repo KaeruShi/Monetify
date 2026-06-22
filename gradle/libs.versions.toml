@@ -1,34 +1,36 @@
 [versions]
-agp = "9.0.1"
-coilCompose = "3.4.0"
-coilNetworkOkhttp = "3.4.0"
-composeMarkdown = "0.6.0"
-material = "1.13.0"
-yukihookapi = "1.3.1"
-kavaref-core = "1.0.2"
-kavaref-extension = "1.0.2"
-ksp = "2.3.5"
-kotlin = "2.3.10"
-coreKtx = "1.18.0"
-kotlinxCoroutinesAndroid = "1.10.2"
-lifecycleRuntimeKtx = "2.10.0"
+agp = "9.2.1"
+coilCompose = "3.5.0"
+coilNetworkOkhttp = "3.5.0"
+composeMarkdown = "0.7.2"
+material = "1.14.0"
+yukihookapi = "1.3.2"
+kavaref-core = "1.1.0"
+kavaref-extension = "1.1.0"
+kavaref-android = "1.1.0"
+ksp = "2.3.9"
+kotlin = "2.4.0"
+coreKtx = "1.19.0"
+kotlinxCoroutinesAndroid = "1.11.0"
+lifecycleRuntimeKtx = "2.11.0"
 activityCompose = "1.13.0"
-composeBom = "2026.03.00"
-nav3Core = "1.0.1"
-lifecycleViewmodelNav3 = "2.10.0"
-kotlinSerialization = "2.3.10"
-kotlinxSerializationCore = "1.10.0"
-material3AdaptiveNav3 = "1.3.0-alpha09"
-material3 = "1.5.0-alpha15"
-navigation = "2.9.7"
+composeBom = "2026.06.00"
+nav3Core = "1.1.3"
+lifecycleViewmodelNav3 = "2.11.0"
+kotlinSerialization = "2.4.0"
+kotlinxSerializationCore = "1.11.0"
+material3AdaptiveNav3 = "1.3.0-rc01"
+material3 = "1.5.0-alpha22"
+navigation = "2.9.8"
 material-icons = "1.7.8"
 datastore = "1.2.1"
 libsuVersion = "6.0.0"
 xposed = "82"
-dexkit = "2.0.7"
-gson = "2.13.2"
+dexkit = "2.2.0"
+gson = "2.14.0"
 hilt = "2.59.2"
 hilt-navigation = "1.3.0"
+kotlin-metadata-version = "2.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -56,6 +58,7 @@ coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-ksp = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+metadata-jvm = { module = "org.jetbrains.kotlin:kotlin-metadata-jvm", version.ref = "kotlin-metadata-version" }
 
 # Markdown
 compose-markdown = { module = "com.github.jeziellago:compose-markdown", version.ref = "composeMarkdown" }
@@ -75,6 +78,7 @@ yukihookapi-api = { module = "com.highcapable.yukihookapi:api", version.ref = "y
 yukihookapi-ksp-xposed = { module = "com.highcapable.yukihookapi:ksp-xposed", version.ref = "yukihookapi" }
 kavaref-core = { module = "com.highcapable.kavaref:kavaref-core", version.ref = "kavaref-core" }
 kavaref-extension = { module = "com.highcapable.kavaref:kavaref-extension", version.ref = "kavaref-extension" }
+kavaref-android = { module = "com.highcapable.kavaref:kavaref-android", version.ref = "kavaref-android" }
 dexkit = { module = "org.luckypray:dexkit", version.ref = "dexkit" }
 
 # Optional add-on libraries

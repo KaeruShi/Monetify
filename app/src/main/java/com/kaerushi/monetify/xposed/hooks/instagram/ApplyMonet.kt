@@ -1,6 +1,5 @@
 package com.kaerushi.monetify.xposed.hooks.instagram
 
-import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -8,15 +7,11 @@ import android.graphics.RectF
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.log.YLog
-import com.kaerushi.monetify.xposed.MainHook.bridge
-import com.kaerushi.monetify.xposed.extensions.applyToView
-import com.kaerushi.monetify.xposed.extensions.applyToViewWithRadius
 import com.kaerushi.monetify.xposed.extensions.floatToDp
 import com.kaerushi.monetify.xposed.extensions.getParent
 import com.kaerushi.monetify.xposed.extensions.setViewBackgroundColor

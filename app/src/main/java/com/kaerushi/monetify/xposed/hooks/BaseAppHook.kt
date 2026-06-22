@@ -8,17 +8,23 @@ import androidx.core.content.res.ResourcesCompat
 import com.highcapable.kavaref.KavaRef.Companion.resolve
 import com.highcapable.yukihookapi.hook.core.annotation.LegacyResourcesHook
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
-import com.highcapable.yukihookapi.hook.log.YLog
 import com.kaerushi.monetify.data.model.preferences.AppIconPack
 import com.kaerushi.monetify.xposed.MainHook
-import com.kaerushi.monetify.xposed.MainHook.bridge
 import com.kaerushi.monetify.xposed.extensions.showAlertDialog
 import com.kaerushi.monetify.xposed.helper.InjectLayoutHelper
-import com.kaerushi.monetify.xposed.hooks.android.IconPack
 import com.kaerushi.monetify.xposed.utils.PreferenceUtils
+import org.luckypray.dexkit.DexKitBridge
 import java.lang.ref.WeakReference
+import com.highcapable.kavaref.extension.classOf
+import com.highcapable.yukihookapi.hook.log.YLog
 
 abstract class BaseAppHook : YukiBaseHooker() {
+    internal val bridge: DexKitBridge by lazy {
+        if (!MainHook.dexKitLoaded) {
+            YLog.warn("DexKit not loaded, bridge will not work")
+        }
+        MainHook.createBridge(appInfo.sourceDir)
+    }
     private var currentActivity: WeakReference<Activity>? = null
     private var errorShown = false
     private val errorNames = mutableListOf<String>()
@@ -27,25 +33,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
 
     @LegacyResourcesHook
     override fun onHook() {
-        loadZygote {
-            val getIconPack = when (PreferenceUtils.getAppIconPack("android")) {
-                AppIconPack.DUOTONE.name -> IconPack.duotoneDrawables
-                else -> return@loadZygote
-            }
-            getIconPack.forEach { (name, replacement) ->
-                resources().hook {
-                    injectResource {
-                        conditions {
-                            this.name = name
-                            drawable()
-                        }
-                        replaceToModuleResource(replacement.resId)
-                    }
-                }
-            }
-        }
         loadApp(pkgName) {
-            bridge = MainHook.getOrCreateBridge(appInfo.sourceDir, pkgName)
             onAppLifecycle {
                 onCreate {
                     if (PreferenceUtils.getAppHookStatus(pkgName) == false) {
@@ -59,7 +47,7 @@ abstract class BaseAppHook : YukiBaseHooker() {
 
     @LegacyResourcesHook
     protected open fun hookClass() {
-        Activity::class.java.resolve().firstMethod { name = "onCreate"; parameters(Bundle::class.java) }.hook {
+        classOf<Activity>().resolve().firstMethod { name = "onCreate"; parameters(classOf<Bundle>()) }.hook {
             after {
                 val instance = instance<Activity>()
                 currentActivity = WeakReference(instance)

@@ -11,12 +11,12 @@ plugins {
 android {
     namespace = "com.kaerushi.monetify"
     compileSdk {
-        version = release(36)
+        version = release(37)
     }
     defaultConfig {
         applicationId = "com.kaerushi.monetify"
         minSdk = 31
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 2
         versionName = "0.1.0-beta2"
         ndk {
@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.yukihookapi.api)
     implementation(libs.kavaref.core)
     implementation(libs.kavaref.extension)
+    implementation(libs.kavaref.android)
     ksp(libs.yukihookapi.ksp.xposed)
     implementation(libs.dexkit)
 
@@ -109,6 +110,7 @@ dependencies {
     implementation(libs.hilt)
     ksp(libs.hilt.ksp)
     ksp(libs.androidx.hilt.compiler)
+    ksp(libs.metadata.jvm)
 
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.navigation3.runtime)
