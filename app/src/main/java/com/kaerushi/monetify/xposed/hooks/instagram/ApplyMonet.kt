@@ -18,7 +18,9 @@ import com.kaerushi.monetify.xposed.extensions.setViewBackgroundColor
 import com.kaerushi.monetify.xposed.utils.colorInversePrimary
 import com.kaerushi.monetify.xposed.utils.colorSurface
 import com.kaerushi.monetify.xposed.utils.colorSurfaceContainer
+import org.luckypray.dexkit.annotations.DexKitExperimentalApi
 
+@DexKitExperimentalApi
 fun InstagramHooks.applyMonetClazz() {
     View::class.java.resolve().method { name = "onAttachedToWindow" }.hookAll {
         before {
@@ -397,7 +399,7 @@ fun InstagramHooks.applyMonetClazz() {
             }
         }
 
-    val chainButtonMethod = bridge.findMethod {
+    val chainButtonMethod = bridgeCache.getMethod {
         matcher {
             usingStrings("progressBar", "buttonImageView")
             declaredClass {
@@ -408,14 +410,14 @@ fun InstagramHooks.applyMonetClazz() {
                 }
             }
         }
-    }.single()
+    }
 
-    val iconField = bridge.findField {
+    val iconField = bridgeCache.getField {
         matcher {
             declaredClass(chainButtonMethod.className)
             type("android.widget.ImageView")
         }
-    }.single()
+    }
 
     chainButtonMethod.getMethodInstance(appClassLoader!!).hook {
         after {

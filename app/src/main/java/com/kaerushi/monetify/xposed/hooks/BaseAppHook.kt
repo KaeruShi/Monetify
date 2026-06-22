@@ -17,14 +17,32 @@ import org.luckypray.dexkit.DexKitBridge
 import java.lang.ref.WeakReference
 import com.highcapable.kavaref.extension.classOf
 import com.highcapable.yukihookapi.hook.log.YLog
+import org.luckypray.dexkit.DexKitCacheBridge
+import org.luckypray.dexkit.annotations.DexKitExperimentalApi
+import java.io.File
 
+@DexKitExperimentalApi
 abstract class BaseAppHook : YukiBaseHooker() {
+
+    private val appTag: String by lazy {
+        val apk = File(appInfo.sourceDir)
+        "$pkgName:${apk.length()}_${apk.lastModified()}"
+    }
+
+    internal val bridgeCache: DexKitCacheBridge.RecyclableBridge by lazy {
+        if (!MainHook.dexKitLoaded) {
+            YLog.warn("DexKit not loaded, bridge will not work")
+        }
+        DexKitCacheBridge.create(appTag, appInfo.sourceDir)
+    }
+
     internal val bridge: DexKitBridge by lazy {
         if (!MainHook.dexKitLoaded) {
             YLog.warn("DexKit not loaded, bridge will not work")
         }
         MainHook.createBridge(appInfo.sourceDir)
     }
+
     private var currentActivity: WeakReference<Activity>? = null
     private var errorShown = false
     private val errorNames = mutableListOf<String>()
